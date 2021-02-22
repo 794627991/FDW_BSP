@@ -1,0 +1,17 @@
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\Widget\WIDGET_Effect_3D.c
+..\..\fdw_download\hex\widget_effect_3d.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\fdw_download\hex\widget_effect_3d.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\Widget\WIDGET.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\WM\WM_Intern.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\WM\WM.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\Core\GUI_ConfDefaults.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\Config\GUIConf.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\Core\GUIType.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\Core\LCD.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\WM\WM_GUI.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\Core\GUI_Protected.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\Core\GUI.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\Core\GUIVersion.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\Core\LCD_Protected.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\Core\GUIDebug.h
+..\..\fdw_download\hex\widget_effect_3d.o: ..\GUI\Core\GUI_X.h

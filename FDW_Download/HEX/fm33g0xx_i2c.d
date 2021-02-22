@@ -1,0 +1,12 @@
+..\..\fdw_download\hex\fm33g0xx_i2c.o: ..\lib\fm33g0xx_i2c.c
+..\..\fdw_download\hex\fm33g0xx_i2c.o: ..\lib\fm33g0xx_i2c.h
+..\..\fdw_download\hex\fm33g0xx_i2c.o: ..\device\Include\FM33G0XX.h
+..\..\fdw_download\hex\fm33g0xx_i2c.o: ..\device\Include\core_cm0plus.h
+..\..\fdw_download\hex\fm33g0xx_i2c.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\fdw_download\hex\fm33g0xx_i2c.o: ..\device\Include\core_cminstr.h
+..\..\fdw_download\hex\fm33g0xx_i2c.o: ..\device\Include\core_cmfunc.h
+..\..\fdw_download\hex\fm33g0xx_i2c.o: ..\device\Include\system_FM33G0XX.h
+..\..\fdw_download\hex\fm33g0xx_i2c.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\fdw_download\hex\fm33g0xx_i2c.o: ..\device\Include\FM33G0XX.h
+..\..\fdw_download\hex\fm33g0xx_i2c.o: ..\lib\fm33g0xx_conf.h
+..\..\fdw_download\hex\fm33g0xx_i2c.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

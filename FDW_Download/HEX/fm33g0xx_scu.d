@@ -1,0 +1,11 @@
+..\..\fdw_download\hex\fm33g0xx_scu.o: ..\lib\fm33g0xx_scu.c
+..\..\fdw_download\hex\fm33g0xx_scu.o: ..\lib\fm33g0xx_scu.h
+..\..\fdw_download\hex\fm33g0xx_scu.o: ..\device\Include\FM33G0XX.h
+..\..\fdw_download\hex\fm33g0xx_scu.o: ..\device\Include\core_cm0plus.h
+..\..\fdw_download\hex\fm33g0xx_scu.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\fdw_download\hex\fm33g0xx_scu.o: ..\device\Include\core_cminstr.h
+..\..\fdw_download\hex\fm33g0xx_scu.o: ..\device\Include\core_cmfunc.h
+..\..\fdw_download\hex\fm33g0xx_scu.o: ..\device\Include\system_FM33G0XX.h
+..\..\fdw_download\hex\fm33g0xx_scu.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\fdw_download\hex\fm33g0xx_scu.o: ..\device\Include\FM33G0XX.h
+..\..\fdw_download\hex\fm33g0xx_scu.o: ..\lib\fm33g0xx_conf.h

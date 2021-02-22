@@ -1,0 +1,10 @@
+..\..\fdw_download\hex\edit_getcursorpos.o: ..\GUI\Widget\EDIT_GetCursorPos.c
+..\..\fdw_download\hex\edit_getcursorpos.o: ..\GUI\Widget\EDIT.h
+..\..\fdw_download\hex\edit_getcursorpos.o: ..\GUI\WM\WM.h
+..\..\fdw_download\hex\edit_getcursorpos.o: ..\GUI\Core\GUI_ConfDefaults.h
+..\..\fdw_download\hex\edit_getcursorpos.o: ..\GUI\Config\GUIConf.h
+..\..\fdw_download\hex\edit_getcursorpos.o: ..\GUI\Core\GUIType.h
+..\..\fdw_download\hex\edit_getcursorpos.o: ..\GUI\Core\LCD.h
+..\..\fdw_download\hex\edit_getcursorpos.o: ..\GUI\WM\WM_GUI.h
+..\..\fdw_download\hex\edit_getcursorpos.o: ..\GUI\Widget\DIALOG_Intern.h
+..\..\fdw_download\hex\edit_getcursorpos.o: ..\GUI\Widget\EDIT_Private.h

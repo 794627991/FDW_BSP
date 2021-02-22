@@ -1,0 +1,11 @@
+..\..\fdw_download\hex\dropdown_createindirect.o: ..\GUI\Widget\DROPDOWN_CreateIndirect.c
+..\..\fdw_download\hex\dropdown_createindirect.o: ..\GUI\Core\GUI.h
+..\..\fdw_download\hex\dropdown_createindirect.o: ..\GUI\Core\GUI_ConfDefaults.h
+..\..\fdw_download\hex\dropdown_createindirect.o: ..\GUI\Config\GUIConf.h
+..\..\fdw_download\hex\dropdown_createindirect.o: ..\GUI\Core\GUIType.h
+..\..\fdw_download\hex\dropdown_createindirect.o: ..\GUI\Core\LCD.h
+..\..\fdw_download\hex\dropdown_createindirect.o: ..\GUI\Core\GUIVersion.h
+..\..\fdw_download\hex\dropdown_createindirect.o: ..\GUI\Widget\DROPDOWN.h
+..\..\fdw_download\hex\dropdown_createindirect.o: ..\GUI\WM\WM.h
+..\..\fdw_download\hex\dropdown_createindirect.o: ..\GUI\WM\WM_GUI.h
+..\..\fdw_download\hex\dropdown_createindirect.o: ..\GUI\Widget\DIALOG_Intern.h

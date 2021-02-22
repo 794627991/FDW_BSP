@@ -1,0 +1,25 @@
+将引导程序命名为  boot.hex
+将应用程序命名为  app.hex
+将命名好的两个文件放入HEX文件夹中
+打开DownLoad.bat  然后会自动合并并下载程序
+成功会自动关闭界面否则会报错
+
+
+
+
+DownLoad.bat 源码
+
+@ECHO OFF
+ECHO Open a project and data file, start auto processing and exit
+ECHO. %换行%
+TOOL\JFlash.exe -openprjTOOL\jlinkCfgFile.jflash -openHEX\boot.hex,0x00000000 -mergeHEX\app.hex,0x00010000 -saveasHEX\iap_app.hex -auto -startapp -exit
+IF ERRORLEVEL 1 goto ERROR
+goto END
+:ERROR
+ECHO J-Flash ARM:  Error!
+pause
+:END
+
+
+
+
