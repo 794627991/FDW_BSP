@@ -1,2 +1,1 @@
-# FDW_BSP
-¸´µ©Î¢G048/G045µÄbsp
+å¤æ—¦å¾®BSP G045/G048
