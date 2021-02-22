@@ -230,5 +230,4 @@ commit:
         $(Q)git status  
   
 
-<div>-include $(wildcard $(BUILD)/Obj/*                                       </div><div>
-</div>
+-include $(wildcard $(BUILD)/Obj/*.d)
