@@ -1,0 +1,11 @@
+.\objects\cpu_c.o: ..\ucosiii\ports\cpu_c.c
+.\objects\cpu_c.o: ..\ucosiii\ports\cpu.h
+.\objects\cpu_c.o: ..\ucosiii\ports\cpu_def.h
+.\objects\cpu_c.o: ..\ucosiii\ports\cpu_cfg.h
+.\objects\cpu_c.o: ..\ucosiii\ports\cpu_core.h
+.\objects\cpu_c.o: ..\ucosiii\src\lib_def.h
+.\objects\cpu_c.o: ..\ucosiii\src\lib_mem.h
+.\objects\cpu_c.o: ..\ucosiii\ports\cpu_core.h
+.\objects\cpu_c.o: ..\ucosiii\ports\app_cfg.h
+.\objects\cpu_c.o: ..\ucosiii\src\lib_str.h
+.\objects\cpu_c.o: ..\ucosiii\src\lib_ascii.h

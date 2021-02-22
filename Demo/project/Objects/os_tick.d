@@ -1,0 +1,15 @@
+.\objects\os_tick.o: ..\ucosiii\src\os_tick.c
+.\objects\os_tick.o: ..\ucosiii\src\os.h
+.\objects\os_tick.o: ..\ucosiii\ports\os_cfg.h
+.\objects\os_tick.o: ..\ucosiii\ports\cpu.h
+.\objects\os_tick.o: ..\ucosiii\ports\cpu_def.h
+.\objects\os_tick.o: ..\ucosiii\ports\cpu_cfg.h
+.\objects\os_tick.o: ..\ucosiii\ports\cpu_core.h
+.\objects\os_tick.o: ..\ucosiii\src\lib_def.h
+.\objects\os_tick.o: ..\ucosiii\src\lib_mem.h
+.\objects\os_tick.o: ..\ucosiii\ports\cpu_core.h
+.\objects\os_tick.o: ..\ucosiii\ports\app_cfg.h
+.\objects\os_tick.o: ..\ucosiii\src\lib_str.h
+.\objects\os_tick.o: ..\ucosiii\src\lib_ascii.h
+.\objects\os_tick.o: ..\ucosiii\src\os_type.h
+.\objects\os_tick.o: ..\ucosiii\ports\os_cpu.h

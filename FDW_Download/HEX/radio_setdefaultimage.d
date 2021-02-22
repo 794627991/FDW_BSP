@@ -1,0 +1,10 @@
+..\..\fdw_download\hex\radio_setdefaultimage.o: ..\GUI\Widget\RADIO_SetDefaultImage.c
+..\..\fdw_download\hex\radio_setdefaultimage.o: ..\GUI\Widget\RADIO.h
+..\..\fdw_download\hex\radio_setdefaultimage.o: ..\GUI\WM\WM.h
+..\..\fdw_download\hex\radio_setdefaultimage.o: ..\GUI\Core\GUI_ConfDefaults.h
+..\..\fdw_download\hex\radio_setdefaultimage.o: ..\GUI\Config\GUIConf.h
+..\..\fdw_download\hex\radio_setdefaultimage.o: ..\GUI\Core\GUIType.h
+..\..\fdw_download\hex\radio_setdefaultimage.o: ..\GUI\Core\LCD.h
+..\..\fdw_download\hex\radio_setdefaultimage.o: ..\GUI\WM\WM_GUI.h
+..\..\fdw_download\hex\radio_setdefaultimage.o: ..\GUI\Widget\DIALOG_Intern.h
+..\..\fdw_download\hex\radio_setdefaultimage.o: ..\GUI\Widget\RADIO_Private.h

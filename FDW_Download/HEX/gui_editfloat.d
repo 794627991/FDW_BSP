@@ -1,0 +1,16 @@
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Widget\GUI_EditFloat.c
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Widget\EDIT.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\WM\WM.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Core\GUI_ConfDefaults.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Config\GUIConf.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Core\GUIType.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Core\LCD.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\WM\WM_GUI.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Widget\DIALOG_Intern.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Core\GUI_Protected.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Core\GUI.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Core\GUIVersion.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Core\LCD_Protected.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Core\GUIDebug.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Core\GUI_X.h
+..\..\fdw_download\hex\gui_editfloat.o: ..\GUI\Widget\EDIT_Private.h

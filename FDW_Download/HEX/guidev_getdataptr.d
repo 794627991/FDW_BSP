@@ -1,0 +1,15 @@
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\MemDev\GUIDEV_GetDataPtr.c
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Core\GUI_Private.h
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Core\GUI_Protected.h
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Core\GUI.h
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Core\GUI_ConfDefaults.h
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Config\GUIConf.h
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Core\GUIType.h
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Core\LCD.h
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Core\GUIVersion.h
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Core\LCD_Protected.h
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Core\GUIDebug.h
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Core\GUI_X.h
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Core\LCD_Private.h
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Core\LCD_ConfDefaults.h
+..\..\fdw_download\hex\guidev_getdataptr.o: ..\GUI\Config\LCDConf.h

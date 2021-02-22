@@ -1,0 +1,9 @@
+..\..\fdw_download\hex\guiaapolyout.o: ..\GUI\AntiAlias\GUIAAPolyOut.c
+..\..\fdw_download\hex\guiaapolyout.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\fdw_download\hex\guiaapolyout.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\fdw_download\hex\guiaapolyout.o: ..\GUI\Core\GUI.h
+..\..\fdw_download\hex\guiaapolyout.o: ..\GUI\Core\GUI_ConfDefaults.h
+..\..\fdw_download\hex\guiaapolyout.o: ..\GUI\Config\GUIConf.h
+..\..\fdw_download\hex\guiaapolyout.o: ..\GUI\Core\GUIType.h
+..\..\fdw_download\hex\guiaapolyout.o: ..\GUI\Core\LCD.h
+..\..\fdw_download\hex\guiaapolyout.o: ..\GUI\Core\GUIVersion.h

@@ -1,0 +1,15 @@
+..\..\fdw_download\hex\guiaaarc.o: ..\GUI\AntiAlias\GUIAAArc.c
+..\..\fdw_download\hex\guiaaarc.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\fdw_download\hex\guiaaarc.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\fdw_download\hex\guiaaarc.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\fdw_download\hex\guiaaarc.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+..\..\fdw_download\hex\guiaaarc.o: ..\GUI\Core\GUI_Protected.h
+..\..\fdw_download\hex\guiaaarc.o: ..\GUI\Core\GUI.h
+..\..\fdw_download\hex\guiaaarc.o: ..\GUI\Core\GUI_ConfDefaults.h
+..\..\fdw_download\hex\guiaaarc.o: ..\GUI\Config\GUIConf.h
+..\..\fdw_download\hex\guiaaarc.o: ..\GUI\Core\GUIType.h
+..\..\fdw_download\hex\guiaaarc.o: ..\GUI\Core\LCD.h
+..\..\fdw_download\hex\guiaaarc.o: ..\GUI\Core\GUIVersion.h
+..\..\fdw_download\hex\guiaaarc.o: ..\GUI\Core\LCD_Protected.h
+..\..\fdw_download\hex\guiaaarc.o: ..\GUI\Core\GUIDebug.h
+..\..\fdw_download\hex\guiaaarc.o: ..\GUI\Core\GUI_X.h

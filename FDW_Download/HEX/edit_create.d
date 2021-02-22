@@ -1,0 +1,9 @@
+..\..\fdw_download\hex\edit_create.o: ..\GUI\Widget\EDIT_Create.c
+..\..\fdw_download\hex\edit_create.o: ..\GUI\Widget\EDIT.h
+..\..\fdw_download\hex\edit_create.o: ..\GUI\WM\WM.h
+..\..\fdw_download\hex\edit_create.o: ..\GUI\Core\GUI_ConfDefaults.h
+..\..\fdw_download\hex\edit_create.o: ..\GUI\Config\GUIConf.h
+..\..\fdw_download\hex\edit_create.o: ..\GUI\Core\GUIType.h
+..\..\fdw_download\hex\edit_create.o: ..\GUI\Core\LCD.h
+..\..\fdw_download\hex\edit_create.o: ..\GUI\WM\WM_GUI.h
+..\..\fdw_download\hex\edit_create.o: ..\GUI\Widget\DIALOG_Intern.h

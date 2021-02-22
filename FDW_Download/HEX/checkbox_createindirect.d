@@ -1,0 +1,9 @@
+..\..\fdw_download\hex\checkbox_createindirect.o: ..\GUI\Widget\CHECKBOX_CreateIndirect.c
+..\..\fdw_download\hex\checkbox_createindirect.o: ..\GUI\Widget\CHECKBOX.h
+..\..\fdw_download\hex\checkbox_createindirect.o: ..\GUI\WM\WM.h
+..\..\fdw_download\hex\checkbox_createindirect.o: ..\GUI\Core\GUI_ConfDefaults.h
+..\..\fdw_download\hex\checkbox_createindirect.o: ..\GUI\Config\GUIConf.h
+..\..\fdw_download\hex\checkbox_createindirect.o: ..\GUI\Core\GUIType.h
+..\..\fdw_download\hex\checkbox_createindirect.o: ..\GUI\Core\LCD.h
+..\..\fdw_download\hex\checkbox_createindirect.o: ..\GUI\WM\WM_GUI.h
+..\..\fdw_download\hex\checkbox_createindirect.o: ..\GUI\Widget\DIALOG_Intern.h
