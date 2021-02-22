@@ -1,9 +1,0 @@
-..\..\fdw_download\hex\radio_settext.o: ..\GUI\Widget\RADIO_SetText.c
-..\..\fdw_download\hex\radio_settext.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-..\..\fdw_download\hex\radio_settext.o: ..\GUI\Widget\RADIO_Private.h
-..\..\fdw_download\hex\radio_settext.o: ..\GUI\WM\WM.h
-..\..\fdw_download\hex\radio_settext.o: ..\GUI\Core\GUI_ConfDefaults.h
-..\..\fdw_download\hex\radio_settext.o: ..\GUI\Config\GUIConf.h
-..\..\fdw_download\hex\radio_settext.o: ..\GUI\Core\GUIType.h
-..\..\fdw_download\hex\radio_settext.o: ..\GUI\Core\LCD.h
-..\..\fdw_download\hex\radio_settext.o: ..\GUI\WM\WM_GUI.h
