@@ -64,7 +64,7 @@ void Send(uchar type, uchar transdata)
 
 void lcd_show(const unsigned char *ptr)
 {
-    uchar y, x;
+    uint8_t y, x;
     for (y = 0; y < 32; y++)
     {
         Send(0, 0x80 + y);
@@ -86,4 +86,44 @@ void lcd_show(const unsigned char *ptr)
         }
         Send(0, 0x36); //打开绘图显示
     }
+
+    //fd 34 00 08 00 00 00 00 00 80 00 40 （图片数据）dd cc bb aa
+
+    // uint8_t cmd[15];
+    // uint16_t i = 0;
+    // cmd[0] = 0xfd;
+    // cmd[1] = 0x34;
+    // cmd[2] = 0;
+    // cmd[3] = 0x08;
+    
+    // cmd[4] = 0;
+    // cmd[5] = 0; //x
+
+    // cmd[6] = 0;
+    // cmd[7] = 0; //y
+
+    // cmd[8] = 0;
+    // cmd[9] = 0x80; //Width
+
+    // cmd[10] = 0;
+    // cmd[11] = 0x40; //Hight
+    // SIMLT_SPI.nss(0);
+    // for (i = 0; i < 12; i++)
+    // {
+    //     SIMLT_SPI.mode(cmd[i]);
+    // }
+    // for (i = 0; i < 1024; i++)
+    // {
+    //     SIMLT_SPI.mode(*ptr);
+    //     ptr++;
+    // }
+    // cmd[0] = 0xdd;
+    // cmd[1] = 0xcc;
+    // cmd[2] = 0xbb;
+    // cmd[3] = 0xaa;
+    // for (i = 0; i < 4; i++)
+    // {
+    //     SIMLT_SPI.mode(cmd[i]);
+    // }
+    // SIMLT_SPI.nss(1);
 }

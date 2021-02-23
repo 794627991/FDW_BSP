@@ -56,6 +56,7 @@
 ..\..\fdw_download\hex\myprintf.o: ..\api\etim_api.h
 ..\..\fdw_download\hex\myprintf.o: ..\api\flash_api.h
 ..\..\fdw_download\hex\myprintf.o: ..\api\iic_api.h
+..\..\fdw_download\hex\myprintf.o: ..\api\spi_api.h
 ..\..\fdw_download\hex\myprintf.o: ..\api\lcd_api.h
 ..\..\fdw_download\hex\myprintf.o: ..\api\lptim_api.h
 ..\..\fdw_download\hex\myprintf.o: ..\api\lpuart_api.h

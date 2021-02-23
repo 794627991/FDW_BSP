@@ -557,71 +557,141 @@ void SIMLT_I2C_OP_INIT1(void)
     SIMLT_IIC.sda_in = iic_op_sda_in1;
     SIMLT_IIC.scl = iic_op_scl1;
 }
-
+extern void showclock(void);
 void uCOS_SystemInit(void)
 {
-#define iicinit API_I2C_Init       //SIMLT_I2C_OP_INIT1  API_I2C_Init
-#define iicwirte API_I2C_Write_Com //API_SIMLT_I2C_Write_Com  API_I2C_Write_Com
-#define iicread API_I2C_Read_Com   //API_SIMLT_I2C_Read_Com  API_I2C_Read_Com
+    // fd 12 00 0C 00 00 00 00 d5 d8 c7 ec bd f0 c5 f4 dd cc bb aa
     /* 系统初始化函数都放在这里 */
     //LowPower_IO_Init();
-    uint8_t cmd[28];
+    uint8_t cmd[28] = {0xff};
     uCOS_LEDCreate();
     GUI_Init();
     printf("\r\n程序已开始运行\r\n");
 
-    iicinit();
+    SIMLT_SPI_OP_INIT(0);
+    cmd[0] = 0xfd;
+    cmd[1] = 0;
+    cmd[2] = 0;
+    cmd[3] = 0;
+    cmd[4] = 0xdd;
+    cmd[5] = 0xcc;
+    cmd[6] = 0xbb;
+    cmd[7] = 0xaa;
+    API_SIMLT_SPI(cmd, 10);
 
-    cmd[0] = 0;
-    iicwirte(0X7C, 0X82, 1, cmd, 1);
-    cmd[0] = 0;
-    iicwirte(0X7C, 0X83, 1, cmd, 1);
-    cmd[0] = 0X31;
-    iicwirte(0X7C, 0X8A, 1, cmd, 1);
-    cmd[0] = 0;
-    iicwirte(0X7C, 0X88, 1, cmd, 1);
+    uint16_t i = 0;
+    cmd[0] = 0xfd;
+    cmd[1] = 0x34;
+    cmd[2] = 0;
+    cmd[3] = 0x08;
+    
+    cmd[4] = 0;
+    cmd[5] = 0; //x
 
-    cmd[0] = 0;
-    iicwirte(0X7C, 0X84, 1, cmd, 1); /* 关闭液晶 */
+    cmd[6] = 0;
+    cmd[7] = 0; //y
 
-    cmd[0] = 3;
-    iicwirte(0X7C, 0X84, 1, cmd, 1); /* 开启液晶 */
+    cmd[8] = 0;
+    cmd[9] = 1; //Width
 
-    for (uint8_t i = 0; i < 28; i++)
+    cmd[10] = 0;
+    cmd[11] = 8; //Hight
+    SIMLT_SPI.nss(0);
+    for (i = 0; i < 12; i++)
     {
-        cmd[i] = 0xff;
+        SIMLT_SPI.mode(cmd[i]);
     }
-    cmd[0] = 0;
-    iicwirte(0X7C, 0X80, 1, cmd, 28); /* 写 */
-
-    memset(cmd, 0x0, 28);
-    iicread(0X7C, 0X8000, 2, cmd, 27); /* 读 */
-
-    for (uint8_t i = 0; i < 28; i++)
+    for (i = 0; i < 1; i++)
     {
-        cmd[i] = 0x11;
+        SIMLT_SPI.mode(0X0F);
     }
-    cmd[0] = 0;
-    iicwirte(0X7C, 0X80, 1, cmd, 28); /* 写 */
-
-    memset(cmd, 0x0, 28);
-    iicread(0X7C, 0X8000, 2, cmd, 27); /* 读 */
-
-    for (uint8_t i = 0; i < 28; i++)
+    cmd[0] = 0xdd;
+    cmd[1] = 0xcc;
+    cmd[2] = 0xbb;
+    cmd[3] = 0xaa;
+    for (i = 0; i < 4; i++)
     {
-        cmd[i] = 0x55;
+        SIMLT_SPI.mode(cmd[i]);
     }
-    cmd[0] = 0;
-    iicwirte(0X7C, 0X80, 1, cmd, 28); /* 写 */
+    SIMLT_SPI.nss(1);
 
-    memset(cmd, 0x0, 28);
-    iicread(0X7C, 0X8000, 2, cmd, 27); /* 读 */
+    
+    //    cmd[0] = 0xfd;
+    //    cmd[1] = 0x12;
+    //    cmd[2] = 0;
+    //    cmd[3] = 0x0c;
+    //    cmd[4] = 0;
+    //    cmd[5] = 0;
+    //    cmd[6] = 0;
+    //    cmd[7] = 0;
+    //    cmd[8] = 0xd5;
+    //    cmd[9] = 0xd8;
+    //    cmd[10] = 0xc7;
+    //    cmd[11] = 0xec;
+    //    cmd[12] = 0xbd;
+    //    cmd[13] = 0xf0;
+    //    cmd[14] = 0xc5;
+    //    cmd[15] = 0xf4;
+    //    cmd[16] = 0xdd;
+    //    cmd[17] = 0xcc;
+    //    cmd[18] = 0xbb;
+    //    cmd[19] = 0xaa;
+    //    API_SIMLT_SPI(cmd, 20);
+
+    //#define iicinit API_I2C_Init       //SIMLT_I2C_OP_INIT1  API_I2C_Init
+    //#define iicwirte API_I2C_Write_Com //API_SIMLT_I2C_Write_Com  API_I2C_Write_Com
+    //#define iicread API_I2C_Read_Com   //API_SIMLT_I2C_Read_Com  API_I2C_Read_Com
+    //    iicinit();
+
+    //    cmd[0] = 0;
+    //    iicwirte(0X7C, 0X82, 1, cmd, 1);
+    //    cmd[0] = 0;
+    //    iicwirte(0X7C, 0X83, 1, cmd, 1);
+    //    cmd[0] = 0X31;
+    //    iicwirte(0X7C, 0X8A, 1, cmd, 1);
+    //    cmd[0] = 0;
+    //    iicwirte(0X7C, 0X88, 1, cmd, 1);
+
+    //    cmd[0] = 0;
+    //    iicwirte(0X7C, 0X84, 1, cmd, 1); /* 关闭液晶 */
+
+    //    cmd[0] = 3;
+    //    iicwirte(0X7C, 0X84, 1, cmd, 1); /* 开启液晶 */
+
+    //    for (uint8_t i = 0; i < 28; i++)
+    //    {
+    //        cmd[i] = 0xff;
+    //    }
+    //    cmd[0] = 0;
+    //    iicwirte(0X7C, 0X80, 1, cmd, 28); /* 写 */
+
+    //    memset(cmd, 0x0, 28);
+    //    iicread(0X7C, 0X8000, 2, cmd, 27); /* 读 */
+
+    //    for (uint8_t i = 0; i < 28; i++)
+    //    {
+    //        cmd[i] = 0x11;
+    //    }
+    //    cmd[0] = 0;
+    //    iicwirte(0X7C, 0X80, 1, cmd, 28); /* 写 */
+
+    //    memset(cmd, 0x0, 28);
+    //    iicread(0X7C, 0X8000, 2, cmd, 27); /* 读 */
+
+    //    for (uint8_t i = 0; i < 28; i++)
+    //    {
+    //        cmd[i] = 0x55;
+    //    }
+    //    cmd[0] = 0;
+    //    iicwirte(0X7C, 0X80, 1, cmd, 28); /* 写 */
+
+    //    memset(cmd, 0x0, 28);
+    //    iicread(0X7C, 0X8000, 2, cmd, 27); /* 读 */
+    //#undef iicinit
+    //#undef iicwirte
+    //#undef iicread
 
     SIMLT_I2C_OP_INIT();
-
-#undef iicinit
-#undef iicwirte
-#undef iicread
 }
 
 extern uint8_t notintosleep;

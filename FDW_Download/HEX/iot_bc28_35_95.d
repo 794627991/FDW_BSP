@@ -57,6 +57,7 @@
 ..\..\fdw_download\hex\iot_bc28_35_95.o: ..\api\etim_api.h
 ..\..\fdw_download\hex\iot_bc28_35_95.o: ..\api\flash_api.h
 ..\..\fdw_download\hex\iot_bc28_35_95.o: ..\api\iic_api.h
+..\..\fdw_download\hex\iot_bc28_35_95.o: ..\api\spi_api.h
 ..\..\fdw_download\hex\iot_bc28_35_95.o: ..\api\lcd_api.h
 ..\..\fdw_download\hex\iot_bc28_35_95.o: ..\api\lptim_api.h
 ..\..\fdw_download\hex\iot_bc28_35_95.o: ..\api\lpuart_api.h

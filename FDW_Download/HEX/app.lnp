@@ -22,6 +22,7 @@
 "..\..\fdw_download\hex\myprintf.o"
 "..\..\fdw_download\hex\rtc_api.o"
 "..\..\fdw_download\hex\sha256.o"
+"..\..\fdw_download\hex\spi_api.o"
 "..\..\fdw_download\hex\system.o"
 "..\..\fdw_download\hex\uart_api.o"
 "..\..\fdw_download\hex\uarttimeout.o"

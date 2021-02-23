@@ -174,6 +174,7 @@ extern void Refresh(void); /* GUI，mem模式刷新显示 */
 #include "etim_api.h"
 #include "flash_api.h"
 #include "iic_api.h"
+#include "spi_api.h"
 #include "lcd_api.h"
 #include "lptim_api.h"
 #include "lpuart_api.h"

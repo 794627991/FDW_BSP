@@ -57,6 +57,7 @@
 ..\..\fdw_download\hex\iot_bc260.o: ..\api\etim_api.h
 ..\..\fdw_download\hex\iot_bc260.o: ..\api\flash_api.h
 ..\..\fdw_download\hex\iot_bc260.o: ..\api\iic_api.h
+..\..\fdw_download\hex\iot_bc260.o: ..\api\spi_api.h
 ..\..\fdw_download\hex\iot_bc260.o: ..\api\lcd_api.h
 ..\..\fdw_download\hex\iot_bc260.o: ..\api\lptim_api.h
 ..\..\fdw_download\hex\iot_bc260.o: ..\api\lpuart_api.h

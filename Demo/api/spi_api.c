@@ -95,7 +95,7 @@ uint8_t SOFT_SPI_RW_MODE0(uint8_t write_dat)
         delay_us(1);
         SIMLT_SPI.sck(1);
         read_dat <<= 1;
-        if (SIMLT_SPI.mosi(0))
+        if (SIMLT_SPI.miso(0))
             read_dat++;
         delay_us(1);
         SIMLT_SPI.sck(0);
@@ -133,7 +133,7 @@ uint8_t SOFT_SPI_RW_MODE1(uint8_t write_dat)
         SIMLT_SPI.sck(0); //拉低时钟
         read_dat <<= 1;   //数据左移
 
-        if (SIMLT_SPI.mosi(0))
+        if (SIMLT_SPI.miso(0))
             read_dat++; //若从从机接收到高电平，数据自加一
         delay_us(1);
     }
@@ -167,7 +167,7 @@ uint8_t SOFT_SPI_RW_MODE2(uint8_t write_dat)
         SIMLT_SPI.sck(0); //拉低时钟
         read_dat <<= 1;   //数据左移
 
-        if (SIMLT_SPI.mosi(0))
+        if (SIMLT_SPI.miso(0))
             read_dat++; //若从从机接收到高电平，数据自加一
         delay_us(1);
         SIMLT_SPI.sck(1); //拉高时钟
@@ -197,7 +197,7 @@ uint8_t SOFT_SPI_RW_MODE3(uint8_t write_dat)
         delay_us(1);
         SIMLT_SPI.sck(1);
         read_dat <<= 1;
-        if (SIMLT_SPI.mosi(0))
+        if (SIMLT_SPI.miso(0))
             read_dat++;
         delay_us(1);
         __nop();
@@ -235,7 +235,7 @@ __weak void SIMLT_SPI_OP_INIT(uint8_t mode)
 }
 /*
 *********************************************************************************************************
-*	函 数 名: API_SIMLT_I2C
+*	函 数 名: API_SIMLT_SPI
 *	功能说明: 模拟SPI
 *	形    参: *buf：读写数据缓存
 *             len：数据长度
@@ -243,13 +243,13 @@ __weak void SIMLT_SPI_OP_INIT(uint8_t mode)
 *	备    注：IIC_ChipWL 需要在APP_CFG.h中手动配置
 *********************************************************************************************************
 */
-void API_SIMLT_I2C(uint8_t *buf, uint32_t len)
+void API_SIMLT_SPI(uint8_t *buf, uint32_t len)
 {
     uint64_t i;
     SIMLT_SPI.nss(0);
     for (i = 0; i < len; i++)
     {
-        buf[i] = SIMLT_SPI.mode(&buf[i]);
+        buf[i] = SIMLT_SPI.mode(buf[i]);
     }
     SIMLT_SPI.nss(1);
 }
