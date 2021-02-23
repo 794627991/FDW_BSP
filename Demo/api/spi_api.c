@@ -237,20 +237,19 @@ __weak void SIMLT_SPI_OP_INIT(uint8_t mode)
 *********************************************************************************************************
 *	函 数 名: API_SIMLT_I2C
 *	功能说明: 模拟SPI
-*	形    参: *write：写入的数据缓存
-*             *read：读出的数据缓存
+*	形    参: *buf：读写数据缓存
 *             len：数据长度
 *	返 回 值: 无 
 *	备    注：IIC_ChipWL 需要在APP_CFG.h中手动配置
 *********************************************************************************************************
 */
-void API_SIMLT_I2C(uint8_t *write, uint8_t *read, uint32_t len)
+void API_SIMLT_I2C(uint8_t *buf, uint32_t len)
 {
     uint64_t i;
     SIMLT_SPI.nss(0);
     for (i = 0; i < len; i++)
     {
-        read[i] = SIMLT_SPI.mode(&write[i]);
+        buf[i] = SIMLT_SPI.mode(&buf[i]);
     }
     SIMLT_SPI.nss(1);
 }
