@@ -62,68 +62,89 @@ void Send(uchar type, uchar transdata)
     LCD_12864_CS_0;
 }
 
+uint8_t buf[1024] = {0};
+void qumozhuanhuan(const unsigned char *ptr)
+{
+    uint8_t i, j, k, q;
+    uint16_t n = 0;
+    for (i = 0; i < 8; i++)
+        for (j = 0; j < 128; j++)
+        {
+            q = 1 << (7 - (j % 8));
+            for (k = 0; k < 8; k++)
+            {
+                buf[n] <<= 1;
+                if (ptr[i * 128 + 16 * (8 - k) + j / 8] & q)
+                {
+                    buf[n] += 1;
+                }
+            }
+            n++;
+        }
+}
+
 void lcd_show(const unsigned char *ptr)
 {
-    uint8_t y, x;
-    for (y = 0; y < 32; y++)
-    {
-        Send(0, 0x80 + y);
-        Send(0, 0x80);
-        for (x = 0; x < 16; x++)
-        {
-            Send(1, *ptr++);
-        }
-        Send(0, 0x36); //打开绘图显示
-    }
+    // uint8_t y, x;
+    // for (y = 0; y < 32; y++)
+    // {
+    //     Send(0, 0x80 + y);
+    //     Send(0, 0x80);
+    //     for (x = 0; x < 16; x++)
+    //     {
+    //         Send(1, *ptr++);
+    //     }
+    //     Send(0, 0x36); //打开绘图显示
+    // }
 
-    for (y = 0; y < 32; y++)
-    {
-        Send(0, 0x80 + y);
-        Send(0, 0x88);
-        for (x = 0; x < 16; x++)
-        {
-            Send(1, *ptr++);
-        }
-        Send(0, 0x36); //打开绘图显示
-    }
+    // for (y = 0; y < 32; y++)
+    // {
+    //     Send(0, 0x80 + y);
+    //     Send(0, 0x88);
+    //     for (x = 0; x < 16; x++)
+    //     {
+    //         Send(1, *ptr++);
+    //     }
+    //     Send(0, 0x36); //打开绘图显示
+    // }
 
     //fd 34 00 08 00 00 00 00 00 80 00 40 （图片数据）dd cc bb aa
 
-    // uint8_t cmd[15];
-    // uint16_t i = 0;
-    // cmd[0] = 0xfd;
-    // cmd[1] = 0x34;
-    // cmd[2] = 0;
-    // cmd[3] = 0x08;
-    
-    // cmd[4] = 0;
-    // cmd[5] = 0; //x
+    uint8_t cmd[15];
+    uint16_t i = 0;
+    qumozhuanhuan(ptr);
+    cmd[0] = 0xfd;
+    cmd[1] = 0x34;
+    cmd[2] = 0;
+    cmd[3] = 0x08;
 
-    // cmd[6] = 0;
-    // cmd[7] = 0; //y
+    cmd[4] = 0;
+    cmd[5] = 0; //x
 
-    // cmd[8] = 0;
-    // cmd[9] = 0x80; //Width
+    cmd[6] = 0;
+    cmd[7] = 0; //y
 
-    // cmd[10] = 0;
-    // cmd[11] = 0x40; //Hight
-    // SIMLT_SPI.nss(0);
-    // for (i = 0; i < 12; i++)
-    // {
-    //     SIMLT_SPI.mode(cmd[i]);
-    // }
-    // for (i = 0; i < 1024; i++)
-    // {
-    //     SIMLT_SPI.mode(*ptr);
-    //     ptr++;
-    // }
-    // cmd[0] = 0xdd;
-    // cmd[1] = 0xcc;
-    // cmd[2] = 0xbb;
-    // cmd[3] = 0xaa;
-    // for (i = 0; i < 4; i++)
-    // {
-    //     SIMLT_SPI.mode(cmd[i]);
-    // }
-    // SIMLT_SPI.nss(1);
+    cmd[8] = 0;
+    cmd[9] = 0x80; //Width
+
+    cmd[10] = 0;
+    cmd[11] = 0x40; //Hight
+    SIMLT_SPI.nss(0);
+    for (i = 0; i < 12; i++)
+    {
+        SIMLT_SPI.mode(cmd[i]);
+    }
+    for (i = 0; i < 1024; i++)
+    {
+        SIMLT_SPI.mode(buf[i]);
+    }
+    cmd[0] = 0xdd;
+    cmd[1] = 0xcc;
+    cmd[2] = 0xbb;
+    cmd[3] = 0xaa;
+    for (i = 0; i < 4; i++)
+    {
+        SIMLT_SPI.mode(cmd[i]);
+    }
+    SIMLT_SPI.nss(1);
 }
