@@ -2,20 +2,32 @@
 
 void LCD_12864_Init(void)
 {
-    LCD_12864_CS_W;
-    LCD_12864_CLK_W;
-    LCD_12864_SID_W;
-    Send(0, 0x30); /*功能设置:一次送8位数据,基本指令集*/
-    delay_us(720);
-    Send(0, 0x02); /*DDRAM地址归位*/
-    delay_us(720);
-    Send(0, 0x0c); /*显示设定:开显示,不显示光标,不做当前显示位反白闪动*/
-    delay_us(720);
-    Send(0, 0x01); /*清屏，将DDRAM的位址计数器调整为“00H”*/
-    delay_us(720);
-    Send(0, 0x06); /*功能设置，点设定:显示字符/光标从左到右移位,DDRAM地址加1*/
-    delay_us(720);
-    Send(0, 0x34); //打开扩展指令集
+    // LCD_12864_CS_W;
+    // LCD_12864_CLK_W;
+    // LCD_12864_SID_W;
+    // Send(0, 0x30); /*功能设置:一次送8位数据,基本指令集*/
+    // delay_us(720);
+    // Send(0, 0x02); /*DDRAM地址归位*/
+    // delay_us(720);
+    // Send(0, 0x0c); /*显示设定:开显示,不显示光标,不做当前显示位反白闪动*/
+    // delay_us(720);
+    // Send(0, 0x01); /*清屏，将DDRAM的位址计数器调整为“00H”*/
+    // delay_us(720);
+    // Send(0, 0x06); /*功能设置，点设定:显示字符/光标从左到右移位,DDRAM地址加1*/
+    // delay_us(720);
+    // Send(0, 0x34); //打开扩展指令集
+
+    uint8_t cmd[10];
+    SIMLT_SPI_OP_INIT(0);
+    cmd[0] = 0xfd;
+    cmd[1] = 0;
+    cmd[2] = 0;
+    cmd[3] = 0;
+    cmd[4] = 0xdd;
+    cmd[5] = 0xcc;
+    cmd[6] = 0xbb;
+    cmd[7] = 0xaa;
+    API_SIMLT_SPI(cmd, 10);
 }
 
 /*******************************************
@@ -74,7 +86,7 @@ void qumozhuanhuan(const unsigned char *ptr)
             for (k = 0; k < 8; k++)
             {
                 buf[n] <<= 1;
-                if (ptr[i * 128 + 16 * (8 - k) + j / 8] & q)
+                if (ptr[i * 128 + 16 * (8 - k) + (j >> 3)] & q)
                 {
                     buf[n] += 1;
                 }
