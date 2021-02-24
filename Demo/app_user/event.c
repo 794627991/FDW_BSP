@@ -192,7 +192,7 @@ void jiamitest(uint8_t *buf, uint16_t len)
 {
     int r;
     lzo_uint in_len;
-    lzo_uint out_len;
+    lzo_uint out_len; 
     lzo_uint new_len;
     unsigned char *out = NULL;
     lzo_align_t *wrkmem = NULL;

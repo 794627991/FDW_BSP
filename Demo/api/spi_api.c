@@ -99,7 +99,7 @@ uint8_t SOFT_SPI_RW_MODE0(uint8_t write_dat)
             read_dat++;
         delay_us(1);
         SIMLT_SPI.sck(0);
-        __nop();
+        __NOP();
     }
 
     return read_dat;
@@ -200,7 +200,7 @@ uint8_t SOFT_SPI_RW_MODE3(uint8_t write_dat)
         if (SIMLT_SPI.miso(0))
             read_dat++;
         delay_us(1);
-        __nop();
+        __NOP();
     }
     return read_dat;
 }

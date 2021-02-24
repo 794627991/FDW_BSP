@@ -46,15 +46,15 @@ uint8_t API_EEPROM_Write(uint8_t Device, uint32_t Addr, uint8_t AddrLen, uint8_t
     return iicwt(Device, Addr, AddrLen, Buf, Len);
 }
 
-uint8_t API_I2C_Read_Com(uint8_t Device, uint32_t Addr, uint8_t AddrLen, uint8_t *Buf, uint16_t Len)
+uint8_t API_I2C_Read_Com(uint8_t Device, uint16_t Addr, uint8_t AddrLen, uint8_t *Buf, uint16_t Len)
 {
-    gy_iicop iicrd = (uint8_t(*)(uint8_t Device, uint32_t Addr, uint8_t AddrLen, uint8_t * Buf, uint16_t Len))(table_base[API_I2C_Read_Com_Loc] | 0x1);
+    gy_iicopcom iicrd = (uint8_t(*)(uint8_t Device, uint16_t Addr, uint8_t AddrLen, uint8_t * Buf, uint16_t Len))(table_base[API_I2C_Read_Com_Loc] | 0x1);
     return iicrd(Device, Addr, AddrLen, Buf, Len);
 }
 
-uint8_t API_I2C_Write_Com(uint8_t Device, uint32_t Addr, uint8_t AddrLen, uint8_t *Buf, uint16_t Len)
+uint8_t API_I2C_Write_Com(uint8_t Device, uint16_t Addr, uint8_t AddrLen, uint8_t *Buf, uint16_t Len)
 {
-    gy_iicop iicwt = (uint8_t(*)(uint8_t Device, uint32_t Addr, uint8_t AddrLen, uint8_t * Buf, uint16_t Len))(table_base[API_I2C_Write_Com_Loc] | 0x1);
+    gy_iicopcom iicwt = (uint8_t(*)(uint8_t Device, uint16_t Addr, uint8_t AddrLen, uint8_t * Buf, uint16_t Len))(table_base[API_I2C_Write_Com_Loc] | 0x1);
     return iicwt(Device, Addr, AddrLen, Buf, Len);
 }
 #endif

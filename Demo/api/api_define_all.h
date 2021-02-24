@@ -18,9 +18,8 @@
 #ifndef __API_DEFINE_ALL_H__
 #define __API_DEFINE_ALL_H__
 
-#pragma anon_unions /* 允许匿名共用体 */
-
 #if defined(__CC_ARM)
+#pragma anon_unions /* 允许匿名共用体 */
 /* Suppress warning message: extended constant initialiser used*/
 #pragma diag_suppress 1296 /* 消除1296警告 (由于函数固化导致的报警)*/
 #pragma diag_suppress 1293 /* 消除1293警告 (while内赋值)*/

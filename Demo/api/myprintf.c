@@ -17,22 +17,38 @@
 #include "myprintf.h"
 
 #if Uart_Output > 0
-#pragma import(__use_no_semihosting)
 
+#if !defined(__MICROLIB)
+#if defined ( __CC_ARM )
+#pragma import(__use_no_semihosting)
+#elif defined(__GNUC__)
+__asm(".global __use_no_semihosting\n\t");
+#endif
+
+void _sys_exit(int x) //避免使用半主机模式
+{
+    x = x;
+}
+//__use_no_semihosting was requested, but _ttywrch was
+void _ttywrch(int ch)
+{
+    ch = ch;
+}
 struct __FILE
 {
     int handle;
 };
 FILE __stdout;
 
-void _sys_exit(int x)
-{
-    x = x;
-}
+#endif
 
-void _ttywrch(int ch) {}
+#if defined(__GNUC__) && !defined(__clang__)
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif
 
-int fputc(int ch, FILE *f)
+PUTCHAR_PROTOTYPE
 {
     uint32_t timeout = 0;
 #if Use_Uartx_Send == 0

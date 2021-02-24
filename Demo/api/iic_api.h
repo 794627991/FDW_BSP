@@ -123,6 +123,7 @@ extern "C"
 
     /**************************函数指针定义**************************/
     typedef void (*gy_iicinit)(void);
+    typedef uint8_t (*gy_iicopcom)(uint8_t Device, uint16_t Addr, uint8_t AddrLen, uint8_t *Buf, uint16_t Len);
     typedef uint8_t (*gy_iicop)(uint8_t Device, uint32_t Addr, uint8_t AddrLen, uint8_t *Buf, uint16_t Len);
 
     /****************************函数声明****************************/
