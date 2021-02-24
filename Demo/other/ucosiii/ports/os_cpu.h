@@ -68,7 +68,7 @@ extern  "C" {                                    /* See Note #1.                
 
 #define  OS_TASK_SW()               OSCtxSw()
 
-#define  OS_TASK_SW_SYNC()          //__isb(0xF)
+#define  OS_TASK_SW_SYNC()          __isb(0xF)
 
 
 /*
