@@ -50,6 +50,7 @@
 ..\..\fdw_download\hex\bootmain.o: ..\api\etim_api.h
 ..\..\fdw_download\hex\bootmain.o: ..\api\flash_api.h
 ..\..\fdw_download\hex\bootmain.o: ..\api\iic_api.h
+..\..\fdw_download\hex\bootmain.o: ..\api\spi_api.h
 ..\..\fdw_download\hex\bootmain.o: ..\api\lcd_api.h
 ..\..\fdw_download\hex\bootmain.o: ..\api\lptim_api.h
 ..\..\fdw_download\hex\bootmain.o: ..\api\lpuart_api.h

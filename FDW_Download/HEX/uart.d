@@ -50,6 +50,7 @@
 ..\..\fdw_download\hex\uart.o: ..\api\etim_api.h
 ..\..\fdw_download\hex\uart.o: ..\api\flash_api.h
 ..\..\fdw_download\hex\uart.o: ..\api\iic_api.h
+..\..\fdw_download\hex\uart.o: ..\api\spi_api.h
 ..\..\fdw_download\hex\uart.o: ..\api\lcd_api.h
 ..\..\fdw_download\hex\uart.o: ..\api\lptim_api.h
 ..\..\fdw_download\hex\uart.o: ..\api\lpuart_api.h

@@ -29,7 +29,7 @@
 ***********************************************************************/
 #define API_UseDataUp 0      /* 远程升级 大于0开启 */
 #define FlashAllSize 0x40000 /* G045/48固定0x40000 */
-#define BOOTENDADR 0x10000   /* BOOT区的大小 */
+#define BOOTENDADR 0x4000   /* BOOT区的大小 */
 #define APP1ENDADR 0x20000   /* APP1和APP2的分界地址 */
 
 /***********************************************************************
@@ -37,7 +37,7 @@
 ***********************************************************************/
 #define RCHFCLKCFG 36 /* 系统时钟主频配置：8, 16, 24, 36MHz*/
 
-#define UseBootFixSys 0 /* boot固化单片机核心程序 */
+#define UseBootFixSys 0 /* boot固化单片机核心程序，跑系统不能用 */
 #define UseBootFixFun 0 /* boot固化API程序 */
 
 #define UseuCOS 1      /* 如果使用操作系统,需要由ETIM4提供软件延时  大于0使用系统 */

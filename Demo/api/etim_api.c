@@ -76,7 +76,7 @@ __weak void API_Etim_Init(ETIMx_Type *ETIMx, ETIM_INIT_Type *init)
 
     switch (EtimNum)
     {
-#if Use_uCOS > 0 && Use32BitEtim == 0
+#if Use_uCOS > 0 && Use32BitEtim == 0 || ThisBoot == 1
     case 0:
         init_para.sig_src_para.GRP1SEL = ETIMx_ETxINSEL_GRP1SEL_ET1_APBCLK; /* 定时器1 */
         RCC_PERCLK_SetableEx(ET1CLK, ENABLE);
@@ -93,7 +93,7 @@ __weak void API_Etim_Init(ETIMx_Type *ETIMx, ETIM_INIT_Type *init)
         RCC_PERCLK_SetableEx(ET3CLK, ENABLE);
         NVIC_SET(ETIM3_IRQn, init->Nvicpry);
         break;
-#if Use_uCOS > 0 && Use32BitEtim == 1
+#if Use_uCOS > 0 && Use32BitEtim == 1 || ThisBoot == 1
     case 3:
         init_para.sig_src_para.GRP1SEL = ETIMx_ETxINSEL_GRP1SEL_ET4_APBCLK; /* 定时器4 */
         RCC_PERCLK_SetableEx(ET4CLK, ENABLE);

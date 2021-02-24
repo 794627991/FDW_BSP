@@ -50,6 +50,7 @@
 ..\..\fdw_download\hex\system_fm33g0xx_boot.o: ..\api\etim_api.h
 ..\..\fdw_download\hex\system_fm33g0xx_boot.o: ..\api\flash_api.h
 ..\..\fdw_download\hex\system_fm33g0xx_boot.o: ..\api\iic_api.h
+..\..\fdw_download\hex\system_fm33g0xx_boot.o: ..\api\spi_api.h
 ..\..\fdw_download\hex\system_fm33g0xx_boot.o: ..\api\lcd_api.h
 ..\..\fdw_download\hex\system_fm33g0xx_boot.o: ..\api\lptim_api.h
 ..\..\fdw_download\hex\system_fm33g0xx_boot.o: ..\api\lpuart_api.h
