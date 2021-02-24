@@ -1,4 +1,4 @@
-/**************************************************************************//**
+/**************************************************************************/ /**
  * @file     system_FM33G0XX.h
  * @brief    CMSIS Cortex-M# Device Peripheral Access Layer Header File for
  *           Device FM33G0XX
@@ -35,27 +35,22 @@
    POSSIBILITY OF SUCH DAMAGE.
    ---------------------------------------------------------------------------*/
 
-
 #ifndef SYSTEM_FM33G0XX_H
 #define SYSTEM_FM33G0XX_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-  
-  
-  
-  
 #include <stdint.h>
 #include <stdio.h>
 #include "FM33G0XX.h"
-#include "fm33g0xx_conf.h"	
+#include "fm33g0xx_conf.h"
 
-extern uint32_t SystemCoreClock;     /*!< System Clock Frequency (Core Clock)  */
+  extern uint32_t SystemCoreClock; /*!< System Clock Frequency (Core Clock)  */
 
- 
-/**
+  /**
  * Initialize the system
  *
  * @param  none
@@ -64,9 +59,9 @@ extern uint32_t SystemCoreClock;     /*!< System Clock Frequency (Core Clock)  *
  * @brief  Setup the microcontroller system.
  *         Initialize the System and update the SystemCoreClock variable.
  */
-extern void SystemInit (void);
+  extern void SystemInit(void);
 
-/**
+  /**
  * Update SystemCoreClock variable
  *
  * @param  none
@@ -75,20 +70,7 @@ extern void SystemInit (void);
  * @brief  Updates the SystemCoreClock with current core Clock
  *         retrieved from cpu registers.
  */
-extern void SystemCoreClockUpdate (void);
-// #define __SYSTEM_CLOCK    (8000000)
-// #define DELAY_US      (__SYSTEM_CLOCK/1000000)
-// #define DELAY_MS      (__SYSTEM_CLOCK/1000)
-
-
-// #define Do_DelayStart()  { \
-//                         uint32_t LastTick = SysTick->VAL;   do {
-                        
-// #define While_DelayMsEnd(Count) }while(((LastTick - SysTick->VAL)&0xFFFFFF)<DELAY_MS*Count); \
-//                       }
-                      
-// #define While_DelayUsEnd(Count) }while(((LastTick - SysTick->VAL)&0xFFFFFF)<DELAY_US*Count); \
-//                       }            
+  extern void SystemCoreClockUpdate(void);
 
 #ifdef __cplusplus
 }

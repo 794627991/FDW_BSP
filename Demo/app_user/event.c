@@ -192,7 +192,7 @@ void jiamitest(uint8_t *buf, uint16_t len)
 {
     int r;
     lzo_uint in_len;
-    lzo_uint out_len; 
+    lzo_uint out_len;
     lzo_uint new_len;
     unsigned char *out = NULL;
     lzo_align_t *wrkmem = NULL;
@@ -748,9 +748,11 @@ void showclock(void)
 static void uCOS_TaskLED(void *p_arg)
 {
     OS_ERR err;
+    uint16_t tim;
     while (1)
     {
-        GUI_Clear();
+        tim = 15;
+        GUI_Clear();     
         if (showemu == 0)
         {
             showtemptable();
@@ -761,6 +763,7 @@ static void uCOS_TaskLED(void *p_arg)
         }
         else
         {
+            tim = 100;
             GUI_SetFont(&GUI_FontD24x32); //设置字体大小
             GUI_DispDecAt(Hex_Hour, 3, 16, 2);
             GUI_DispString(":");
@@ -769,7 +772,7 @@ static void uCOS_TaskLED(void *p_arg)
         }
 
         showgui();
-        OSTimeDlyHMSM(0, 0, 0, 15, OS_OPT_TIME_HMSM_NON_STRICT, &err);
+        OSTimeDlyHMSM(0, 0, 0, tim, OS_OPT_TIME_HMSM_NON_STRICT, &err);
     }
 }
 
@@ -783,272 +786,4 @@ void uCOS_LEDCreate(void)
                  (OS_TASK_PTR)uCOS_TaskLED,
                  (OS_PRIO)uCOS_TaskLED_PRIO,
                  (CPU_STK_SIZE)uCOS_TaskLED_STK_SIZE);
-}
-
-void SIMLT_I2C_OP_INIT_EX(uint8_t selet)
-{
-    MONI_IIC_SDA_DIR_OUT;
-    MONI_IIC_SCL_DIR_OUT;
-    SIMLT_IIC.sda_set = iic_op_sda_set;
-    SIMLT_IIC.sda_out = iic_op_sda_out;
-    SIMLT_IIC.sda_in = iic_op_sda_in;
-    SIMLT_IIC.scl = iic_op_scl;
-}
-
-typedef struct __minalgt
-{
-    uint8_t state;
-    uint32_t timestamp;
-    uint8_t buf[20];
-} collection_data_type;
-
-typedef struct __minalgt
-{
-    uint8_t isloop;
-    uint16_t end;
-    uint16_t lock;
-    uint16_t start;
-    uint16_t step;
-    uint32_t frequency; /* 单位秒 */
-} data_save_type;
-data_save_type data_save;
-collection_data_type collection_data;
-
-#define ONEPACKMAX 400
-#define savebase 100
-#define MAXSAVE 5000
-#define DATALEN sizeof(collection_data_type)
-
-void SaveCore(void)
-{
-    struct tm stm = {0};
-    uint8_t cmd = 0x0a, flag = 0;
-    volatile uint8_t i;
-    memset(&collection_data, 0, DATALEN);
-
-    stm.tm_year = Hex_YearL + 100;
-    stm.tm_mon = Hex_Mon - 1;
-    stm.tm_mday = Hex_Day;
-    stm.tm_hour = Hex_Hour;
-    stm.tm_min = Hex_Min;
-    stm.tm_sec = Hex_Sec;
-    collection_data.timestamp = mktime(&stm);
-
-    for (i = 0; i < 4; i++)
-    {
-        SIMLT_I2C_OP_INIT_EX(i);
-        API_SIMLT_I2C_Write_Com(0xDA, 0x30, 1, &cmd, 1);
-        Do_DelayStart();
-        {
-            API_SIMLT_I2C_Read_Com(0xDA, 0x2, 1, &cmd, 1);
-            if (cmd & 0x1)
-                flag = 1; /* 设置地址成功, 写周期结束 */
-        }
-        While_DelayMsEnd(8 * clkmode);
-        if (flag)
-        {
-            flag = 0;
-            collection_data.state <<= 1;
-            API_SIMLT_I2C_Read_Com(0xDA, 0x6, 1, &collection_data.buf[5 * i], 5);
-
-            /* 0-2为压力，大端，最高位为符号位，后6位为小数位 */
-            /* 3-4为温度，大端，最高位为符号位，后8位为小数位 */
-            unsigned long int a_pre, T_mid;
-            float Pressure, Temp;
-            a_pre = (((collection_data.buf[0 + 5 * i] << 8) + collection_data.buf[1 + 5 * i]) << 8) + collection_data.buf[2 + 5 * i];
-            Pressure = (float)a_pre / 8;
-            if ((collection_data.buf[3 + 5 * i] & 0x80) == 0x00)
-            {
-                T_mid = (collection_data.buf[3 + 5 * i] << 8) + collection_data.buf[4 + 5 * i];
-                Temp = (float)T_mid / 256.0;
-            }
-            else
-            {
-                T_mid = ((127 - (collection_data.buf[3 + 5 * i] & 0x7F)) << 8) + collection_data.buf[4 + 5 * i];
-                Temp = 0.0 - (float)T_mid / 256.0;
-            }
-            printf("采集到的温度为：%.3f℃，压力为：%.3fPa\r\n", Temp, Pressure);
-
-            collection_data.state++;
-        }
-    }
-    API_I2CSave(savebase + DATALEN * data_save.end, (uint8_t *)&collection_data, DATALEN);
-    data_save.end++; /* 这个值每天存一次,要不太频繁容易坏 */
-    data_save.end %= MAXSAVE;
-    if (data_save.start == data_save.end)
-    {
-        /* 说明已经绕了一圈了 */
-        data_save.isloop = 1;
-    }
-    if (data_save.isloop == 1)
-    {
-        data_save.start = data_save.end;
-    }
-}
-
-uint32_t SAVEJUDGE(uint32_t a, uint32_t b)
-{
-    uint32_t c;
-    (a > b) ? (c = MAXSAVE - b) : (c = a - b);
-    return c;
-}
-
-/* 返回要读取的数据距离当前游标的距离 */
-int ReadCore(uint32_t start, uint32_t end)
-{
-    /* T1:start时间戳;T2:end时间戳;T3:游标时间戳; */
-    uint32_t T1 = start, T2 = end, TT = 0;
-    struct tm stm = {0};
-    collection_data_type tdat;
-
-    /* 输入的时间都不对 */
-    if (T1 == 0 || T2 == 0 || T1 > T2)
-        return -1;
-
-    if ((T2 - T1) > (MAXSAVE * data_save.frequency))
-        return -1;
-
-    /* 游标:data_save.end */
-
-    /* 读取当前游标的数据 */
-    API_I2CRead(savebase + DATALEN * SAVEJUDGE(data_save.end, 1), (uint8_t *)&tdat, DATALEN);
-
-    if (tdat.timestamp < T1)
-    {
-        /* 说明游标时间戳比要读取的时间还小，即存储的数据根本没有要读的或者游标时间戳有问题 */
-        return -1;
-    }
-    else if (tdat.timestamp > T2)
-    {
-        /* 说明要么读取的数据是历史数据，要么游标时间戳有问题 */
-        stm.tm_year = Hex_YearL + 100;
-        stm.tm_mon = Hex_Mon - 1;
-        stm.tm_mday = Hex_Day;
-        stm.tm_hour = Hex_Hour;
-        stm.tm_min = Hex_Min;
-        stm.tm_sec = Hex_Sec;
-        TT = mktime(&stm);
-
-        /* 获取系统当天的时间戳，以此为依据判断读取的时间戳是否正确，正常情况下，
-               都应该是读取的时间戳小于当前时间，如果当前时间异常，那就没办法了 */
-        if (TT < tdat.timestamp)
-            return -1;
-
-        /* 计算游标时间戳和起始时间时间戳之间相差的距离 */
-        return (((tdat.timestamp - T1) / data_save.frequency) + 1);
-    }
-    else
-    {
-        /* 说明游标时间戳直接就在要读取的时间范围内 */
-        return (((tdat.timestamp - T1) / data_save.frequency) + 1);
-    }
-}
-/*
-*********************************************************************************************************
-*	函 数 名: FillCore
-*	功能说明: 数据填充
-*	形    参: start：要填充的起始地址
-*             buf：填充用缓冲
-*	返 回 值: 1：已经填充完毕，0：还需要继续填充
-*	备    注：填充结束后必须将 data_save.step 置0
-*********************************************************************************************************
-*/
-int FillCore(uint32_t start, uint8_t *buf, uint8_t *cnt)
-{
-    uint8_t i = 0, j = 0;
-    uint32_t tstart;
-    volatile uint16_t len = 0;
-    collection_data_type tdat;
-    /* 锁定起始点：tstart 和结束点：data_save.lock */
-    if (!data_save.step)
-    {
-        data_save.lock = data_save.end;
-    }
-    (data_save.isloop) ? (tstart = SAVEJUDGE(data_save.lock, ONEPACKMAX * 10)) : (tstart = start);
-    for (i = 0; len < ONEPACKMAX; i++)
-    {
-        if (((tstart + data_save.step) % MAXSAVE) != data_save.lock)
-        {
-            *cnt++;
-            /* 读取起始点+步进距离的数据 */
-            API_I2CRead(savebase + DATALEN * ((tstart + data_save.step) % MAXSAVE), (uint8_t *)&tdat, DATALEN);
-            memcpy(&buf[len], (uint8_t *)&tdat.state, 1);
-            len += 1;
-            memcpy(&buf[len], (uint8_t *)&tdat.timestamp, 4);
-            len += 4;
-            for (j = 0; j < 4; j++)
-            {
-                if (tdat.state & BIT3)
-                {
-                    memcpy(&buf[len], (uint8_t *)&tdat.buf[j * 5], 5);
-                    len += 5;
-                    tdat.state <<= 1;
-                }
-            }
-            data_save.step++;
-        }
-        else
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-void sendend(void)
-{
-}
-
-void atuoup(void)
-{
-    uint8_t buf[500], end = 0, cnt = 0;
-    /* 协议头 */
-
-    /* 数据填充 */
-    end = FillCore(data_save.start, buf, &cnt);
-    /* 协议尾 */
-
-    /* 数据发送 */
-    if (end)
-    {
-        /* 数据发送完成后，需要将套圈取消，并将起始置位到上一次lock的end */
-        data_save.start = data_save.lock;
-        data_save.isloop = 0;
-        data_save.step = 0;
-    }
-}
-
-void askup(struct tm start, struct tm end)
-{
-    uint32_t T1 = mktime(&start), T2 = mktime(&end);
-    static int distance = 0;
-    static uint32_t memstart = 0, memend = 0;
-    uint8_t buf[500], endflag = 0, cnt = 0;
-    if (memstart != T1 || memend != T2)
-    {
-        memstart = T1;
-        memend = T2;
-        distance = 0;
-    }
-    /* 协议头 */
-
-    /* 数据填充 */
-    if (distance == 0)
-    {
-        distance = ReadCore(memstart, memend);
-    }
-
-    if (distance != -1)
-    {
-        endflag = FillCore(distance, buf, &cnt);
-    }
-
-    /* 协议尾 */
-
-    /* 数据发送 */
-    if (endflag)
-    {
-        distance = 0;
-        data_save.step = 0;
-    }
 }
