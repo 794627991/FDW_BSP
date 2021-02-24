@@ -15,9 +15,13 @@
 *********************************************************************************************************
 */
 #include "iotnew_api.h"
+#ifdef USEBC260
 #include "iot_bc260.h"
-//#include "iot_n23.h"
-//#include "iot_bc28_35_95.h"
+#elif USEN23
+#include "iot_n23.h"
+#else
+#include "iot_bc28_35_95.h"
+#endif
 
 /* ¾²Ì¬±äÁ¿ÉùÃ÷ */
 static iot_type iot = {NULL};
