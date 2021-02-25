@@ -327,7 +327,7 @@ float API_Temperature(ADC_INIT_Type *init)
             break;
         }
     }
-    While_DelayMsEnd(init->SampleNeed * 10);
+    While_DelayMsEnd(init->SampleNeed * 8);
 
     ANAC_ADCCON_ADC_IE_Setable(DISABLE);  /* ÖÐ¶Ï½ûÖ¹ */
     ANAC_ADCCON_ADC_EN_Setable(DISABLE);  /* ADC¹Ø±Õ */

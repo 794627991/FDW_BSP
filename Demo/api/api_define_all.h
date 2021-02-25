@@ -27,7 +27,7 @@
 #elif defined(__GNUC__)
 #endif
 
-#define __weak __attribute__((weak))      /* 弱函数定义 */
+#define __weak __attribute__((weak))	  /* 弱函数定义 */
 #define __minalgt __attribute__((packed)) /* 最小字节对齐定义 */
 
 #ifndef offsetof
@@ -35,8 +35,8 @@
 #endif
 
 #define STRUCT(type)                 \
-    typedef struct _tag_##type type; \
-    struct _tag_##type
+	typedef struct _tag_##type type; \
+	struct _tag_##type
 
 #ifdef DEBUG
 #define debug(format, ...) printf(format, ##__VA_ARGS__)
@@ -47,18 +47,18 @@
 /* 变量类型定义 */
 typedef union
 {
-    unsigned char B08;
-    struct
-    {
-        unsigned char bit0 : 1;
-        unsigned char bit1 : 1;
-        unsigned char bit2 : 1;
-        unsigned char bit3 : 1;
-        unsigned char bit4 : 1;
-        unsigned char bit5 : 1;
-        unsigned char bit6 : 1;
-        unsigned char bit7 : 1;
-    } Bit;
+	unsigned char B08;
+	struct
+	{
+		unsigned char bit0 : 1;
+		unsigned char bit1 : 1;
+		unsigned char bit2 : 1;
+		unsigned char bit3 : 1;
+		unsigned char bit4 : 1;
+		unsigned char bit5 : 1;
+		unsigned char bit6 : 1;
+		unsigned char bit7 : 1;
+	} Bit;
 } B08_Bit;
 
 #ifndef uint08
@@ -269,6 +269,26 @@ extern void Refresh(void); /* GUI，mem模式刷新显示 */
 #include "bootfixapi.h"
 #include "API_Exp.h"
 #include "sha256.h"
+
+#define DelayMsStart(ms)               \
+	{                                  \
+		uint32_t tms;                  \
+		for (tms = 0; tms < ms; tms++) \
+		{
+#define DelayMsEnd() \
+	delay_ms(1);     \
+	}                \
+	}
+
+#define DelayUsStart(us)               \
+	{                                  \
+		uint32_t tus;                  \
+		for (tus = 0; tus < us; tus++) \
+		{
+#define DelayUsEnd() \
+	delay_us(1);     \
+	}                \
+	}
 
 #define WAITTIME 250 /* BOOT中使用的参数 X * 4MS 上电后等待进入boot的时间，超时后跳转到主程序运行 */
 
