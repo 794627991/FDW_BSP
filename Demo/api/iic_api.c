@@ -100,7 +100,7 @@ void API_I2CRead(uint32_t base, uint8_t *Buf, uint32_t len)
 */
 uint8_t G_I2C_Send_Bit(uint8_t BIT_def)
 {
-    uint8_t i;
+    uint32_t i;
 
     I2C_I2CCTRL_I2CEN_Setable(ENABLE); //使能I2C电路
 

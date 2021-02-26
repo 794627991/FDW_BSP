@@ -437,7 +437,7 @@ uint8_t TheIPFormatIsCorrect(char *IPort, uint8_t type)
 void IPReduceSpotAddZero(char *ip1, char *ip2)
 {
     char changeIP[20] = {0}, Dot[4] = {0};
-    uint8_t jj = 0, i = 0, len = mystrlen(ip1, 15);
+    uint16_t jj = 0, i = 0, len = mystrlen(ip1, 15);
 
     memcpy(changeIP, ip1, len);
 
@@ -748,7 +748,7 @@ void IPAddSpot(char *a, char *b)
 */
 uint8_t camper(uint8_t *a, uint8_t *b, uint8_t len)
 {
-    uint8_t i = 0;
+    uint16_t i = 0;
     for (i = 0; i < len; i++)
     {
         if (a[i] != b[i])
