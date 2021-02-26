@@ -214,7 +214,7 @@ uint8_t SOFT_SPI_RW_MODE3(uint8_t write_dat)
 *	±¸    ×¢£ºÎÞ
 *********************************************************************************************************
 */
-__weak void SIMLT_SPI_OP_INIT(uint8_t mode)
+__weak spi_op_type* SIMLT_SPI_OP_INIT(uint8_t mode)
 {
     MONI_SPI_MOSI_DIR;
     MONI_SPI_MISO_DIR;
@@ -225,13 +225,14 @@ __weak void SIMLT_SPI_OP_INIT(uint8_t mode)
     SIMLT_SPI.sck = spi_op_sck;
     SIMLT_SPI.nss = spi_op_nss;
     if (1 == mode)
-        SIMLT_SPI.mode = SOFT_SPI_RW_MODE1;
+        SIMLT_SPI.op = SOFT_SPI_RW_MODE1;
     else if (2 == mode)
-        SIMLT_SPI.mode = SOFT_SPI_RW_MODE2;
+        SIMLT_SPI.op = SOFT_SPI_RW_MODE2;
     else if (3 == mode)
-        SIMLT_SPI.mode = SOFT_SPI_RW_MODE3;
+        SIMLT_SPI.op = SOFT_SPI_RW_MODE3;
     else
-        SIMLT_SPI.mode = SOFT_SPI_RW_MODE0;
+        SIMLT_SPI.op = SOFT_SPI_RW_MODE0;
+    return &SIMLT_SPI;
 }
 /*
 *********************************************************************************************************
@@ -249,7 +250,7 @@ void API_SIMLT_SPI(uint8_t *buf, uint32_t len)
     SIMLT_SPI.nss(0);
     for (i = 0; i < len; i++)
     {
-        buf[i] = SIMLT_SPI.mode(buf[i]);
+        buf[i] = SIMLT_SPI.op(buf[i]);
     }
     SIMLT_SPI.nss(1);
 }

@@ -1,5 +1,8 @@
 #include "12864.h"
 
+uint8_t *membuf = NULL;
+spi_op_type *SoftSPI = NULL;
+
 void LCD_12864_Init(void)
 {
     // LCD_12864_CS_W;
@@ -18,7 +21,8 @@ void LCD_12864_Init(void)
     // Send(0, 0x34); //打开扩展指令集
 
     uint8_t cmd[10];
-    SIMLT_SPI_OP_INIT(0);
+    membuf = mymalloc(1024);
+    SoftSPI = SIMLT_SPI_OP_INIT(0);
     cmd[0] = 0xfd;
     cmd[1] = 0;
     cmd[2] = 0;
@@ -74,8 +78,7 @@ void Send(uchar type, uchar transdata)
     LCD_12864_CS_0;
 }
 
-uint8_t buf[1024] = {0};
-void qumozhuanhuan(const unsigned char *ptr)
+void qumozhuanhuan(uint8_t *buf, const unsigned char *ptr)
 {
     uint8_t i, j, k, q;
     uint16_t n = 0;
@@ -124,7 +127,7 @@ void lcd_show(const unsigned char *ptr)
 
     uint8_t cmd[15];
     uint16_t i = 0;
-    qumozhuanhuan(ptr);
+    qumozhuanhuan(membuf, ptr);
     cmd[0] = 0xfd;
     cmd[1] = 0x34;
     cmd[2] = 0;
@@ -141,14 +144,15 @@ void lcd_show(const unsigned char *ptr)
 
     cmd[10] = 0;
     cmd[11] = 0x40; //Hight
-    SIMLT_SPI.nss(0);
+
+    SoftSPI->nss(0);
     for (i = 0; i < 12; i++)
     {
-        SIMLT_SPI.mode(cmd[i]);
+        SoftSPI->op(cmd[i]);
     }
     for (i = 0; i < 1024; i++)
     {
-        SIMLT_SPI.mode(buf[i]);
+        SoftSPI->op(membuf[i]);
     }
     cmd[0] = 0xdd;
     cmd[1] = 0xcc;
@@ -156,7 +160,7 @@ void lcd_show(const unsigned char *ptr)
     cmd[3] = 0xaa;
     for (i = 0; i < 4; i++)
     {
-        SIMLT_SPI.mode(cmd[i]);
+        SoftSPI->op(cmd[i]);
     }
-    SIMLT_SPI.nss(1);
+    SoftSPI->nss(1);
 }
