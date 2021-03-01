@@ -1,25 +1,13 @@
 #include "12864.h"
 
+#define USEOLCD
+
 uint8_t *membuf = NULL;
 spi_op_type *SoftSPI = NULL;
 
 void LCD_12864_Init(void)
 {
-    // LCD_12864_CS_W;
-    // LCD_12864_CLK_W;
-    // LCD_12864_SID_W;
-    // Send(0, 0x30); /*功能设置:一次送8位数据,基本指令集*/
-    // delay_us(720);
-    // Send(0, 0x02); /*DDRAM地址归位*/
-    // delay_us(720);
-    // Send(0, 0x0c); /*显示设定:开显示,不显示光标,不做当前显示位反白闪动*/
-    // delay_us(720);
-    // Send(0, 0x01); /*清屏，将DDRAM的位址计数器调整为“00H”*/
-    // delay_us(720);
-    // Send(0, 0x06); /*功能设置，点设定:显示字符/光标从左到右移位,DDRAM地址加1*/
-    // delay_us(720);
-    // Send(0, 0x34); //打开扩展指令集
-
+#ifdef USEOLCD
     uint8_t cmd[10];
     membuf = mymalloc(1024);
     SoftSPI = SIMLT_SPI_OP_INIT(0);
@@ -32,6 +20,22 @@ void LCD_12864_Init(void)
     cmd[6] = 0xbb;
     cmd[7] = 0xaa;
     API_SIMLT_SPI(cmd, 10);
+#else
+    LCD_12864_CS_W;
+    LCD_12864_CLK_W;
+    LCD_12864_SID_W;
+    Send(0, 0x30); /*功能设置:一次送8位数据,基本指令集*/
+    delay_us(720);
+    Send(0, 0x02); /*DDRAM地址归位*/
+    delay_us(720);
+    Send(0, 0x0c); /*显示设定:开显示,不显示光标,不做当前显示位反白闪动*/
+    delay_us(720);
+    Send(0, 0x01); /*清屏，将DDRAM的位址计数器调整为“00H”*/
+    delay_us(720);
+    Send(0, 0x06); /*功能设置，点设定:显示字符/光标从左到右移位,DDRAM地址加1*/
+    delay_us(720);
+    Send(0, 0x34); //打开扩展指令集
+#endif
 }
 
 /*******************************************
@@ -100,29 +104,7 @@ void qumozhuanhuan(uint8_t *buf, const unsigned char *ptr)
 
 void lcd_show(const unsigned char *ptr)
 {
-    // uint8_t y, x;
-    // for (y = 0; y < 32; y++)
-    // {
-    //     Send(0, 0x80 + y);
-    //     Send(0, 0x80);
-    //     for (x = 0; x < 16; x++)
-    //     {
-    //         Send(1, *ptr++);
-    //     }
-    //     Send(0, 0x36); //打开绘图显示
-    // }
-
-    // for (y = 0; y < 32; y++)
-    // {
-    //     Send(0, 0x80 + y);
-    //     Send(0, 0x88);
-    //     for (x = 0; x < 16; x++)
-    //     {
-    //         Send(1, *ptr++);
-    //     }
-    //     Send(0, 0x36); //打开绘图显示
-    // }
-
+#ifdef USEOLCD
     //fd 34 00 08 00 00 00 00 00 80 00 40 （图片数据）dd cc bb aa
 
     uint8_t cmd[15];
@@ -163,4 +145,28 @@ void lcd_show(const unsigned char *ptr)
         SoftSPI->op(cmd[i]);
     }
     SoftSPI->nss(1);
+#else
+    uint8_t y, x;
+    for (y = 0; y < 32; y++)
+    {
+        Send(0, 0x80 + y);
+        Send(0, 0x80);
+        for (x = 0; x < 16; x++)
+        {
+            Send(1, *ptr++);
+        }
+        Send(0, 0x36); //打开绘图显示
+    }
+
+    for (y = 0; y < 32; y++)
+    {
+        Send(0, 0x80 + y);
+        Send(0, 0x88);
+        for (x = 0; x < 16; x++)
+        {
+            Send(1, *ptr++);
+        }
+        Send(0, 0x36); //打开绘图显示
+    }
+#endif
 }

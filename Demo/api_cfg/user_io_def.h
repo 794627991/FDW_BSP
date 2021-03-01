@@ -3,11 +3,29 @@
 
 /*功能IO宏定义*/
 
-#define LED_GPIO GPIOB
-#define LED_PIN GPIO_Pin_0
-#define LEDOFF GPIO_SetBits(LED_GPIO, LED_PIN)
-#define LEDON GPIO_ResetBits(LED_GPIO, LED_PIN)
-#define LEDCPL GPIO_ToggleBits(LED_GPIO, LED_PIN)
+#define LED1_GPIO GPIOC
+#define LED1_PIN GPIO_Pin_12
+#define LED1OFF GPIO_SetBits(LED1_GPIO, LED1_PIN)
+#define LED1ON GPIO_ResetBits(LED1_GPIO, LED1_PIN)
+#define LED1CPL GPIO_ToggleBits(LED1_GPIO, LED1_PIN)
+
+#define LED2_GPIO GPIOC
+#define LED2_PIN GPIO_Pin_13
+#define LED2OFF GPIO_SetBits(LED2_GPIO, LED2_PIN)
+#define LED2ON GPIO_ResetBits(LED2_GPIO, LED2_PIN)
+#define LED2CPL GPIO_ToggleBits(LED2_GPIO, LED2_PIN)
+
+#define LED3_GPIO GPIOC
+#define LED3_PIN GPIO_Pin_14
+#define LED3OFF GPIO_SetBits(LED3_GPIO, LED3_PIN)
+#define LED3ON GPIO_ResetBits(LED3_GPIO, LED3_PIN)
+#define LED3CPL GPIO_ToggleBits(LED3_GPIO, LED3_PIN)
+
+#define LED4_GPIO GPIOD
+#define LED4_PIN GPIO_Pin_7
+#define LED4OFF GPIO_SetBits(LED4_GPIO, LED4_PIN)
+#define LED4ON GPIO_ResetBits(LED4_GPIO, LED4_PIN)
+#define LED4CPL GPIO_ToggleBits(LED4_GPIO, LED4_PIN)
 
 #define KEY1_GPIO GPIOC
 #define KEY1_PIN GPIO_Pin_15

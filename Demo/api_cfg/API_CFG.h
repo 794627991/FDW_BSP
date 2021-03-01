@@ -63,7 +63,7 @@
 ***********************************************************************/
 #define U0Rxlen 1 /* 串口x接收的最大缓存 */
 
-#define U1Rxlen 1
+#define U1Rxlen 60
 
 #define U2Rxlen 200
 
@@ -83,7 +83,7 @@
 #define U0UseRxIe 1   /* 接收中断 大于0开启 */
 #define U0UseTxIe 0   /* 发送中断 大于0开启 */
 
-#define UseUart1 0    /* UART1 大于0开启 */
+#define UseUart1 1    /* UART1 大于0开启 */
 #define U1USEIRMod 0  /* 大于0使用调制红外 */
 #define U1Baud 9600   /* 需要的波特率 */
 #define U1UseRxIe 1   /* 接收中断 大于0开启 */

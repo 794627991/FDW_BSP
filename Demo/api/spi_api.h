@@ -98,7 +98,6 @@ extern "C"
         spi_op nss;
         spi_op op;
     } spi_op_type; /* Ä£ÄâSPIÊ¹ÓÃ */
-    extern spi_op_type SIMLT_SPI;
 
     spi_op_type* SIMLT_SPI_OP_INIT(uint8_t mode);
     void API_SIMLT_SPI(uint8_t *buf, uint32_t len);

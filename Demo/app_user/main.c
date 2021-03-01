@@ -519,7 +519,6 @@ void User_IO_Init(void)
 void LowPower_IO_Init(void)
 {
     /*低功耗使用*/
-    LEDOFF;
     NB_OFF;
 }
 
@@ -527,12 +526,29 @@ extern void PressureAndTempTest(void);
 
 void uCOS_SystemInit(void)
 {
+    Uart_INIT_Type Uart_init;
+
+    Uart_init.Nvicpry = 1; //中断优先级选择  越小优先级越高  不能大于3
+
+    //Uart_init.SEL = Uart1_UsePE3PE4; //只有使用UART1时候才需要选择
+
+    Uart_init.SEL = Uart1_UsePB0PB1; //只有使用UART1时候才需要选择
+
+    Uart_init.IRMod = NoUSEIRMod;          //不使用红外38K调制
+    Uart_init.RxIEEN = 1;                  //开启接收中断
+    Uart_init.TxIEEN = 0;                  //开启发送中断
+    Uart_init.uartint.BaudRate = 9600;     //设置波特率
+    Uart_init.uartint.DataBit = Eight8Bit; //8位数据位
+    Uart_init.uartint.ParityBit = NONE;    //不开校验
+    Uart_init.uartint.StopBit = OneBit;    //两位停止位
+
+    API_Uartx_Init(UART1, &Uart_init); //设置Uart
     // fd 12 00 0C 00 00 00 00 d5 d8 c7 ec bd f0 c5 f4 dd cc bb aa
     /* 系统初始化函数都放在这里 */
     //LowPower_IO_Init();
     uCOS_LEDCreate();
     GUI_Init();
-    printf("\r\n程序已开始运行\r\n");  
+    printf("\r\n程序已开始运行\r\n");
     SIMLT_I2C_OP_INIT();
 }
 
@@ -542,6 +558,59 @@ void uCOS_LowPower(void)
     /*空闲任务*/
     // if (!notintosleep)
     //     Sleep(0);
+}
+void UART1_IRQ_Rx_CallBack(uint8_t data)
+{
+    uint8_t os_err;
+    static uint8_t Buf[60], LEN = 0;
+
+    Buf[LEN] = data;
+    if (LEN == 0 && Buf[0] != 0x55)
+        return;
+
+    LEN++;
+    if (LEN == 11) //接收到 11 个数据
+    {
+        OSTaskQPost((OS_TCB *)&TaskUart1TCB,
+                    (void *)&Buf,
+                    (OS_MSG_SIZE)LEN,
+                    (OS_OPT)OS_OPT_POST_FIFO,
+                    (OS_ERR *)&os_err);
+        LEN = 0;
+    }
+}
+
+float _60ya[3], _60yw[3], _60yangle[3];
+void uCOS_APP_Uart1(uint8_t *buf, uint16_t len)
+{
+    if (buf[0] == 0x55)
+    {
+        //检查帧头
+        switch (buf[1])
+        {
+        case 0x51:
+            _60ya[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 16;
+            _60ya[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 16;
+            _60ya[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 16;
+
+            break;
+        case 0x52:
+            _60yw[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 2000;
+            _60yw[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 2000;
+            _60yw[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 2000;
+
+            break;
+        case 0x53:
+            _60yangle[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 180;
+            _60yangle[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 180;
+            _60yangle[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 180;
+
+            break;
+        }
+    }
+    (abs((int)_60yw[0]) > 5) ? (LED1ON) : (LED1OFF);
+    (abs((int)_60yw[1]) > 5) ? (LED2ON) : (LED2OFF);
+    (abs((int)_60yw[2]) > 5) ? (LED3ON) : (LED3OFF);
 }
 
 void uCOS_APP_Uart2(uint8_t *buf, uint16_t len)
@@ -671,7 +740,7 @@ void uCOS_APP_IO(void)
         /* 下降沿中断处理 */
         showemu++;
         GUI_Clear();
-        if (showemu >= 3)
+        if (showemu >= 4)
         {
             showemu = 0;
         }

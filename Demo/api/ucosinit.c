@@ -534,6 +534,7 @@ static void uCOS_TaskUart0(void *p_arg)
     {
         OS_ERR os_err;
         OS_MSG_SIZE msg_size;
+#if TmOut_Uart0 > 0
         OSTaskQPend((OS_TICK)0,
                     (OS_OPT)OS_OPT_PEND_BLOCKING,
                     (OS_MSG_SIZE *)&msg_size,
@@ -547,6 +548,15 @@ static void uCOS_TaskUart0(void *p_arg)
         //     uCOS_APP_Uart0(dat->pData, dat->len);
         //     FreeComInfo(0);
         // }
+#else
+        uint8_t *msg;
+        msg = (uint8_t *)OSTaskQPend((OS_TICK)0,
+                                     (OS_OPT)OS_OPT_PEND_BLOCKING,
+                                     (OS_MSG_SIZE *)&msg_size,
+                                     (CPU_TS *)0,
+                                     (OS_ERR *)&os_err);
+        uCOS_APP_Uart0(msg, msg_size);
+#endif
     }
 }
 /*
@@ -571,6 +581,7 @@ static void uCOS_TaskUart1(void *p_arg)
     {
         OS_ERR os_err;
         OS_MSG_SIZE msg_size;
+#if TmOut_Uart1 > 0
         OSTaskQPend((OS_TICK)0,
                     (OS_OPT)OS_OPT_PEND_BLOCKING,
                     (OS_MSG_SIZE *)&msg_size,
@@ -584,6 +595,15 @@ static void uCOS_TaskUart1(void *p_arg)
         //     uCOS_APP_Uart1(dat->pData, dat->len);
         //     FreeComInfo(1);
         // }
+#else
+        uint8_t *msg;
+        msg = (uint8_t *)OSTaskQPend((OS_TICK)0,
+                                     (OS_OPT)OS_OPT_PEND_BLOCKING,
+                                     (OS_MSG_SIZE *)&msg_size,
+                                     (CPU_TS *)0,
+                                     (OS_ERR *)&os_err);
+        uCOS_APP_Uart1(msg, msg_size);
+#endif
     }
 }
 
@@ -599,6 +619,7 @@ static void uCOS_TaskUart2(void *p_arg)
     {
         OS_ERR os_err;
         OS_MSG_SIZE msg_size;
+#if TmOut_Uart2 > 0
         OSTaskQPend((OS_TICK)0,
                     (OS_OPT)OS_OPT_PEND_BLOCKING,
                     (OS_MSG_SIZE *)&msg_size,
@@ -612,6 +633,15 @@ static void uCOS_TaskUart2(void *p_arg)
         //     uCOS_APP_Uart2(dat->pData, dat->len);
         //     FreeComInfo(2);
         // }
+#else
+        uint8_t *msg;
+        msg = (uint8_t *)OSTaskQPend((OS_TICK)0,
+                                     (OS_OPT)OS_OPT_PEND_BLOCKING,
+                                     (OS_MSG_SIZE *)&msg_size,
+                                     (CPU_TS *)0,
+                                     (OS_ERR *)&os_err);
+        uCOS_APP_Uart2(msg, msg_size);
+#endif
     }
 }
 
@@ -627,6 +657,7 @@ static void uCOS_TaskUart3(void *p_arg)
     {
         OS_ERR os_err;
         OS_MSG_SIZE msg_size;
+#if TmOut_Uart3 > 0
         OSTaskQPend((OS_TICK)0,
                     (OS_OPT)OS_OPT_PEND_BLOCKING,
                     (OS_MSG_SIZE *)&msg_size,
@@ -640,6 +671,15 @@ static void uCOS_TaskUart3(void *p_arg)
         //     uCOS_APP_Uart3(dat->pData, dat->len);
         //     FreeComInfo(3);
         // }
+#else
+        uint8_t *msg;
+        msg = (uint8_t *)OSTaskQPend((OS_TICK)0,
+                                     (OS_OPT)OS_OPT_PEND_BLOCKING,
+                                     (OS_MSG_SIZE *)&msg_size,
+                                     (CPU_TS *)0,
+                                     (OS_ERR *)&os_err);
+        uCOS_APP_Uart3(msg, msg_size);
+#endif
     }
 }
 
@@ -655,6 +695,7 @@ static void uCOS_TaskUart4(void *p_arg)
     {
         OS_ERR os_err;
         OS_MSG_SIZE msg_size;
+#if TmOut_Uart4 > 0
         OSTaskQPend((OS_TICK)0,
                     (OS_OPT)OS_OPT_PEND_BLOCKING,
                     (OS_MSG_SIZE *)&msg_size,
@@ -668,6 +709,15 @@ static void uCOS_TaskUart4(void *p_arg)
         //     uCOS_APP_Uart4(dat->pData, dat->len);
         //     FreeComInfo(4);
         // }
+#else
+        uint8_t *msg;
+        msg = (uint8_t *)OSTaskQPend((OS_TICK)0,
+                                     (OS_OPT)OS_OPT_PEND_BLOCKING,
+                                     (OS_MSG_SIZE *)&msg_size,
+                                     (CPU_TS *)0,
+                                     (OS_ERR *)&os_err);
+        uCOS_APP_Uart4(msg, msg_size);
+#endif
     }
 }
 
@@ -681,19 +731,9 @@ static void uCOS_TaskUart5(void *p_arg)
 {
     while (1)
     {
-        /*传统方式*/
-        /*uint8_t *msg;
         OS_ERR os_err;
         OS_MSG_SIZE msg_size;
-        msg = (uint8_t *)OSTaskQPend((OS_TICK)0,
-                                     (OS_OPT)OS_OPT_PEND_BLOCKING,
-                                     (OS_MSG_SIZE *)&msg_size,
-                                     (CPU_TS *)0,
-                                     (OS_ERR *)&os_err);
-        uCOS_APP_Uart5(msg, msg_size);*/
-
-        OS_ERR os_err;
-        OS_MSG_SIZE msg_size;
+#if TmOut_Uart5 > 0
         OSTaskQPend((OS_TICK)0,
                     (OS_OPT)OS_OPT_PEND_BLOCKING,
                     (OS_MSG_SIZE *)&msg_size,
@@ -708,6 +748,15 @@ static void uCOS_TaskUart5(void *p_arg)
         //     uCOS_APP_Uart5(dat->pData, dat->len);
         //     FreeComInfo(5);
         // }
+#else
+        uint8_t *msg;
+        msg = (uint8_t *)OSTaskQPend((OS_TICK)0,
+                                     (OS_OPT)OS_OPT_PEND_BLOCKING,
+                                     (OS_MSG_SIZE *)&msg_size,
+                                     (CPU_TS *)0,
+                                     (OS_ERR *)&os_err);
+        uCOS_APP_Uart5(msg, msg_size);
+#endif
     }
 }
 
