@@ -22,22 +22,22 @@ void Sysinit_Exp(void)
 
 #if Uart_Output > 0
 #if Use_Uartx_Send == 0
-    Uart_Init_Macro(UART0, OutBaud, NoUSEIRMod, DISABLE, DISABLE);
+    Uart_Init_Macro(UART0, OutBaud, NoUSEIRMod, DISABLE, DISABLE, OneBit);
 #endif
 #if Use_Uartx_Send == 1
-    Uart_Init_Macro(UART1, OutBaud, NoUSEIRMod, DISABLE, DISABLE);
+    Uart_Init_Macro(UART1, OutBaud, NoUSEIRMod, DISABLE, DISABLE, OneBit);
 #endif
 #if Use_Uartx_Send == 2
-    Uart_Init_Macro(UART2, OutBaud, NoUSEIRMod, DISABLE, DISABLE);
+    Uart_Init_Macro(UART2, OutBaud, NoUSEIRMod, DISABLE, DISABLE, OneBit);
 #endif
 #if Use_Uartx_Send == 3
-    Uart_Init_Macro(UART3, OutBaud, NoUSEIRMod, DISABLE, DISABLE);
+    Uart_Init_Macro(UART3, OutBaud, NoUSEIRMod, DISABLE, DISABLE, OneBit);
 #endif
 #if Use_Uartx_Send == 4
-    Uart_Init_Macro(UART4, OutBaud, NoUSEIRMod, DISABLE, DISABLE);
+    Uart_Init_Macro(UART4, OutBaud, NoUSEIRMod, DISABLE, DISABLE, OneBit);
 #endif
 #if Use_Uartx_Send == 5
-    Uart_Init_Macro(UART5, OutBaud, NoUSEIRMod, DISABLE, DISABLE);
+    Uart_Init_Macro(UART5, OutBaud, NoUSEIRMod, DISABLE, DISABLE, OneBit);
 #endif
 #endif
 
@@ -62,50 +62,98 @@ void Sysinit_Exp(void)
 #endif
 
 #if UseUart0 > 0
-#if U0USEIRMod == 0
-    Uart_Init_Macro(UART0, U0Baud, 0, U0UseRxIe, U0UseTxIe);
+#if U1USEIRMod == 0
+#ifndef U0Stopbit
+    Uart_Init_Macro(UART0, U0Baud, 0, U0UseRxIe, U0UseTxIe, OneBit);
 #else
-    Uart_Init_Macro(UART0, 2400, 1, U0UseRxIe, U0UseTxIe);
+    Uart_Init_Macro(UART0, U0Baud, 0, U0UseRxIe, U0UseTxIe, U0Stopbit);
+#endif
+#else
+#ifndef U0Stopbit
+    Uart_Init_Macro(UART0, 2400, 1, U0UseRxIe, U0UseTxIe, OneBit);
+#else
+    Uart_Init_Macro(UART0, 2400, 1, U0UseRxIe, U0UseTxIe, U0Stopbit);
+#endif
 #endif
 #endif
 
 #if UseUart1 > 0
 #if U1USEIRMod == 0
-    Uart_Init_Macro(UART1, U1Baud, 0, U1UseRxIe, U1UseTxIe);
+#ifndef U1Stopbit
+    Uart_Init_Macro(UART1, U1Baud, 0, U1UseRxIe, U1UseTxIe, OneBit);
 #else
-    Uart_Init_Macro(UART1, 2400, 1, U1UseRxIe, U1UseTxIe);
+    Uart_Init_Macro(UART1, U1Baud, 0, U1UseRxIe, U1UseTxIe, U1Stopbit);
+#endif
+#else
+#ifndef U1Stopbit
+    Uart_Init_Macro(UART1, 2400, 1, U1UseRxIe, U1UseTxIe, OneBit);
+#else
+    Uart_Init_Macro(UART1, 2400, 1, U1UseRxIe, U1UseTxIe, U1Stopbit);
+#endif
 #endif
 #endif
 
 #if UseUart2 > 0
 #if U2USEIRMod == 0
-    Uart_Init_Macro(UART2, U2Baud, 0, U2UseRxIe, U2UseTxIe);
+#ifndef U2Stopbit
+    Uart_Init_Macro(UART2, U2Baud, 0, U2UseRxIe, U2UseTxIe, OneBit);
 #else
-    Uart_Init_Macro(UART2, 2400, 1, U2UseRxIe, U2UseTxIe);
+    Uart_Init_Macro(UART2, U2Baud, 0, U2UseRxIe, U2UseTxIe, U2Stopbit);
+#endif
+#else
+#ifndef U2Stopbit
+    Uart_Init_Macro(UART2, 2400, 1, U2UseRxIe, U2UseTxIe, OneBit);
+#else
+    Uart_Init_Macro(UART2, 2400, 1, U2UseRxIe, U2UseTxIe, U2Stopbit);
+#endif
 #endif
 #endif
 
 #if UseUart3 > 0
 #if U3USEIRMod == 0
-    Uart_Init_Macro(UART3, U3Baud, 0, U3UseRxIe, U3UseTxIe);
+#ifndef U3Stopbit
+    Uart_Init_Macro(UART3, U3Baud, 0, U3UseRxIe, U3UseTxIe, OneBit);
 #else
-    Uart_Init_Macro(UART3, 2400, 1, U3UseRxIe, U3UseTxIe);
+    Uart_Init_Macro(UART3, U3Baud, 0, U3UseRxIe, U3UseTxIe, U3Stopbit);
+#endif
+#else
+#ifndef U3Stopbit
+    Uart_Init_Macro(UART3, 2400, 1, U3UseRxIe, U3UseTxIe, OneBit);
+#else
+    Uart_Init_Macro(UART3, 2400, 1, U3UseRxIe, U3UseTxIe, U3Stopbit);
+#endif
 #endif
 #endif
 
 #if UseUart4 > 0
 #if U4USEIRMod == 0
-    Uart_Init_Macro(UART4, U4Baud, 0, U4UseRxIe, U4UseTxIe);
+#ifndef U4Stopbit
+    Uart_Init_Macro(UART4, U4Baud, 0, U4UseRxIe, U4UseTxIe, OneBit);
 #else
-    Uart_Init_Macro(UART4, 2400, 1, U4UseRxIe, U4UseTxIe);
+    Uart_Init_Macro(UART4, U4Baud, 0, U4UseRxIe, U4UseTxIe, U4Stopbit);
+#endif
+#else
+#ifndef U4Stopbit
+    Uart_Init_Macro(UART4, 2400, 1, U4UseRxIe, U4UseTxIe, OneBit);
+#else
+    Uart_Init_Macro(UART4, 2400, 1, U4UseRxIe, U4UseTxIe, U4Stopbit);
+#endif
 #endif
 #endif
 
 #if UseUart5 > 0
-#if U4USEIRMod == 0
-    Uart_Init_Macro(UART5, U5Baud, 0, U5UseRxIe, U5UseTxIe);
+#if U5USEIRMod == 0
+#ifndef U5Stopbit
+    Uart_Init_Macro(UART5, U5Baud, 0, U5UseRxIe, U5UseTxIe, OneBit);
 #else
-    Uart_Init_Macro(UART5, 2400, 1, U5UseRxIe, U5UseTxIe);
+    Uart_Init_Macro(UART5, U5Baud, 0, U5UseRxIe, U5UseTxIe, U5Stopbit);
+#endif
+#else
+#ifndef U5Stopbit
+    Uart_Init_Macro(UART5, 2400, 1, U5UseRxIe, U5UseTxIe, OneBit);
+#else
+    Uart_Init_Macro(UART5, 2400, 1, U5UseRxIe, U5UseTxIe, U5Stopbit);
+#endif
 #endif
 #endif
 
@@ -304,7 +352,7 @@ __weak void API_EPROM_Read(uint32_t base, uint8_t *Buf, uint16_t len)
 *	返 回 值: 无
 *********************************************************************************************************
 */
-void Uart_Init_Macro(UARTx_Type *Uartx, uint32_t baudrate, uint8_t useirm, bool RxIeEn, bool TxIeEn)
+void Uart_Init_Macro(UARTx_Type *Uartx, uint32_t baudrate, uint8_t useirm, bool RxIeEn, bool TxIeEn, bool Stopbit)
 {
     Uart_INIT_Type Uart_init;
 
@@ -320,7 +368,7 @@ void Uart_Init_Macro(UARTx_Type *Uartx, uint32_t baudrate, uint8_t useirm, bool 
     Uart_init.uartint.BaudRate = baudrate; //设置波特率
     Uart_init.uartint.DataBit = Eight8Bit; //8位数据位
     Uart_init.uartint.ParityBit = NONE;    //不开校验
-    Uart_init.uartint.StopBit = TwoBit;    //两位停止位
+    Uart_init.uartint.StopBit = Stopbit;   //停止位
 
     API_Uartx_Init(Uartx, &Uart_init); //设置Uart
 }

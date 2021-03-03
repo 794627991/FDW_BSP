@@ -82,6 +82,7 @@
 #define U0Baud 115200 /* 需要的波特率 */
 #define U0UseRxIe 1   /* 接收中断 大于0开启 */
 #define U0UseTxIe 0   /* 发送中断 大于0开启 */
+#define U0Stopbit TwoBit 
 
 #define UseUart1 1    /* UART1 大于0开启 */
 #define U1USEIRMod 0  /* 大于0使用调制红外 */
@@ -89,30 +90,35 @@
 #define U1UseRxIe 1   /* 接收中断 大于0开启 */
 #define U1UseTxIe 0   /* 发送中断 大于0开启 */
 #define U1UsePE3PE4 1 /* 0：Uart1使用PB0PB1  1：Uart1使用PE3PE4 */
+#define U1Stopbit TwoBit
 
 #define UseUart2 1   /* UART2 大于0开启 */
 #define U2USEIRMod 0 /* 大于0使用调制红外 */
 #define U2Baud 9600  /* 需要的波特率 */
 #define U2UseRxIe 1  /* 接收中断 大于0开启 */
 #define U2UseTxIe 0  /* 发送中断 大于0开启 */
+#define U2Stopbit TwoBit
 
 #define UseUart3 1    /* UART3 大于0开启 */
 #define U3USEIRMod 0  /* 大于0使用调制红外 */
 #define U3Baud 115200 /* 需要的波特率 */
 #define U3UseRxIe 1   /* 接收中断 大于0开启 */
 #define U3UseTxIe 1   /* 发送中断 大于0开启 */
+#define U3Stopbit TwoBit
 
 #define UseUart4 0   /* UART4 大于0开启 */
 #define U4USEIRMod 0 /* 大于0使用调制红外 */
 #define U4Baud 9600  /* 需要的波特率 */
 #define U4UseRxIe 1  /* 接收中断 大于0开启 */
 #define U4UseTxIe 0  /* 发送中断 大于0开启 */
+#define U4Stopbit TwoBit
 
 #define UseUart5 0   /* UART4 大于0开启 */
 #define U5USEIRMod 0 /* 大于0使用调制红外 */
 #define U5Baud 9600  /* 需要的波特率 */
 #define U5UseRxIe 1  /* 接收中断 大于0开启 */
 #define U5UseTxIe 0  /* 发送中断 大于0开启 */
+#define U5Stopbit TwoBit
 
 #define API_UseLPUart 0 /* LPUart 大于0开启 */
 #define LPUBaud 9600    /* 需要的波特率 */
