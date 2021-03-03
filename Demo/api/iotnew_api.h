@@ -54,6 +54,14 @@ extern "C"
 #define WEIGOU IWDT_Clr()
 #endif
 
+#ifndef NB_OFF
+#define NB_OFF
+#endif
+
+#ifndef NB_ON
+#define NB_ON
+#endif
+
 /* 沾粘函数名定义 */
 #define _DIC_COAP(x) x##coap
 #define DIC_COAP(x) _DIC_COAP(x)
