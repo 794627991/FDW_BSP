@@ -28,7 +28,10 @@
 */
 void API_LPTIM_Start(void)
 {
-    LPTIM_LPTCTRL_LPTEN_Setable(ENABLE); /* LPTIMER模块使能 */
+    LPTIM_LPTIE_OVIE_Setable(DISABLE);    /* 使能LPTIMER的溢出中断 */
+    LPTIM_LPTCTRL_LPTEN_Setable(DISABLE); /* LPTIMER模块使能 */
+    LPTIM_LPTIE_OVIE_Setable(ENABLE);     /* 使能LPTIMER的溢出中断 */
+    LPTIM_LPTCTRL_LPTEN_Setable(ENABLE);  /* LPTIMER模块使能 */
 }
 /*
 *********************************************************************************************************

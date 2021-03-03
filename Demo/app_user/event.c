@@ -746,6 +746,7 @@ void showclock(void)
 }
 
 extern float _60ya[3], _60yw[3], _60yangle[3];
+extern float _60yCura[3], _60yCurw[3], _60yCurangle[3];
 static void uCOS_TaskLED(void *p_arg)
 {
     OS_ERR err;
@@ -768,25 +769,25 @@ static void uCOS_TaskLED(void *p_arg)
             GUI_SetFont(&GUI_Font6x8); //设置字体大小
             GUI_DispStringAt("X     Y     Z", 26, 10);
             GUI_DispStringAt("A ", 3, 20);
-            GUI_DispFloat(_60ya[0], 5);
+            GUI_DispFloat(_60yCura[0], 5);
             GUI_DispString(" ");
-            GUI_DispFloat(_60ya[1], 5);
+            GUI_DispFloat(_60yCura[1], 5);
             GUI_DispString(" ");
-            GUI_DispFloat(_60ya[2], 5);
+            GUI_DispFloat(_60yCura[2], 5);
 
             GUI_DispStringAt("W ", 3, 30);
-            GUI_DispFloat(_60yw[0], 5);
+            GUI_DispFloat(_60yCurw[0], 5);
             GUI_DispString(" ");
-            GUI_DispFloat(_60yw[1], 5);
+            GUI_DispFloat(_60yCurw[1], 5);
             GUI_DispString(" ");
-            GUI_DispFloat(_60yw[2], 5);
+            GUI_DispFloat(_60yCurw[2], 5);
 
             GUI_DispStringAt("R ", 3, 40);
-            GUI_DispFloat(_60yangle[0], 5);
+            GUI_DispFloat(_60yCurangle[0], 5);
             GUI_DispString(" ");
-            GUI_DispFloat(_60yangle[1], 5);
+            GUI_DispFloat(_60yCurangle[1], 5);
             GUI_DispString(" ");
-            GUI_DispFloat(_60yangle[2], 5);
+            GUI_DispFloat(_60yCurangle[2], 5);
             GUI_SetFont(&GUI_Font4x6); //设置字体大小
         }
         else if (showemu == 2)
