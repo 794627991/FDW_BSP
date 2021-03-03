@@ -350,7 +350,7 @@ __weak void __API_EPROM_Read(uint32_t base, uint8_t *Buf, uint16_t len)
 *	·µ »Ø Öµ: ÎÞ
 *********************************************************************************************************
 */
-void Uart_Init_Macro(UARTx_Type *Uartx, uint32_t baudrate, uint8_t useirm, bool RxIeEn, bool TxIeEn, bool Stopbit)
+void Uart_Init_Macro(UARTx_Type *Uartx, uint32_t baudrate, uint8_t useirm, bool RxIeEn, bool TxIeEn, uint8_t Stopbit)
 {
     Uart_INIT_Type Uart_init;
 
