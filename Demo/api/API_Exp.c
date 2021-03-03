@@ -322,7 +322,7 @@ __weak void API_SaveAdr_Init(void)
     I2CStartAdr = (uint32_t)(&EPROM_I2cStart);
 }
 
-__weak void API_EPROM_Save(uint32_t base, uint8_t *Buf, uint16_t len)
+__weak void __API_EPROM_Save(uint32_t base, uint8_t *Buf, uint16_t len)
 {
     API_SaveAdr_Init();
     EPROM_POWER_ON;
@@ -330,7 +330,7 @@ __weak void API_EPROM_Save(uint32_t base, uint8_t *Buf, uint16_t len)
     EPROM_POWER_OFF;
 }
 
-__weak void API_EPROM_Read(uint32_t base, uint8_t *Buf, uint16_t len)
+__weak void __API_EPROM_Read(uint32_t base, uint8_t *Buf, uint16_t len)
 {
     API_SaveAdr_Init();
     EPROM_POWER_ON;
