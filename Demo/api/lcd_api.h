@@ -8,7 +8,8 @@
 *	修改记录 :
 *
 *		版本号     日期      作者    说明
-*		V1.0.0  2021-1-5    高屹  正式发布
+*		V1.0.0  2021-1-5    高屹    正式发布
+*		V1.0.1  2021-3-3    高屹    新增宏定义沾粘方式
 *
 *	Copyright (C), 2020-2030,  辽宁思凯-高屹
 *
@@ -23,6 +24,18 @@ extern "C"
 #endif
 
 #include "api_define_all.h"
+
+#define _LCD_X_EFGDP(x) LCD_##x##_EFGDP
+#define LCD_X_EFGDP(x) _LCD_X_EFGDP(x)
+
+#define _LCD_X_EFGD(x) LCD_##x##_EFGD
+#define LCD_X_EFGD(x) _LCD_X_EFGD(x)
+
+#define _LCD_X_ABCDP(x) LCD_##x##_ABCDP
+#define LCD_X_ABCDP(x) _LCD_X_ABCDP(x)
+
+#define _LCD_X_ABCD(x) LCD_##x##_ABCD
+#define LCD_X_ABCD(x) _LCD_X_ABCD(x)
 
 /*以下为实际液晶需要映射的对应引脚*/
 #ifndef LCD_a

@@ -8,7 +8,8 @@
 *	修改记录 :
 *
 *		版本号     日期      作者    说明
-*		V1.0.0  2021-1-5    高屹  正式发布
+*		V1.0.0  2021-1-5    高屹    正式发布
+*		V1.0.1  2021-3-3    高屹    新增宏定义沾粘方式
 *
 *	Copyright (C), 2020-2030,  辽宁思凯-高屹
 *
@@ -382,760 +383,1718 @@ void LCD_Display(uint8_t Num, uint8_t Show)
     Num += 1;
     switch (Num)
     {
-    case 0x01:
-        //------------ 第1个"8"字符 ----------
-#ifdef LCD_1_EFGDP //1E
+#define LNx 1
+    case LNx:
+        //------------ 第LNx个"8"字符 ----------
+#if LCD_X_EFGDP(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_1_EFGDP;
+            DispBuf[L_E] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_1_EFGD //1E
+#if LCD_X_EFGD(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_1_EFGD;
+            DispBuf[L_E] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_1_EFGDP //1G
+#if LCD_X_EFGDP(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_1_EFGDP;
+            DispBuf[L_G] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_1_EFGD //1G
+#if LCD_X_EFGD(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_1_EFGD;
+            DispBuf[L_G] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_1_EFGDP //1F
+#if LCD_X_EFGDP(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_1_EFGDP;
+            DispBuf[L_F] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_1_EFGD //1F
+#if LCD_X_EFGD(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_1_EFGD;
+            DispBuf[L_F] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_1_ABCD //1D
+#if LCD_X_ABCD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_1_ABCD;
+            DispBuf[L_D] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_1_EFGD //1D
+#if LCD_X_EFGD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_1_EFGD;
+            DispBuf[L_D] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_1_ABCD //1C
+#if LCD_X_ABCD(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_1_ABCD;
+            DispBuf[L_C] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_1_ABCDP //1C
+#if LCD_X_ABCDP(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_1_ABCDP;
+            DispBuf[L_C] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_1_ABCD //1B
+#if LCD_X_ABCD(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_1_ABCD;
+            DispBuf[L_B] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_1_ABCDP //1B
+#if LCD_X_ABCDP(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_1_ABCDP;
+            DispBuf[L_B] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_1_ABCD //1A
+#if LCD_X_ABCD(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_1_ABCD;
+            DispBuf[L_A] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_1_ABCDP //1A
+#if LCD_X_ABCDP(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_1_ABCDP;
-        }
-#endif
-
-        break;
-
-    //------------ 第2个"8"字符 ----------
-    case 0x02:
-
-#ifdef LCD_2_EFGDP //2E
-        if ((Show & LCD_e) == LCD_e)
-        {
-            DispBuf[L_E] |= LCD_2_EFGDP;
-        }
-#endif
-#ifdef LCD_2_EFGD //2E
-        if ((Show & LCD_e) == LCD_e)
-        {
-            DispBuf[L_E] |= LCD_2_EFGD;
-        }
-#endif
-
-#ifdef LCD_2_EFGDP //2G
-        if ((Show & LCD_g) == LCD_g)
-        {
-            DispBuf[L_G] |= LCD_2_EFGDP;
-        }
-#endif
-#ifdef LCD_2_EFGD //2G
-        if ((Show & LCD_g) == LCD_g)
-        {
-            DispBuf[L_G] |= LCD_2_EFGD;
-        }
-#endif
-
-#ifdef LCD_2_EFGDP //2F
-        if ((Show & LCD_f) == LCD_f)
-        {
-            DispBuf[L_F] |= LCD_2_EFGDP;
-        }
-#endif
-#ifdef LCD_2_EFGD //2F
-        if ((Show & LCD_f) == LCD_f)
-        {
-            DispBuf[L_F] |= LCD_2_EFGD;
-        }
-#endif
-
-#ifdef LCD_2_ABCD //2D
-        if ((Show & LCD_d) == LCD_d)
-        {
-            DispBuf[L_D] |= LCD_2_ABCD;
-        }
-#endif
-#ifdef LCD_2_EFGD //2D
-        if ((Show & LCD_d) == LCD_d)
-        {
-            DispBuf[L_D] |= LCD_2_EFGD;
-        }
-#endif
-
-#ifdef LCD_2_ABCD //2C
-        if ((Show & LCD_c) == LCD_c)
-        {
-            DispBuf[L_C] |= LCD_2_ABCD;
-        }
-#endif
-#ifdef LCD_2_ABCDP //2C
-        if ((Show & LCD_c) == LCD_c)
-        {
-            DispBuf[L_C] |= LCD_2_ABCDP;
-        }
-#endif
-
-#ifdef LCD_2_ABCD //2B
-        if ((Show & LCD_b) == LCD_b)
-        {
-            DispBuf[L_B] |= LCD_2_ABCD;
-        }
-#endif
-#ifdef LCD_2_ABCDP //2B
-        if ((Show & LCD_b) == LCD_b)
-        {
-            DispBuf[L_B] |= LCD_2_ABCDP;
-        }
-#endif
-
-#ifdef LCD_2_ABCD //2A
-        if ((Show & LCD_a) == LCD_a)
-        {
-            DispBuf[L_A] |= LCD_2_ABCD;
-        }
-#endif
-#ifdef LCD_2_ABCDP //2A
-        if ((Show & LCD_a) == LCD_a)
-        {
-            DispBuf[L_A] |= LCD_2_ABCDP;
+            DispBuf[L_A] |= LCD_X_ABCDP(LNx);
         }
 #endif
         break;
+#undef LNx
 
-    //------------ 第3个"8"字符 ----------
-    case 0x03:
-
-#ifdef LCD_3_EFGDP //3E
+#define LNx 2
+    case LNx:
+        //------------ 第LNx个"8"字符 ----------
+#if LCD_X_EFGDP(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_3_EFGDP;
+            DispBuf[L_E] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_3_EFGD //3E
+#if LCD_X_EFGD(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_3_EFGD;
+            DispBuf[L_E] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_3_EFGDP //3G
+#if LCD_X_EFGDP(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_3_EFGDP;
+            DispBuf[L_G] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_3_EFGD //3G
+#if LCD_X_EFGD(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_3_EFGD;
+            DispBuf[L_G] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_3_EFGDP //3F
+#if LCD_X_EFGDP(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_3_EFGDP;
+            DispBuf[L_F] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_3_EFGD //3F
+#if LCD_X_EFGD(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_3_EFGD;
+            DispBuf[L_F] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_3_ABCD //3D
+#if LCD_X_ABCD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_3_ABCD;
+            DispBuf[L_D] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_3_EFGD //3D
+#if LCD_X_EFGD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_3_EFGD;
+            DispBuf[L_D] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_3_ABCD //3C
+#if LCD_X_ABCD(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_3_ABCD;
+            DispBuf[L_C] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_3_ABCDP //3C
+#if LCD_X_ABCDP(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_3_ABCDP;
+            DispBuf[L_C] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_3_ABCD //3B
+#if LCD_X_ABCD(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_3_ABCD;
+            DispBuf[L_B] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_3_ABCDP //3B
+#if LCD_X_ABCDP(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_3_ABCDP;
+            DispBuf[L_B] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_3_ABCD //3A
+#if LCD_X_ABCD(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_3_ABCD;
+            DispBuf[L_A] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_3_ABCDP //3A
+#if LCD_X_ABCDP(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_3_ABCDP;
+            DispBuf[L_A] |= LCD_X_ABCDP(LNx);
         }
 #endif
         break;
+#undef LNx
 
-    //------------ 第4个"8"字符 ----------
-    case 0x04:
-#ifdef LCD_4_EFGDP //4E
+#define LNx 3
+    case LNx:
+        //------------ 第LNx个"8"字符 ----------
+#if LCD_X_EFGDP(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_4_EFGDP;
+            DispBuf[L_E] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_4_EFGD //4E
+#if LCD_X_EFGD(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_4_EFGD;
+            DispBuf[L_E] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_4_EFGDP //4G
+#if LCD_X_EFGDP(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_4_EFGDP;
+            DispBuf[L_G] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_4_EFGD //4G
+#if LCD_X_EFGD(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_4_EFGD;
+            DispBuf[L_G] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_4_EFGDP //4F
+#if LCD_X_EFGDP(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_4_EFGDP;
+            DispBuf[L_F] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_4_EFGD //4F
+#if LCD_X_EFGD(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_4_EFGD;
+            DispBuf[L_F] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_4_ABCD //4D
+#if LCD_X_ABCD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_4_ABCD;
+            DispBuf[L_D] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_4_EFGD //4D
+#if LCD_X_EFGD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_4_EFGD;
+            DispBuf[L_D] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_4_ABCD //4C
+#if LCD_X_ABCD(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_4_ABCD;
+            DispBuf[L_C] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_4_ABCDP //4C
+#if LCD_X_ABCDP(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_4_ABCDP;
+            DispBuf[L_C] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_4_ABCD //4B
+#if LCD_X_ABCD(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_4_ABCD;
+            DispBuf[L_B] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_4_ABCDP //4B
+#if LCD_X_ABCDP(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_4_ABCDP;
+            DispBuf[L_B] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_4_ABCD //4A
+#if LCD_X_ABCD(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_4_ABCD;
+            DispBuf[L_A] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_4_ABCDP //4A
+#if LCD_X_ABCDP(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_4_ABCDP;
+            DispBuf[L_A] |= LCD_X_ABCDP(LNx);
         }
 #endif
         break;
+#undef LNx
 
-    //------------ 第5个"8"字符 ----------
-    case 0x05:
-#ifdef LCD_5_EFGDP //5E
+#define LNx 4
+    case LNx:
+        //------------ 第LNx个"8"字符 ----------
+#if LCD_X_EFGDP(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_5_EFGDP;
+            DispBuf[L_E] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_5_EFGD //5E
+#if LCD_X_EFGD(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_5_EFGD;
+            DispBuf[L_E] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_5_EFGDP //5G
+#if LCD_X_EFGDP(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_5_EFGDP;
+            DispBuf[L_G] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_5_EFGD //5G
+#if LCD_X_EFGD(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_5_EFGD;
+            DispBuf[L_G] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_4_EFGDP //4F
+#if LCD_X_EFGDP(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_4_EFGDP;
+            DispBuf[L_F] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_5_EFGD //5F
+#if LCD_X_EFGD(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_5_EFGD;
+            DispBuf[L_F] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_5_ABCD //5D
+#if LCD_X_ABCD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_5_ABCD;
+            DispBuf[L_D] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_5_EFGD //5D
+#if LCD_X_EFGD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_5_EFGD;
+            DispBuf[L_D] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_5_ABCD //5C
+#if LCD_X_ABCD(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_5_ABCD;
+            DispBuf[L_C] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_5_ABCDP //5C
+#if LCD_X_ABCDP(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_5_ABCDP;
+            DispBuf[L_C] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_5_ABCD //5B
+#if LCD_X_ABCD(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_5_ABCD;
+            DispBuf[L_B] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_5_ABCDP //5B
+#if LCD_X_ABCDP(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_5_ABCDP;
+            DispBuf[L_B] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_5_ABCD //5A
+#if LCD_X_ABCD(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_5_ABCD;
+            DispBuf[L_A] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_5_ABCDP //5A
+#if LCD_X_ABCDP(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_5_ABCDP;
+            DispBuf[L_A] |= LCD_X_ABCDP(LNx);
         }
 #endif
         break;
+#undef LNx
 
-    //------------ 第6个"8"字符 ----------
-    case 0x06:
-#ifdef LCD_6_EFGDP //6E
+#define LNx 5
+    case LNx:
+        //------------ 第LNx个"8"字符 ----------
+#if LCD_X_EFGDP(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_6_EFGDP;
+            DispBuf[L_E] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_6_EFGD //6E
+#if LCD_X_EFGD(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_6_EFGD;
+            DispBuf[L_E] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_6_EFGDP //6G
+#if LCD_X_EFGDP(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_6_EFGDP;
+            DispBuf[L_G] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_6_EFGD //6G
+#if LCD_X_EFGD(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_6_EFGD;
+            DispBuf[L_G] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_6_EFGDP //6F
+#if LCD_X_EFGDP(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_6_EFGDP;
+            DispBuf[L_F] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_6_EFGD //6F
+#if LCD_X_EFGD(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_6_EFGD;
+            DispBuf[L_F] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_6_ABCD //6D
+#if LCD_X_ABCD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_6_ABCD;
+            DispBuf[L_D] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_6_EFGD //6D
+#if LCD_X_EFGD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_6_EFGD;
+            DispBuf[L_D] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_6_ABCD //6C
+#if LCD_X_ABCD(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_6_ABCD;
+            DispBuf[L_C] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_6_ABCDP //6C
+#if LCD_X_ABCDP(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_6_ABCDP;
+            DispBuf[L_C] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_6_ABCD //6B
+#if LCD_X_ABCD(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_6_ABCD;
+            DispBuf[L_B] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_6_ABCDP //6B
+#if LCD_X_ABCDP(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_6_ABCDP;
+            DispBuf[L_B] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_6_ABCD //6A
+#if LCD_X_ABCD(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_6_ABCD;
+            DispBuf[L_A] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_6_ABCDP //6A
+#if LCD_X_ABCDP(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_6_ABCDP;
+            DispBuf[L_A] |= LCD_X_ABCDP(LNx);
         }
 #endif
         break;
+#undef LNx
 
-    //------------ 第7个"8"字符 ----------
-    case 0x07:
-#ifdef LCD_7_EFGDP //7E
+#define LNx 6
+    case LNx:
+        //------------ 第LNx个"8"字符 ----------
+#if LCD_X_EFGDP(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_7_EFGDP;
+            DispBuf[L_E] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_7_EFGD //7E
+#if LCD_X_EFGD(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_7_EFGD;
+            DispBuf[L_E] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_7_EFGDP //7G
+#if LCD_X_EFGDP(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_7_EFGDP;
+            DispBuf[L_G] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_7_EFGD //7G
+#if LCD_X_EFGD(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_7_EFGD;
+            DispBuf[L_G] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_7_EFGDP //7F
+#if LCD_X_EFGDP(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_7_EFGDP;
+            DispBuf[L_F] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_7_EFGD //7F
+#if LCD_X_EFGD(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_7_EFGD;
+            DispBuf[L_F] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_7_ABCD //7D
+#if LCD_X_ABCD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_7_ABCD;
+            DispBuf[L_D] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_7_EFGD //7D
+#if LCD_X_EFGD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_7_EFGD;
+            DispBuf[L_D] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_7_ABCD //7C
+#if LCD_X_ABCD(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_7_ABCD;
+            DispBuf[L_C] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_7_ABCDP //7C
+#if LCD_X_ABCDP(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_7_ABCDP;
+            DispBuf[L_C] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_7_ABCD //7B
+#if LCD_X_ABCD(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_7_ABCD;
+            DispBuf[L_B] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_7_ABCDP //7B
+#if LCD_X_ABCDP(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_7_ABCDP;
+            DispBuf[L_B] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_7_ABCD //7A
+#if LCD_X_ABCD(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_7_ABCD;
+            DispBuf[L_A] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_7_ABCDP //7A
+#if LCD_X_ABCDP(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_7_ABCDP;
+            DispBuf[L_A] |= LCD_X_ABCDP(LNx);
         }
 #endif
         break;
+#undef LNx
 
-    //------------ 第8个"8"字符 ----------
-    case 0x08:
-#ifdef LCD_8_EFGDP //8E
+#define LNx 7
+    case LNx:
+        //------------ 第LNx个"8"字符 ----------
+#if LCD_X_EFGDP(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_8_EFGDP;
+            DispBuf[L_E] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_8_EFGD //8E
+#if LCD_X_EFGD(LNx) != 0 //E
         if ((Show & LCD_e) == LCD_e)
         {
-            DispBuf[L_E] |= LCD_8_EFGD;
+            DispBuf[L_E] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_8_EFGDP //8G
+#if LCD_X_EFGDP(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_8_EFGDP;
+            DispBuf[L_G] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_8_EFGD //8G
+#if LCD_X_EFGD(LNx) != 0 //G
         if ((Show & LCD_g) == LCD_g)
         {
-            DispBuf[L_G] |= LCD_8_EFGD;
+            DispBuf[L_G] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_8_EFGDP //8F
+#if LCD_X_EFGDP(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_8_EFGDP;
+            DispBuf[L_F] |= LCD_X_EFGDP(LNx);
         }
 #endif
-#ifdef LCD_8_EFGD //8F
+#if LCD_X_EFGD(LNx) != 0 //F
         if ((Show & LCD_f) == LCD_f)
         {
-            DispBuf[L_F] |= LCD_8_EFGD;
+            DispBuf[L_F] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_8_ABCD //8D
+#if LCD_X_ABCD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_8_ABCD;
+            DispBuf[L_D] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_8_EFGD //8D
+#if LCD_X_EFGD(LNx) != 0 //D
         if ((Show & LCD_d) == LCD_d)
         {
-            DispBuf[L_D] |= LCD_8_EFGD;
+            DispBuf[L_D] |= LCD_X_EFGD(LNx);
         }
 #endif
 
-#ifdef LCD_8_ABCD //8C
+#if LCD_X_ABCD(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_8_ABCD;
+            DispBuf[L_C] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_8_ABCDP //8C
+#if LCD_X_ABCDP(LNx) != 0 //C
         if ((Show & LCD_c) == LCD_c)
         {
-            DispBuf[L_C] |= LCD_8_ABCDP;
+            DispBuf[L_C] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_8_ABCD //8B
+#if LCD_X_ABCD(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_8_ABCD;
+            DispBuf[L_B] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_8_ABCDP //8B
+#if LCD_X_ABCDP(LNx) != 0 //B
         if ((Show & LCD_b) == LCD_b)
         {
-            DispBuf[L_B] |= LCD_8_ABCDP;
+            DispBuf[L_B] |= LCD_X_ABCDP(LNx);
         }
 #endif
 
-#ifdef LCD_8_ABCD //8A
+#if LCD_X_ABCD(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_8_ABCD;
+            DispBuf[L_A] |= LCD_X_ABCD(LNx);
         }
 #endif
-#ifdef LCD_8_ABCDP //8A
+#if LCD_X_ABCDP(LNx) != 0 //A
         if ((Show & LCD_a) == LCD_a)
         {
-            DispBuf[L_A] |= LCD_8_ABCDP;
+            DispBuf[L_A] |= LCD_X_ABCDP(LNx);
         }
 #endif
         break;
+#undef LNx
+
+#define LNx 8
+    case LNx:
+        //------------ 第LNx个"8"字符 ----------
+#if LCD_X_EFGDP(LNx) != 0 //E
+        if ((Show & LCD_e) == LCD_e)
+        {
+            DispBuf[L_E] |= LCD_X_EFGDP(LNx);
+        }
+#endif
+#if LCD_X_EFGD(LNx) != 0 //E
+        if ((Show & LCD_e) == LCD_e)
+        {
+            DispBuf[L_E] |= LCD_X_EFGD(LNx);
+        }
+#endif
+
+#if LCD_X_EFGDP(LNx) != 0 //G
+        if ((Show & LCD_g) == LCD_g)
+        {
+            DispBuf[L_G] |= LCD_X_EFGDP(LNx);
+        }
+#endif
+#if LCD_X_EFGD(LNx) != 0 //G
+        if ((Show & LCD_g) == LCD_g)
+        {
+            DispBuf[L_G] |= LCD_X_EFGD(LNx);
+        }
+#endif
+
+#if LCD_X_EFGDP(LNx) != 0 //F
+        if ((Show & LCD_f) == LCD_f)
+        {
+            DispBuf[L_F] |= LCD_X_EFGDP(LNx);
+        }
+#endif
+#if LCD_X_EFGD(LNx) != 0 //F
+        if ((Show & LCD_f) == LCD_f)
+        {
+            DispBuf[L_F] |= LCD_X_EFGD(LNx);
+        }
+#endif
+
+#if LCD_X_ABCD(LNx) != 0 //D
+        if ((Show & LCD_d) == LCD_d)
+        {
+            DispBuf[L_D] |= LCD_X_ABCD(LNx);
+        }
+#endif
+#if LCD_X_EFGD(LNx) != 0 //D
+        if ((Show & LCD_d) == LCD_d)
+        {
+            DispBuf[L_D] |= LCD_X_EFGD(LNx);
+        }
+#endif
+
+#if LCD_X_ABCD(LNx) != 0 //C
+        if ((Show & LCD_c) == LCD_c)
+        {
+            DispBuf[L_C] |= LCD_X_ABCD(LNx);
+        }
+#endif
+#if LCD_X_ABCDP(LNx) != 0 //C
+        if ((Show & LCD_c) == LCD_c)
+        {
+            DispBuf[L_C] |= LCD_X_ABCDP(LNx);
+        }
+#endif
+
+#if LCD_X_ABCD(LNx) != 0 //B
+        if ((Show & LCD_b) == LCD_b)
+        {
+            DispBuf[L_B] |= LCD_X_ABCD(LNx);
+        }
+#endif
+#if LCD_X_ABCDP(LNx) != 0 //B
+        if ((Show & LCD_b) == LCD_b)
+        {
+            DispBuf[L_B] |= LCD_X_ABCDP(LNx);
+        }
+#endif
+
+#if LCD_X_ABCD(LNx) != 0 //A
+        if ((Show & LCD_a) == LCD_a)
+        {
+            DispBuf[L_A] |= LCD_X_ABCD(LNx);
+        }
+#endif
+#if LCD_X_ABCDP(LNx) != 0 //A
+        if ((Show & LCD_a) == LCD_a)
+        {
+            DispBuf[L_A] |= LCD_X_ABCDP(LNx);
+        }
+#endif
+        break;
+#undef LNx
+
+#define LNx 9
+    case LNx:
+        //------------ 第LNx个"8"字符 ----------
+#if LCD_X_EFGDP(LNx) != 0 //E
+        if ((Show & LCD_e) == LCD_e)
+        {
+            DispBuf[L_E] |= LCD_X_EFGDP(LNx);
+        }
+#endif
+#if LCD_X_EFGD(LNx) != 0 //E
+        if ((Show & LCD_e) == LCD_e)
+        {
+            DispBuf[L_E] |= LCD_X_EFGD(LNx);
+        }
+#endif
+
+#if LCD_X_EFGDP(LNx) != 0 //G
+        if ((Show & LCD_g) == LCD_g)
+        {
+            DispBuf[L_G] |= LCD_X_EFGDP(LNx);
+        }
+#endif
+#if LCD_X_EFGD(LNx) != 0 //G
+        if ((Show & LCD_g) == LCD_g)
+        {
+            DispBuf[L_G] |= LCD_X_EFGD(LNx);
+        }
+#endif
+
+#if LCD_X_EFGDP(LNx) != 0 //F
+        if ((Show & LCD_f) == LCD_f)
+        {
+            DispBuf[L_F] |= LCD_X_EFGDP(LNx);
+        }
+#endif
+#if LCD_X_EFGD(LNx) != 0 //F
+        if ((Show & LCD_f) == LCD_f)
+        {
+            DispBuf[L_F] |= LCD_X_EFGD(LNx);
+        }
+#endif
+
+#if LCD_X_ABCD(LNx) != 0 //D
+        if ((Show & LCD_d) == LCD_d)
+        {
+            DispBuf[L_D] |= LCD_X_ABCD(LNx);
+        }
+#endif
+#if LCD_X_EFGD(LNx) != 0 //D
+        if ((Show & LCD_d) == LCD_d)
+        {
+            DispBuf[L_D] |= LCD_X_EFGD(LNx);
+        }
+#endif
+
+#if LCD_X_ABCD(LNx) != 0 //C
+        if ((Show & LCD_c) == LCD_c)
+        {
+            DispBuf[L_C] |= LCD_X_ABCD(LNx);
+        }
+#endif
+#if LCD_X_ABCDP(LNx) != 0 //C
+        if ((Show & LCD_c) == LCD_c)
+        {
+            DispBuf[L_C] |= LCD_X_ABCDP(LNx);
+        }
+#endif
+
+#if LCD_X_ABCD(LNx) != 0 //B
+        if ((Show & LCD_b) == LCD_b)
+        {
+            DispBuf[L_B] |= LCD_X_ABCD(LNx);
+        }
+#endif
+#if LCD_X_ABCDP(LNx) != 0 //B
+        if ((Show & LCD_b) == LCD_b)
+        {
+            DispBuf[L_B] |= LCD_X_ABCDP(LNx);
+        }
+#endif
+
+#if LCD_X_ABCD(LNx) != 0 //A
+        if ((Show & LCD_a) == LCD_a)
+        {
+            DispBuf[L_A] |= LCD_X_ABCD(LNx);
+        }
+#endif
+#if LCD_X_ABCDP(LNx) != 0 //A
+        if ((Show & LCD_a) == LCD_a)
+        {
+            DispBuf[L_A] |= LCD_X_ABCDP(LNx);
+        }
+#endif
+        break;
+#undef LNx
+
+        //     case 0x01:
+        //         //------------ 第1个"8"字符 ----------
+        // #ifdef LCD_1_EFGDP //1E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_1_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_1_EFGD //1E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_1_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_1_EFGDP //1G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_1_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_1_EFGD //1G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_1_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_1_EFGDP //1F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_1_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_1_EFGD //1F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_1_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_1_ABCD //1D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_1_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_1_EFGD //1D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_1_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_1_ABCD //1C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_1_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_1_ABCDP //1C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_1_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_1_ABCD //1B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_1_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_1_ABCDP //1B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_1_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_1_ABCD //1A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_1_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_1_ABCDP //1A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_1_ABCDP;
+        //         }
+        // #endif
+
+        //         break;
+
+        //     //------------ 第2个"8"字符 ----------
+        //     case 0x02:
+
+        // #ifdef LCD_2_EFGDP //2E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_2_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_2_EFGD //2E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_2_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_2_EFGDP //2G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_2_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_2_EFGD //2G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_2_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_2_EFGDP //2F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_2_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_2_EFGD //2F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_2_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_2_ABCD //2D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_2_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_2_EFGD //2D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_2_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_2_ABCD //2C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_2_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_2_ABCDP //2C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_2_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_2_ABCD //2B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_2_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_2_ABCDP //2B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_2_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_2_ABCD //2A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_2_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_2_ABCDP //2A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_2_ABCDP;
+        //         }
+        // #endif
+        //         break;
+
+        //     //------------ 第3个"8"字符 ----------
+        //     case 0x03:
+
+        // #ifdef LCD_3_EFGDP //3E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_3_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_3_EFGD //3E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_3_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_3_EFGDP //3G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_3_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_3_EFGD //3G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_3_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_3_EFGDP //3F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_3_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_3_EFGD //3F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_3_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_3_ABCD //3D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_3_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_3_EFGD //3D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_3_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_3_ABCD //3C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_3_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_3_ABCDP //3C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_3_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_3_ABCD //3B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_3_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_3_ABCDP //3B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_3_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_3_ABCD //3A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_3_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_3_ABCDP //3A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_3_ABCDP;
+        //         }
+        // #endif
+        //         break;
+
+        //     //------------ 第4个"8"字符 ----------
+        //     case 0x04:
+        // #ifdef LCD_4_EFGDP //4E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_4_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_4_EFGD //4E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_4_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_4_EFGDP //4G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_4_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_4_EFGD //4G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_4_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_4_EFGDP //4F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_4_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_4_EFGD //4F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_4_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_4_ABCD //4D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_4_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_4_EFGD //4D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_4_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_4_ABCD //4C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_4_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_4_ABCDP //4C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_4_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_4_ABCD //4B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_4_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_4_ABCDP //4B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_4_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_4_ABCD //4A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_4_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_4_ABCDP //4A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_4_ABCDP;
+        //         }
+        // #endif
+        //         break;
+
+        //     //------------ 第5个"8"字符 ----------
+        //     case 0x05:
+        // #ifdef LCD_5_EFGDP //5E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_5_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_5_EFGD //5E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_5_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_5_EFGDP //5G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_5_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_5_EFGD //5G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_5_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_4_EFGDP //4F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_4_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_5_EFGD //5F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_5_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_5_ABCD //5D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_5_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_5_EFGD //5D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_5_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_5_ABCD //5C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_5_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_5_ABCDP //5C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_5_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_5_ABCD //5B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_5_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_5_ABCDP //5B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_5_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_5_ABCD //5A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_5_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_5_ABCDP //5A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_5_ABCDP;
+        //         }
+        // #endif
+        //         break;
+
+        //     //------------ 第6个"8"字符 ----------
+        //     case 0x06:
+        // #ifdef LCD_6_EFGDP //6E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_6_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_6_EFGD //6E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_6_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_6_EFGDP //6G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_6_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_6_EFGD //6G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_6_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_6_EFGDP //6F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_6_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_6_EFGD //6F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_6_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_6_ABCD //6D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_6_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_6_EFGD //6D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_6_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_6_ABCD //6C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_6_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_6_ABCDP //6C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_6_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_6_ABCD //6B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_6_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_6_ABCDP //6B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_6_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_6_ABCD //6A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_6_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_6_ABCDP //6A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_6_ABCDP;
+        //         }
+        // #endif
+        //         break;
+
+        //     //------------ 第7个"8"字符 ----------
+        //     case 0x07:
+        // #ifdef LCD_7_EFGDP //7E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_7_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_7_EFGD //7E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_7_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_7_EFGDP //7G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_7_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_7_EFGD //7G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_7_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_7_EFGDP //7F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_7_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_7_EFGD //7F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_7_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_7_ABCD //7D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_7_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_7_EFGD //7D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_7_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_7_ABCD //7C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_7_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_7_ABCDP //7C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_7_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_7_ABCD //7B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_7_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_7_ABCDP //7B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_7_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_7_ABCD //7A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_7_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_7_ABCDP //7A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_7_ABCDP;
+        //         }
+        // #endif
+        //         break;
+
+        //     //------------ 第8个"8"字符 ----------
+        //     case 0x08:
+        // #ifdef LCD_8_EFGDP //8E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_8_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_8_EFGD //8E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_8_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_8_EFGDP //8G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_8_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_8_EFGD //8G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_8_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_8_EFGDP //8F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_8_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_8_EFGD //8F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_8_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_8_ABCD //8D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_8_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_8_EFGD //8D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_8_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_8_ABCD //8C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_8_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_8_ABCDP //8C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_8_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_8_ABCD //8B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_8_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_8_ABCDP //8B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_8_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_8_ABCD //8A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_8_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_8_ABCDP //8A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_8_ABCDP;
+        //         }
+        // #endif
+        //         break;
+
+        //     //------------ 第9个"8"字符 ----------
+        //     case 0x09:
+        // #ifdef LCD_9_EFGDP //9E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_9_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_9_EFGD //9E
+        //         if ((Show & LCD_e) == LCD_e)
+        //         {
+        //             DispBuf[L_E] |= LCD_9_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_9_EFGDP //9G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_9_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_9_EFGD //9G
+        //         if ((Show & LCD_g) == LCD_g)
+        //         {
+        //             DispBuf[L_G] |= LCD_9_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_9_EFGDP //9F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_9_EFGDP;
+        //         }
+        // #endif
+        // #ifdef LCD_9_EFGD //9F
+        //         if ((Show & LCD_f) == LCD_f)
+        //         {
+        //             DispBuf[L_F] |= LCD_9_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_9_ABCD //9D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_9_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_9_EFGD //9D
+        //         if ((Show & LCD_d) == LCD_d)
+        //         {
+        //             DispBuf[L_D] |= LCD_9_EFGD;
+        //         }
+        // #endif
+
+        // #ifdef LCD_9_ABCD //9C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_9_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_9_ABCDP //9C
+        //         if ((Show & LCD_c) == LCD_c)
+        //         {
+        //             DispBuf[L_C] |= LCD_9_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_9_ABCD //9B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_9_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_9_ABCDP //9B
+        //         if ((Show & LCD_b) == LCD_b)
+        //         {
+        //             DispBuf[L_B] |= LCD_9_ABCDP;
+        //         }
+        // #endif
+
+        // #ifdef LCD_9_ABCD //9A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_9_ABCD;
+        //         }
+        // #endif
+        // #ifdef LCD_9_ABCDP //9A
+        //         if ((Show & LCD_a) == LCD_a)
+        //         {
+        //             DispBuf[L_A] |= LCD_9_ABCDP;
+        //         }
+        // #endif
+        //         break;
 
     default:
         break;
