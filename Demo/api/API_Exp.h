@@ -20,7 +20,7 @@ extern "C"
     void LCD_Init_Exp(void);
     void ETIM_INIT_Exp(ETIMx_Type *ETIMx, uint8_t pre, uint16_t count);
 
-    void Uart_Init_Macro(UARTx_Type *Uartx, uint32_t baudrate, uint8_t useirm, bool RxIeEn, bool TxIeEn, uint8_t Stopbit);
+    void Uart_Init_Macro(UARTx_Type *Uartx, uint32_t baudrate, uint8_t useirm, bool RxIeEn, bool TxIeEn, UART_StopBitTypeDef Stopbit);
     void LPUart_Init_Macro(uint32_t baudrate);
     void LPTIM_Init_Macro(uint8_t pre, uint32_t cnt);
 
