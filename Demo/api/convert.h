@@ -43,6 +43,7 @@ extern "C"
     void IPAddSpot(char *a, char *b);
     void PortReduceZero(char *a, char *b);
     uint8_t TheIPFormatIsCorrect(char *IPort, uint8_t type);
+    uint8_t CalCheckSum(uint8_t *buf, uint32_t size, uint8_t op);
 
 #ifdef __cplusplus
 }

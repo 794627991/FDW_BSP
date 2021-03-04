@@ -2,7 +2,39 @@
 
 extern void Refresh(void);
 extern uint8_t showemu;
+extern uint32_t sysvdd;
+extern float systemp;
+extern float _60ya[3], _60yw[3], _60yangle[3];
+
+OS_TCB TaskLEDTCB;
+#define uCOS_TaskLED_PRIO 5
+#define uCOS_TaskLED_STK_SIZE 256
+
+#define uCOS_TaskNB_PRIO 6
+#define uCOS_TaskNB_STK_SIZE 256
+
+char NB_APN[10];
+char NB_IP[15];
+char NB_PORT[5];
+iot_foo_type FOO;
+uint8_t notintosleep = 0;
+
+uint8_t NBTxBuf[72] = {NULL};
 SaveBase Save;
+
+const GUI_POINT showBattery[] = {{0, 0}, {8, 0}, {8, 1}, {10, 1}, {10, 3}, {8, 3}, {8, 4}, {0, 4}};
+const GUI_POINT showsign1[] = {{0, 0}, {2, 0}, {2, -1}, {0, -1}};
+const GUI_POINT showsign2[] = {{0, 0}, {2, 0}, {2, -2}, {0, -2}};
+const GUI_POINT showsign3[] = {{0, 0}, {2, 0}, {2, -4}, {0, -4}};
+
+typedef struct
+{
+    uint8_t curloc;
+    uint8_t isfull;
+    float temp[100];
+    float pre[100];
+} table_type;
+table_type table;
 
 /*
 *********************************************************************************************************
@@ -49,79 +81,48 @@ void __API_EPROM_Read(uint32_t base, uint8_t *Buf, uint16_t len)
     POWER_2402_OFF;
 }
 
-uchar ToCheckSum(unsigned char *parray, unsigned int size, unsigned char op)
-{
-    uint i;
-    char sum = 0;
-    for (i = 0; i < size; i++)
-    {
-        sum += parray[i];
-    }
-    if (op)
-    {
-        if (sum != parray[size])
-            sum = 0;
-        else
-            sum = 1;
-    }
-    return (sum);
-}
-
-uint8_t NBTxBuf[72] = {NULL};
 void NBTxDeal(void)
 {
     uint16_t VersionNum = 100;
     uint16_t year;
     uint8_t Systemtime[6];
-    //uint8_t *NBTxBuf = (uint8_t *)mymalloc(100);
-    //if (NBTxBuf != NULL)
-    {
-        memset(NBTxBuf, 0, 72);
-        NBTxBuf[0] = 0xaa; //命令头(开始计数)
-        NBTxBuf[1] = 0x11;
-        NBTxBuf[2] = 0xC5;
-        NBTxBuf[3] = 0x11;
-        NBTxBuf[4] = 0x22;
-        NBTxBuf[5] = 0x33;
-        NBTxBuf[6] = 0x44;
 
-        NBTxBuf[7] = 0xAA; //表类型
+    memset(NBTxBuf, 0, 72);
+    NBTxBuf[0] = 0xaa; //命令头(开始计数)
+    NBTxBuf[1] = 0x11;
+    NBTxBuf[2] = 0xC5;
+    NBTxBuf[3] = 0x11;
+    NBTxBuf[4] = 0x22;
+    NBTxBuf[5] = 0x33;
+    NBTxBuf[6] = 0x44;
 
-        Systemtime[0] = Hex_Sec;
-        Systemtime[1] = Hex_Min;
-        Systemtime[2] = Hex_Hour;
-        Systemtime[3] = Hex_Day;
-        year = Hex_YearL + 2000;
-        Systemtime[4] = LOWBYTE(LOWWORD(year)) * 16 + Hex_Mon;
-        Systemtime[5] = HIGHWORD(year) * 16 + HIGHBYTE(LOWWORD(year));
-        memcpy(&NBTxBuf[8], Systemtime, 6); //实时时间 6B
-        NBTxBuf[14] = 1;                    //只取结算日
-        NBTxBuf[15] = 1;                    //上传原因
+    NBTxBuf[7] = 0xAA; //表类型
 
-        memset(&NBTxBuf[16], 0, 12); //累计量
+    Systemtime[0] = Hex_Sec;
+    Systemtime[1] = Hex_Min;
+    Systemtime[2] = Hex_Hour;
+    Systemtime[3] = Hex_Day;
+    year = Hex_YearL + 2000;
+    Systemtime[4] = LOWBYTE(LOWWORD(year)) * 16 + Hex_Mon;
+    Systemtime[5] = HIGHWORD(year) * 16 + HIGHBYTE(LOWWORD(year));
+    memcpy(&NBTxBuf[8], Systemtime, 6); //实时时间 6B
+    NBTxBuf[14] = 1;                    //只取结算日
+    NBTxBuf[15] = 1;                    //上传原因
 
-        NBTxBuf[28] = 0;    //表内运行状态
-        NBTxBuf[29] = 0x31; //信号强度
-        memset(&NBTxBuf[30], 0, 49);
-        //memcpy(&NBTxBuf[57], iotdat.Simword, 10);	   //sim卡号
-        memcpy(&NBTxBuf[67], (uchar *)&VersionNum, 2); //程序版本号
-        NBTxBuf[69] = 0;
-        NBTxBuf[70] = ToCheckSum(NBTxBuf, 70, 0);
-        NBTxBuf[71] = 0xbb;
+    memset(&NBTxBuf[16], 0, 12); //累计量
 
-        iotTxData(NBTxBuf, 72);
-        //myfree(NBTxBuf);
-    }
+    NBTxBuf[28] = 0;    //表内运行状态
+    NBTxBuf[29] = 0x31; //信号强度
+    memset(&NBTxBuf[30], 0, 49);
+    //memcpy(&NBTxBuf[57], iotdat.Simword, 10);	   //sim卡号
+    memcpy(&NBTxBuf[67], (uchar *)&VersionNum, 2); //程序版本号
+    NBTxBuf[69] = 0;
+    NBTxBuf[70] = CalCheckSum(NBTxBuf, 70, 0);
+    NBTxBuf[71] = 0xbb;
+
+    iotTxData(NBTxBuf, 72);
 }
 
-#define uCOS_TaskNB_PRIO 6
-#define uCOS_TaskNB_STK_SIZE 256
-
-char NB_APN[10];
-char NB_IP[15];
-char NB_PORT[5];
-iot_foo_type FOO;
-uint8_t notintosleep = 0;
 void uCOS_TaskNB(void *p_arg)
 {
     uint8_t aaa;
@@ -163,24 +164,6 @@ void uCOS_NBTaskCreate(void)
                  (OS_PRIO)uCOS_TaskNB_PRIO,
                  (CPU_STK_SIZE)uCOS_TaskNB_STK_SIZE);
 }
-
-OS_TCB TaskLEDTCB;
-#define uCOS_TaskLED_PRIO 5
-#define uCOS_TaskLED_STK_SIZE 256
-
-const GUI_POINT showBattery[] = {{0, 0}, {8, 0}, {8, 1}, {10, 1}, {10, 3}, {8, 3}, {8, 4}, {0, 4}};
-const GUI_POINT showsign1[] = {{0, 0}, {2, 0}, {2, -1}, {0, -1}};
-const GUI_POINT showsign2[] = {{0, 0}, {2, 0}, {2, -2}, {0, -2}};
-const GUI_POINT showsign3[] = {{0, 0}, {2, 0}, {2, -4}, {0, -4}};
-
-typedef struct
-{
-    uint8_t curloc;
-    uint8_t isfull;
-    float temp[100];
-    float pre[100];
-} table_type;
-table_type table;
 
 float getTemporPre(uint8_t getwhitch, uint8_t *buf)
 {
@@ -433,8 +416,6 @@ void showpretable()
     GUI_DispFloat(tmin, 5);
 }
 
-extern uint32_t sysvdd;
-extern float systemp;
 void showgui()
 {
     uint32_t vdd = sysvdd;
@@ -556,8 +537,6 @@ void showclock(void)
     GUI_SetPenSize(1);
 }
 
-extern float _60ya[3], _60yw[3], _60yangle[3];
-extern float _60yCura[3], _60yCurw[3], _60yCurangle[3];
 static void uCOS_TaskLED(void *p_arg)
 {
     OS_ERR err;
