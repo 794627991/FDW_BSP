@@ -90,7 +90,7 @@
 #define U1UseRxIe 1   /* 接收中断 大于0开启 */
 #define U1UseTxIe 0   /* 发送中断 大于0开启 */
 #define U1UsePE3PE4 1 /* 0：Uart1使用PB0PB1  1：Uart1使用PE3PE4 */
-#define U1Stopbit TwoBit
+#define U1Stopbit OneBit
 
 #define UseUart2 1   /* UART2 大于0开启 */
 #define U2USEIRMod 0 /* 大于0使用调制红外 */
