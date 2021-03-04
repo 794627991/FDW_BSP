@@ -1,6 +1,5 @@
 #include "event.h"
 
-extern void Refresh(void);
 extern uint8_t showemu;
 extern uint32_t sysvdd;
 extern float systemp;
