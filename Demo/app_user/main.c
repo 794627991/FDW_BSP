@@ -172,7 +172,7 @@ void uCOS_APP_1s(void)
     }
     printf("lptim cnt:%d,tar:%d\r\n", LPTIM_LPTCNT_Read(), LPTIM_LPTTARGET_Read());
 
-    API_GetTime(RealTime);
+    GETTIME;
     iotTim();
 
     sysvdd = ADC_Exp(CH_VDD);

@@ -62,7 +62,7 @@ void Sysinit_Exp(void)
 #endif
 
 #if UseUart0 > 0
-#if U1USEIRMod == 0
+#if U0USEIRMod == 0
 #ifndef U0Stopbit
     Uart_Init_Macro(UART0, U0Baud, 0, U0UseRxIe, U0UseTxIe, OneBit);
 #else
@@ -355,7 +355,7 @@ void Uart_Init_Macro(UARTx_Type *Uartx, uint32_t baudrate, uint8_t useirm, bool 
     Uart_INIT_Type Uart_init;
 
     Uart_init.Nvicpry = 1; //中断优先级选择  越小优先级越高  不能大于3
-#ifdef U1UsePE3PE4
+#if U1UsePE3PE4 == 1
     Uart_init.SEL = Uart1_UsePE3PE4; //只有使用UART1时候才需要选择
 #else
     Uart_init.SEL = Uart1_UsePB0PB1; //只有使用UART1时候才需要选择

@@ -88,6 +88,8 @@ extern "C"
 #define Hex_Sec RealTime[13]
 #endif
 
+#define GETTIME API_GetTime(RealTime)
+
     /**************************函数指针定义*************************/
     typedef void (*gy_rtcinit)(RTC_INIT_Type *init);
     typedef void (*gy_gttim)(uint8_t *tim);
