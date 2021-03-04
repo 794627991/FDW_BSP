@@ -511,9 +511,7 @@ void User_IO_Init(void)
     GPIO_EXTI_Init(KEY3_GPIO, KEY3_PIN, EXTI_BOTH);
 
     /*NVIC中断配置*/
-    NVIC_DisableIRQ(GPIO_IRQn);
-    NVIC_SetPriority(GPIO_IRQn, 0); //中断优先级配置
-    NVIC_EnableIRQ(GPIO_IRQn);
+    NVIC_SET(GPIO_IRQn, 0);
 }
 
 void LowPower_IO_Init(void)
@@ -582,91 +580,92 @@ void UART1_IRQ_Rx_CallBack(uint8_t data)
 
 float _60yCura[3], _60yCurw[3], _60yCurangle[3];
 float _60ya[3], _60yw[3], _60yangle[3];
-// void uCOS_APP_Uart1(uint8_t *buf, uint16_t len)
-// {
-//     if (buf[0] == 0x55)
-//     {
-//         //检查帧头
-//         switch (buf[1])
-//         {
-//         case 0x51:
-//             _60ya[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 16;
-//             _60ya[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 16;
-//             _60ya[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 16;
-
-//             break;
-//         case 0x52:
-//             _60yw[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 2000;
-//             _60yw[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 2000;
-//             _60yw[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 2000;
-
-//             break;
-//         case 0x53:
-//             _60yangle[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 180;
-//             _60yangle[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 180;
-//             _60yangle[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 180;
-
-//             break;
-//         }
-//     }
-//     (abs((int)_60yw[0]) > 5) ? (LED1ON) : (LED1OFF);
-//     (abs((int)_60yw[1]) > 5) ? (LED2ON) : (LED2OFF);
-//     (abs((int)_60yw[2]) > 5) ? (LED3ON) : (LED3OFF);
-// }
-
 void uCOS_APP_Uart1(uint8_t *buf, uint16_t len)
 {
-    static uint8_t acnt = 0, wcnt = 0, anglecnt = 0;
-    uint8_t tbuf[3] = {0xFF, 0xAA, 0x60};
-    if (acnt == 0 && wcnt == 0 && anglecnt == 0)
-    {
-        memcpy(_60ya, _60yCura, sizeof(float) * 3);
-        memcpy(_60yw, _60yCurw, sizeof(float) * 3);
-        memcpy(_60yangle, _60yCurangle, sizeof(float) * 3);
-        memset(_60yCura, 0, sizeof(float) * 3);
-        memset(_60yCurw, 0, sizeof(float) * 3);
-        memset(_60yCurangle, 0, sizeof(float) * 3);
-    }
     if (buf[0] == 0x55)
     {
         //检查帧头
         switch (buf[1])
         {
         case 0x51:
-            if (++acnt > 2)
-            {
-                _60yCura[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 16;
-                _60yCura[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 16;
-                _60yCura[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 16;
-            }
+            _60ya[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 16;
+            _60ya[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 16;
+            _60ya[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 16;
+
             break;
         case 0x52:
-            if (++wcnt > 2)
-            {
-                _60yCurw[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 2000;
-                _60yCurw[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 2000;
-                _60yCurw[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 2000;
-            }
+            _60yw[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 2000;
+            _60yw[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 2000;
+            _60yw[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 2000;
+
             break;
         case 0x53:
-            if (++anglecnt > 2)
-            {
-                _60yCurangle[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 180;
-                _60yCurangle[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 180;
-                _60yCurangle[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 180;
-            }
+            _60yangle[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 180;
+            _60yangle[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 180;
+            _60yangle[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 180;
+
             break;
         }
     }
-
-    if (acnt > 2 && wcnt > 2 && anglecnt > 2)
-    {
-        acnt = 0;
-        wcnt = 0;
-        anglecnt = 0;
-        API_Uart_Send(UART1, tbuf, 3);
-    }
+    (abs((int)_60yw[0]) > 5) ? (LED1ON) : (LED1OFF);
+    (abs((int)_60yw[1]) > 5) ? (LED2ON) : (LED2OFF);
+    (abs((int)_60yw[2]) > 5) ? (LED3ON) : (LED3OFF);
 }
+
+// void uCOS_APP_Uart1(uint8_t *buf, uint16_t len)
+// {
+//     static uint8_t acnt = 0, wcnt = 0, anglecnt = 0;
+
+//     if (acnt == 0 && wcnt == 0 && anglecnt == 0)
+//     {
+//         memcpy(_60ya, _60yCura, sizeof(float) * 3);
+//         memcpy(_60yw, _60yCurw, sizeof(float) * 3);
+//         memcpy(_60yangle, _60yCurangle, sizeof(float) * 3);
+//         memset(_60yCura, 0, sizeof(float) * 3);
+//         memset(_60yCurw, 0, sizeof(float) * 3);
+//         memset(_60yCurangle, 0, sizeof(float) * 3);
+//     }
+//     if (buf[0] == 0x55)
+//     {
+//         //检查帧头
+//         switch (buf[1])
+//         {
+//         case 0x51:
+//             if (++acnt > 2)
+//             {
+//                 _60yCura[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 16;
+//                 _60yCura[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 16;
+//                 _60yCura[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 16;
+//             }
+//             break;
+//         case 0x52:
+//             if (++wcnt > 2)
+//             {
+//                 _60yCurw[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 2000;
+//                 _60yCurw[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 2000;
+//                 _60yCurw[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 2000;
+//             }
+//             break;
+//         case 0x53:
+//             if (++anglecnt > 2)
+//             {
+//                 _60yCurangle[0] = ((short)(buf[3] << 8 | buf[2])) / 32768.0 * 180;
+//                 _60yCurangle[1] = ((short)(buf[5] << 8 | buf[4])) / 32768.0 * 180;
+//                 _60yCurangle[2] = ((short)(buf[7] << 8 | buf[6])) / 32768.0 * 180;
+//             }
+//             break;
+//         }
+//     }
+
+//     if (acnt > 2 && wcnt > 2 && anglecnt > 2)
+//     {
+//         acnt = 0;
+//         wcnt = 0;
+//         anglecnt = 0;
+//         // uint8_t tbuf[3] = {0xFF, 0xAA, 0x60};
+//         // API_Uart_Send(UART1, tbuf, 3);
+//     }
+// }
 
 void uCOS_APP_Uart2(uint8_t *buf, uint16_t len)
 {
@@ -713,6 +712,17 @@ void uCOS_APP_1s(void)
         API_Uart_Send(UART1, &ss, 1);
         ss = 0;
     }
+
+    if (ss % 2)
+    {
+        API_LPTIM_Start();
+        printf("lptim start\r\n");
+    }
+    else
+    {
+        printf("lptim end\r\n");
+    }
+    printf("lptim cnt:%d,tar:%d\r\n", LPTIM_LPTCNT_Read(), LPTIM_LPTTARGET_Read());
 
     //	float ljl = 1234.23, bat = 3.6;
     //	uint16_t rss1 = 123;
@@ -782,7 +792,8 @@ void uCOS_APP_1d(void)
 
 void uCOS_APP_Lptim(void)
 {
-    PWM_CPL;
+    static uint32_t a = 0;
+    printf("lptim:%d\r\n", ++a);
 }
 extern void yasuotest(void);
 void uCOS_APP_IO(void)

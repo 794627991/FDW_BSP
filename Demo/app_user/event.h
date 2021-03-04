@@ -5,19 +5,7 @@
 
 #define Uart_Sent(buff, len) API_Uart_Send(UART1, buff, len)
 
-#define API_EPROM_Save(base, Buf, len)    \
-    {                                     \
-        API_SaveAdr_Init();               \
-        __API_EPROM_Save(base, Buf, len); \
-    }
-
-#define API_EPROM_Read(base, Buf, len)    \
-    {                                     \
-        API_SaveAdr_Init();               \
-        __API_EPROM_Read(base, Buf, len); \
-    }
-
-typedef struct
+typedef struct __minalgt
 {
     uchar vI2cStart;
     uchar vSystemStat;
@@ -27,7 +15,7 @@ typedef struct
     uchar vMeter_address[4];
 } BaseType;
 
-typedef struct __minalgt
+typedef struct
 {
     BaseType Base;
 } SaveBase;
@@ -65,25 +53,24 @@ void ReadData(uint base, uchar *Adr, uint len);
 
 extern OS_TCB TaskLEDTCB;
 extern OS_TCB TaskNBTCB;
-extern OS_TCB TaskNBSendTCB;
-extern OS_Q NBBOX;
 
-void datainit(void);
-uint8_t RXDataSetCmd(uint8_t *buf, uint16_t len, bool uartset);
-void showins(bool op, char *buf, uint16_t len);
-void ShowChar(char *buf, uchar len);
-void ShowNum(uchar Num, uchar show);
-void DisPlay(uchar *disbuf);
-uchar DisPlaySwitch(uchar Num, uchar show);
-void DisPlayClear(void);
-void DisPlayFull(void);
-void lcd_insert(char *buf, uint16_t len);
-void rollshow(void);
-void lcd_send(int x, int y);
-void lcd_re_send(int x, int y);
+// void datainit(void);
+// uint8_t RXDataSetCmd(uint8_t *buf, uint16_t len, bool uartset);
+// void showins(bool op, char *buf, uint16_t len);
+// void ShowChar(char *buf, uchar len);
+// void ShowNum(uchar Num, uchar show);
+// void DisPlay(uchar *disbuf);
+// uchar DisPlaySwitch(uchar Num, uchar show);
+// void DisPlayClear(void);
+// void DisPlayFull(void);
+// void lcd_insert(char *buf, uint16_t len);
+// void rollshow(void);
+// void lcd_send(int x, int y);
+// void lcd_re_send(int x, int y);
 
 void uCOS_NBTaskDel(void);
 void uCOS_NBTaskCreate(void);
 void uCOS_NBInitTaskCreate(void);
 void uCOS_LEDCreate(void);
+
 #endif
