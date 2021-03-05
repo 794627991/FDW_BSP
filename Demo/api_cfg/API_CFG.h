@@ -135,7 +135,7 @@
 #define TmOut_Uart4 0
 #define TmOut_Uart5 0
 
-#define API_UseLPTIM 1 /* LPTIM 大于0开启 */
+#define API_UseLPTIM 0 /* LPTIM 大于0开启 */
 #define LPPRE 7        /* LPTIM分频系数  0-7  2^(pre+1)倍分频 */
 #define LPCount 70    /* 计数目标值  时钟源32.768khz  具体计数时间为 : LPCount/(32768/2^(pre+1)) */
 

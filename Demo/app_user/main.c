@@ -28,7 +28,7 @@ float _60ya[3], _60yw[3], _60yangle[3];
 
 int main(void)
 {
-    Sysinit_Exp(); //系统初始化
+    Sysinit_Exp();
     uCOS_Start();
 }
 
@@ -40,18 +40,18 @@ void User_IO_Init(void)
     InputtIO(KEY2_GPIO, KEY2_PIN, 1); /* 如果外部电路有上拉配成0 */
     InputtIO(KEY3_GPIO, KEY3_PIN, 1); /* 如果外部电路有上拉配成0 */
 
-    //FM33A0XX的7组GPIO（A~G）最多可以产生24个外部引脚中断，部分IO不能同时开启中断功能
+    /* FM33A0XX的7组GPIO（A~G）最多可以产生24个外部引脚中断，部分IO不能同时开启中断功能 */
     GPIO_EXTI_Init(KEY1_GPIO, KEY1_PIN, EXTI_BOTH);
     GPIO_EXTI_Init(KEY2_GPIO, KEY2_PIN, EXTI_BOTH);
     GPIO_EXTI_Init(KEY3_GPIO, KEY3_PIN, EXTI_BOTH);
 
-    /*NVIC中断配置*/
+    /* NVIC中断配置 */
     NVIC_SET(GPIO_IRQn, 0);
 }
 
 void LowPower_IO_Init(void)
 {
-    /*低功耗使用*/
+    /* 低功耗使用 */
     NB_OFF;
 }
 
@@ -67,7 +67,7 @@ void uCOS_SystemInit(void)
 
 void uCOS_LowPower(void)
 {
-    /*空闲任务*/
+    /* 空闲任务 */
     // if (!notintosleep)
     //     Sleep(0);
 }
@@ -75,14 +75,14 @@ void uCOS_LowPower(void)
 void UART1_IRQ_Rx_CallBack(uint8_t data)
 {
     uint8_t os_err;
-    static uint8_t Buf[60], LEN = 0;
+    static uint8_t Buf[20], LEN = 0;
 
     Buf[LEN] = data;
     if (LEN == 0 && Buf[0] != 0x55)
         return;
 
     LEN++;
-    if (LEN == 11) //接收到 11 个数据
+    if (LEN >= 11) //接收到 11 个数据
     {
         OSTaskQPost((OS_TCB *)&TaskUart1TCB,
                     (void *)&Buf,
@@ -160,16 +160,16 @@ void uCOS_APP_1s(void)
     static uint8_t ss = 0;
     ss++;
 
-    if (ss % 2)
-    {
-        API_LPTIM_Start();
-        printf("lptim start\r\n");
-    }
-    else
-    {
-        printf("lptim end\r\n");
-    }
-    printf("lptim cnt:%d,tar:%d\r\n", LPTIM_LPTCNT_Read(), LPTIM_LPTTARGET_Read());
+    // if (ss % 2)
+    // {
+    //     API_LPTIM_Start();
+    //     printf("lptim start\r\n");
+    // }
+    // else
+    // {
+    //     printf("lptim end\r\n");
+    // }
+    // printf("lptim cnt:%d,tar:%d\r\n", LPTIM_LPTCNT_Read(), LPTIM_LPTTARGET_Read());
 
     GETTIME;
     iotTim();

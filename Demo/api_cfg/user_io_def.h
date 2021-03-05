@@ -40,7 +40,7 @@
 #define ReadKey3 GPIO_ReadInputDataBit(KEY3_GPIO, KEY3_PIN)
 
 #define NB_EN_GPIO GPIOB
-#define NB_EN_PIN GPIO_Pin_1
+#define NB_EN_PIN GPIO_Pin_13
 #define NB_ON GPIO_SetBits(NB_EN_GPIO, NB_EN_PIN)
 #define NB_OFF GPIO_ResetBits(NB_EN_GPIO, NB_EN_PIN)
 #define NB_CPL GPIO_ToggleBits(NB_EN_GPIO, NB_EN_PIN)
