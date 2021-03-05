@@ -34,10 +34,8 @@ int main(void)
 
 void User_IO_Init(void)
 {
-    //	OutputIO(LED_GPIO, LED_PIN, 0);
     OutputIO(NB_EN_GPIO, NB_EN_PIN, 0);
     NB_OFF;
-    PWM_DIR;
     InputtIO(KEY1_GPIO, KEY1_PIN, 1); /* 如果外部电路有上拉配成0 */
     InputtIO(KEY2_GPIO, KEY2_PIN, 1); /* 如果外部电路有上拉配成0 */
     InputtIO(KEY3_GPIO, KEY3_PIN, 1); /* 如果外部电路有上拉配成0 */
@@ -59,9 +57,8 @@ void LowPower_IO_Init(void)
 
 void uCOS_SystemInit(void)
 {
-    // fd 12 00 0C 00 00 00 00 d5 d8 c7 ec bd f0 c5 f4 dd cc bb aa
     /* 系统初始化函数都放在这里 */
-    //LowPower_IO_Init();
+    LowPower_IO_Init();
     uCOS_LEDCreate();
     GUI_Init();
     printf("\r\n程序已开始运行\r\n");

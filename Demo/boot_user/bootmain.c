@@ -105,20 +105,8 @@ int main(void)
 {
     uint32 JumpAddress;
     uint32 WrADR;
-    // Uart_INIT_Type Uart_init;
 
     Init_System(); //系统初始化
-
-    // Uart_init.Nvicpry = 1;                 //中断优先级选择  越小优先级越高  不能大于3
-    // Uart_init.SEL = Uart1_UsePB0PB1;       //只有使用UART1时候才需要选择
-    // Uart_init.IRMod = NoUSEIRMod;          //使用红外38K调制
-    // Uart_init.RxIEEN = ENABLE;             //开启接收中断
-    // Uart_init.uartint.BaudRate = 9600;     //设置波特率
-    // Uart_init.uartint.DataBit = Eight8Bit; //8位数据位
-    // Uart_init.uartint.ParityBit = NONE;    //不开校验
-    // Uart_init.uartint.StopBit = OneBit;    //1位停止位
-
-    // API_Uartx_Init(UART1, &Uart_init); //设置Uart
 
 #if UseUart0 > 0 && defined(IRQ_U0)
 #if U0USEIRMod == 0
