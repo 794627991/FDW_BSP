@@ -94,6 +94,9 @@ extern "C"
 	void NVIC_SET(IRQn_Type IRQn, uint32_t priority);
 	int32_t RchfAdjust(ETIMx_Type *ETIMx, uint8_t clkMode);
 
+	uint32_t ReadResetState(void);
+	void GotoBoot(uint8_t *buf, uint8_t len);
+
 #ifdef __cplusplus
 }
 #endif

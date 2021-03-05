@@ -105,20 +105,68 @@ int main(void)
 {
     uint32 JumpAddress;
     uint32 WrADR;
-    Uart_INIT_Type Uart_init;
+    // Uart_INIT_Type Uart_init;
 
     Init_System(); //系统初始化
 
-    Uart_init.Nvicpry = 1;                 //中断优先级选择  越小优先级越高  不能大于3
-    Uart_init.SEL = Uart1_UsePB0PB1;       //只有使用UART1时候才需要选择
-    Uart_init.IRMod = NoUSEIRMod;          //使用红外38K调制
-    Uart_init.RxIEEN = ENABLE;             //开启接收中断
-    Uart_init.uartint.BaudRate = 9600;     //设置波特率
-    Uart_init.uartint.DataBit = Eight8Bit; //8位数据位
-    Uart_init.uartint.ParityBit = NONE;    //不开校验
-    Uart_init.uartint.StopBit = OneBit;    //1位停止位
+    // Uart_init.Nvicpry = 1;                 //中断优先级选择  越小优先级越高  不能大于3
+    // Uart_init.SEL = Uart1_UsePB0PB1;       //只有使用UART1时候才需要选择
+    // Uart_init.IRMod = NoUSEIRMod;          //使用红外38K调制
+    // Uart_init.RxIEEN = ENABLE;             //开启接收中断
+    // Uart_init.uartint.BaudRate = 9600;     //设置波特率
+    // Uart_init.uartint.DataBit = Eight8Bit; //8位数据位
+    // Uart_init.uartint.ParityBit = NONE;    //不开校验
+    // Uart_init.uartint.StopBit = OneBit;    //1位停止位
 
-    API_Uartx_Init(UART1, &Uart_init); //设置Uart
+    // API_Uartx_Init(UART1, &Uart_init); //设置Uart
+
+#if UseUart0 > 0 && defined(IRQ_U0)
+#if U0USEIRMod == 0
+    Uart_Init_Macro(UART0, U0Baud, 0, 1, 0, OneBit);
+#else
+    Uart_Init_Macro(UART0, 2400, 1, 1, 0, OneBit);
+#endif
+#endif
+
+#if UseUart1 > 0 && defined(IRQ_U1)
+#if U1USEIRMod == 0
+    Uart_Init_Macro(UART1, U1Baud, 0, 1, 0, OneBit);
+#else
+    Uart_Init_Macro(UART1, 2400, 1, 1, 0, OneBit);
+#endif
+#endif
+
+#if UseUart2 > 0 && defined(IRQ_U2)
+#if U2USEIRMod == 0
+    Uart_Init_Macro(UART2, U2Baud, 0, 1, 0, OneBit);
+#else
+    Uart_Init_Macro(UART2, 2400, 1, 1, 0, OneBit);
+#endif
+#endif
+
+#if UseUart3 > 0 && defined(IRQ_U3)
+#if U3USEIRMod == 0
+    Uart_Init_Macro(UART3, U3Baud, 0, 1, 0, OneBit);
+#else
+    Uart_Init_Macro(UART3, 2400, 1, 1, 0, OneBit);
+#endif
+#endif
+
+#if UseUart4 > 0 && defined(IRQ_U4)
+#if U4USEIRMod == 0
+    Uart_Init_Macro(UART4, U4Baud, 0, 1, 0, OneBit);
+#else
+    Uart_Init_Macro(UART4, 2400, 1, 1, 0, OneBit);
+#endif
+#endif
+
+#if UseUart5 > 0 && defined(IRQ_U5)
+#if U5USEIRMod == 0
+    Uart_Init_Macro(UART5, U5Baud, 0, 1, 0, OneBit);
+#else
+    Uart_Init_Macro(UART5, 2400, 1, 1, 0, OneBit);
+#endif
+#endif
 
     Init_Etim2();
 

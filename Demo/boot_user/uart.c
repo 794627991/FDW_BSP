@@ -357,6 +357,7 @@ void Uart_Proc(unsigned char Ch)
         case 0x01:
             //存储在ee或者flash中，操作flash前读取赋值给FlashOpID
             FlashOpID = 0x12ABF00F; //FLASHOPKEY
+            firstpack = 0;
 
             for (i = 0; i < (PROGRAMEND1 + 1 - BOOTENDADR) / 512; i++)
             {
@@ -372,6 +373,7 @@ void Uart_Proc(unsigned char Ch)
         //flash erase sector
         case 0x02:
             //存储在ee或者flash中，操作flash前读取赋值给FlashOpID
+            firstpack = 0;
             FlashOpID = 0x12ABF00F; //FLASHOPKEY
             Flash_Erase_Sector(Temp32 / 512, FlashOpID);
             FlashOpID = 0;

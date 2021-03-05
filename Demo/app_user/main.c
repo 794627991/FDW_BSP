@@ -135,6 +135,8 @@ void uCOS_APP_Uart2(uint8_t *buf, uint16_t len)
 
 void uCOS_APP_Uart3(uint8_t *buf, uint16_t len)
 {
+    GotoBoot(buf, len);
+
     if (strstr((char *)buf, "coap") || strstr((char *)buf, "COAP"))
     {
         FOO.LinkMode = CoapNum;
