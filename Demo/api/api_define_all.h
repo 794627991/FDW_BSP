@@ -253,6 +253,7 @@ extern void Refresh(void); /* GUI，mem模式刷新显示 */
 #include "fm33G0xx_pmu.h"
 #include "fm33G0xx_lpuart.h"
 
+/* bsp核心库 */
 #include "bsp_user_lib.h"
 #include "bsp_core.h"
 // #include "bsp_def.h"
