@@ -589,12 +589,6 @@ static void uCOS_TaskUart1(void *p_arg)
                     (OS_ERR *)&os_err);
 
         API_UART_Rx_Queue_Get_Do(1, uCOS_APP_Uart1);
-        // ComData *dat = GetComInfo(1);
-        // if (dat != NULL)
-        // {
-        //     uCOS_APP_Uart1(dat->pData, dat->len);
-        //     FreeComInfo(1);
-        // }
 #else
         uint8_t *msg;
         msg = (uint8_t *)OSTaskQPend((OS_TICK)0,
@@ -627,12 +621,6 @@ static void uCOS_TaskUart2(void *p_arg)
                     (OS_ERR *)&os_err);
 
         API_UART_Rx_Queue_Get_Do(2, uCOS_APP_Uart2);
-        // ComData *dat = GetComInfo(2);
-        // if (dat != NULL)
-        // {
-        //     uCOS_APP_Uart2(dat->pData, dat->len);
-        //     FreeComInfo(2);
-        // }
 #else
         uint8_t *msg;
         msg = (uint8_t *)OSTaskQPend((OS_TICK)0,
@@ -665,12 +653,6 @@ static void uCOS_TaskUart3(void *p_arg)
                     (OS_ERR *)&os_err);
 
         API_UART_Rx_Queue_Get_Do(3, uCOS_APP_Uart3);
-        // ComData *dat = GetComInfo(3);
-        // if (dat != NULL)
-        // {
-        //     uCOS_APP_Uart3(dat->pData, dat->len);
-        //     FreeComInfo(3);
-        // }
 #else
         uint8_t *msg;
         msg = (uint8_t *)OSTaskQPend((OS_TICK)0,
@@ -703,12 +685,6 @@ static void uCOS_TaskUart4(void *p_arg)
                     (OS_ERR *)&os_err);
 
         API_UART_Rx_Queue_Get_Do(4, uCOS_APP_Uart4);
-        // ComData *dat = GetComInfo(4);
-        // if (dat != NULL)
-        // {
-        //     uCOS_APP_Uart4(dat->pData, dat->len);
-        //     FreeComInfo(4);
-        // }
 #else
         uint8_t *msg;
         msg = (uint8_t *)OSTaskQPend((OS_TICK)0,
@@ -741,13 +717,6 @@ static void uCOS_TaskUart5(void *p_arg)
                     (OS_ERR *)&os_err);
 
         API_UART_Rx_Queue_Get_Do(5, uCOS_APP_Uart5);
-
-        // ComData *dat = GetComInfo(5);
-        // if (dat != NULL)
-        // {
-        //     uCOS_APP_Uart5(dat->pData, dat->len);
-        //     FreeComInfo(5);
-        // }
 #else
         uint8_t *msg;
         msg = (uint8_t *)OSTaskQPend((OS_TICK)0,

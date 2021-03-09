@@ -2,10 +2,10 @@
 *********************************************************************************************************
 *
 *	模块名称 : 总BSP定义(FOR复旦微G045/G048)
-*	文件名称 : api_define_all.h
+*	文件名称 : bsp_def.h
 *	版    本 : V1.0.0
 *	说    明 : 全部关键定义，数据类型宏定义等，这是硬件底层驱动程序的主文件
-*              每个h文件可以 #include "api_define_all.h" 来包含相应包含关系
+*              每个h文件可以 #include "bsp_def.h" 来包含相应包含关系
 *	修改记录 :
 *
 *		版本号     日期      作者    说明
@@ -256,7 +256,6 @@ extern void Refresh(void); /* GUI，mem模式刷新显示 */
 /* bsp核心库 */
 #include "bsp_lib.h"
 #include "bsp_core.h"
-// #include "bsp_def.h"
 
 #define DelayMsStart(ms)               \
 	{                                  \
