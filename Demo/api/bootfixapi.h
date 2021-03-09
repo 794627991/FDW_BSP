@@ -7,6 +7,7 @@ extern "C"
 #endif
 
 #include "bsp_def.h"
+#include "bsp_inc.h"
 
 #define Boot_API_Base_Adr 0x00001000 //boot固化FUN到boot区的0x1000
 

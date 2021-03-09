@@ -24,7 +24,7 @@ extern "C"
 
 #if API_UseNB > 0
 
-#include "bsp_def.h"
+#include "api_define_all.h"
 
 #define WEIGOU IWDT_Clr()
 
