@@ -117,6 +117,7 @@ typedef union
 /* ================             Peripheral include                 ================ */
 /* ================================================================================ */
 
+/* 标准库 */
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -125,6 +126,8 @@ typedef union
 #include <stdarg.h>
 #include <time.h>
 #include "bintohex.h"
+
+/* 用户配置 */
 #include "API_CFG.h"
 #include "user_io_def.h"
 
@@ -224,6 +227,7 @@ extern void Refresh(void); /* GUI，mem模式刷新显示 */
 #endif
 #endif
 
+/* 驱动库 */
 #include "FM33G0XX.h"
 #include "fm33G0xx_aes.h"
 #include "fm33G0xx_anac.h"
@@ -249,10 +253,7 @@ extern void Refresh(void); /* GUI，mem模式刷新显示 */
 #include "fm33G0xx_pmu.h"
 #include "fm33G0xx_lpuart.h"
 
-#include "malloc.h"
-#include "myprintf.h"
-#include "ucosinit.h"
-
+/* BSP库 */
 #include "bsp_user_lib.h"
 #include "bsp_core.h"
 #include "bsp_adc.h"
@@ -267,12 +268,16 @@ extern void Refresh(void); /* GUI，mem模式刷新显示 */
 #include "bsp_spi.h"
 #include "bsp_uart.h"
 #include "bsp_interrupt.h"
+#include "bsp_init.h"
 
+/* 应用库 */
+#include "malloc.h"
+#include "myprintf.h"
+#include "ucosinit.h"
 #include "useevent.h"
 #include "uarttimeout.h"
 #include "iotnew_api.h"
 #include "bootfixapi.h"
-#include "bsp_init.h"
 #include "sha256.h"
 
 #define DelayMsStart(ms)               \

@@ -75,7 +75,6 @@ extern "C"
     unsigned char Bcd_to_Int(unsigned char i);
     unsigned char Int_to_Bcd(unsigned char i);
 
-    char BcdToChar(uint8_t _bcd);
     uint32_t AsciiToUint32(char *pAscii);
     uint16_t Find_Max(uint16_t *buf);
     uint16_t Find_Min(uint16_t *buf);

@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.h": "c",
+        "makefile": "makefile",
+        "*.tcc": "c",
+        "limits": "c"
+    }
+}

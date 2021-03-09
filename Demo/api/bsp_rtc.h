@@ -15,8 +15,8 @@
 *
 *********************************************************************************************************
 */
-#ifndef __API_RTC_H__
-#define __API_RTC_H__
+#ifndef __BSP_RTC_H__
+#define __BSP_RTC_H__
 
 #ifdef __cplusplus
 extern "C"
