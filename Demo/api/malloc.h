@@ -24,29 +24,9 @@ extern "C"
 {
 #endif
 
-#include "api_define_all.h"
-
-#define mallocdebug 0
-
-#ifndef NULL
-#define NULL 0
-#endif
-
 #define MEM_BLOCK_SIZE 32								   /* 内存块大小为32字节 */
 #define MEM_MAX_SIZE 9 * 1024							   /* 最大管理内存 nK */
 #define MEM_ALLOC_TABLE_SIZE MEM_MAX_SIZE / MEM_BLOCK_SIZE /* 内存表大小 */
-
-#if MEM_BLOCK_SIZE == 32
-#define MEM_BLOCK_DIV 5
-#elif MEM_BLOCK_SIZE == 16
-#define MEM_BLOCK_DIV 4
-#elif MEM_BLOCK_SIZE == 8
-#define MEM_BLOCK_DIV 3
-#elif MEM_BLOCK_SIZE == 4
-#define MEM_BLOCK_DIV 2
-#elif MEM_BLOCK_SIZE == 2
-#define MEM_BLOCK_DIV 1
-#endif
 
 #if defined(__CC_ARM)
 #define disable_irq __disable_irq()
@@ -87,7 +67,7 @@ extern "C"
 	{                \
 		disable_irq; \
 		__myfree(x); \
-		x = NULL;    \
+		x = 0;       \
 		enable_irq;  \
 	}
 	void *__mymalloc(u32 size);

@@ -22,6 +22,7 @@
 
 /* cJSON */
 /* JSON parser in C. */
+#pragma diag_suppress 1293 /* 消除1293警告 (while内赋值)*/
 
 #include <string.h>
 #include <stdio.h>
@@ -31,7 +32,6 @@
 #include <limits.h>
 #include <ctype.h>
 #include "cJSON.h"
-
 #include "malloc.h"
 
 static const char *ep;

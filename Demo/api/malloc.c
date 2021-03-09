@@ -145,7 +145,7 @@ u32 mem_malloc(u32 size, u8 needprotect)
     if (size == 0)
         return 0XFFFFFFFF; /* 不需要分配 */
     disable_irq;
-    nmemb = size >> MEM_BLOCK_DIV; /* 获取需要分配的连续内存块数 */
+    nmemb = size / MEM_BLOCK_SIZE; /* 获取需要分配的连续内存块数 */
     if (size % memblksize)
         nmemb++;
 
@@ -217,10 +217,6 @@ u32 mem_malloc(u32 size, u8 needprotect)
                     mallco_dev.memmap[offset + i] = nmemb;
                 }
             }
-#if mallocdebug > 0
-            if (!needprotect)
-                printf("申:%d\r\n", nmemb); /* debug */
-#endif
             enable_irq;
             return (offset * memblksize); /* 返回偏移地址 */
         }
@@ -248,13 +244,9 @@ u8 mem_free(u32 offset)
     }
     if (offset < memsize) /* 偏移在内存池内 */
     {
-        int index = offset >> MEM_BLOCK_DIV;                /* 偏移所在内存块号码 */
+        int index = offset / MEM_BLOCK_SIZE;                /* 偏移所在内存块号码 */
         int nmemb = (mallco_dev.memmap[index] & ReProtect); /* 内存块数量 */
-#if mallocdebug > 0
-        if (!(mallco_dev.memmap[index] & Protect))
-            printf("放:%d\r\n", nmemb); /* debug */
-#endif
-        for (i = 0; i < nmemb; i++) /* 内存块清零 */
+        for (i = 0; i < nmemb; i++)                         /* 内存块清零 */
         {
             mallco_dev.memmap[index + i] = 0;
         }
@@ -275,7 +267,7 @@ u8 mem_free(u32 offset)
 void __myfree(void *ptr)
 {
     u32 offset;
-    if (ptr == NULL)
+    if (ptr == 0)
         return;
     offset = (u32)ptr - (u32)mallco_dev.membase;
     mem_free(offset); /* 释放内存 */
@@ -293,7 +285,7 @@ void *__mymalloc(u32 size)
 {
     u32 offset = mem_malloc(size, 0);
     if (offset == 0XFFFFFFFF)
-        return NULL;
+        return 0;
     else
         return (void *)((u32)mallco_dev.membase + offset);
 }
@@ -310,7 +302,7 @@ void *__mymallocpro(u32 size)
 {
     u32 offset = mem_malloc(size, 1);
     if (offset == 0XFFFFFFFF)
-        return NULL;
+        return 0;
     else
         return (void *)((u32)mallco_dev.membase + offset);
 }
@@ -329,7 +321,7 @@ void *__myrealloc(void *ptr, u32 size, u8 needprotect)
     u32 offset;
     offset = mem_malloc(size, needprotect);
     if (offset == 0XFFFFFFFF)
-        return NULL;
+        return 0;
     else
     {
         mymemcpy((void *)((u32)mallco_dev.membase + offset), ptr, size); /* 拷贝旧内存内容到新内存 */
