@@ -22,7 +22,7 @@ extern "C"
 {
 #endif
 
-#include "api_define_all.h"
+#include <stdint.h>
 
     /**************************函数指针定义**************************/
     typedef void (*Event)(void);

@@ -8,7 +8,6 @@ extern "C"
 
 #include <stdint.h>
 #include <string.h>
-#include <ctype.h>
 
 #define BigLittleSwap16(A) ((((uint16)(A)&0xff00) >> 8) | \
                             (((uint16)(A)&0x00ff) << 8)) /* 16位数据大小端转换 */

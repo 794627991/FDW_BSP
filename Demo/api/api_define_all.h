@@ -126,6 +126,7 @@ typedef union
 #include <time.h>
 #include "bintohex.h"
 #include "API_CFG.h"
+#include "user_io_def.h"
 
 #if UseuCOS > 0 && ThisBoot == 0
 #define Use_uCOS 1
@@ -250,7 +251,6 @@ extern void Refresh(void); /* GUI，mem模式刷新显示 */
 
 #include "system.h"
 #include "malloc.h"
-#include "user_io_def.h"
 #include "adc_api.h"
 #include "aes_api.h"
 #include "etim_api.h"

@@ -67,67 +67,67 @@ extern "C"
 #define UartTim4 BIT4
 #define UartTim5 BIT5
 
-    typedef struct
-    {
-        union
+        typedef struct
         {
-            uint8_t TimFlag;
-            struct
-            {
-                uint8_t TimFlag0 : 1;
-                uint8_t TimFlag1 : 1;
-                uint8_t TimFlag2 : 1;
-                uint8_t TimFlag3 : 1;
-                uint8_t TimFlag4 : 1;
-                uint8_t TimFlag5 : 1;
-            };
-        };
+                union
+                {
+                        uint8_t TimFlag;
+                        struct
+                        {
+                                uint8_t TimFlag0 : 1;
+                                uint8_t TimFlag1 : 1;
+                                uint8_t TimFlag2 : 1;
+                                uint8_t TimFlag3 : 1;
+                                uint8_t TimFlag4 : 1;
+                                uint8_t TimFlag5 : 1;
+                        };
+                };
 #if TmOut_Uart0 > 0
-        uint8_t TimNum0;
+                uint8_t TimNum0;
 #endif
 #if TmOut_Uart1 > 0
-        uint8_t TimNum1;
+                uint8_t TimNum1;
 #endif
 #if TmOut_Uart2 > 0
-        uint8_t TimNum2;
+                uint8_t TimNum2;
 #endif
 #if TmOut_Uart3 > 0
-        uint8_t TimNum3;
+                uint8_t TimNum3;
 #endif
 #if TmOut_Uart4 > 0
-        uint8_t TimNum4;
+                uint8_t TimNum4;
 #endif
 #if TmOut_Uart5 > 0
-        uint8_t TimNum5;
+                uint8_t TimNum5;
 #endif
-    } TimStruct;
+        } TimStruct;
 
-    /**************************函数指针定义**************************/
+        /**************************函数指针定义**************************/
 
-    /****************************函数声明****************************/
-    void API_TimSet(uint8_t xUart, uint8_t num);
-    void UartTimeOut(void);
-    /****************************回调函数****************************/
-    void Uart0TimCallBack(void);
-    void Uart1TimCallBack(void);
-    void Uart2TimCallBack(void);
-    void Uart3TimCallBack(void);
-    void Uart4TimCallBack(void);
-    void Uart5TimCallBack(void);
+        /****************************函数声明****************************/
+        void API_TimSet(uint8_t xUart, uint8_t num);
+        void UartTimeOut(void);
+        /****************************回调函数****************************/
+        void Uart0TimCallBack(void);
+        void Uart1TimCallBack(void);
+        void Uart2TimCallBack(void);
+        void Uart3TimCallBack(void);
+        void Uart4TimCallBack(void);
+        void Uart5TimCallBack(void);
 
-    void UART0RXSUCC(void);
-    void UART1RXSUCC(void);
-    void UART2RXSUCC(void);
-    void UART3RXSUCC(void);
-    void UART4RXSUCC(void);
-    void UART5RXSUCC(void);
+        void UART0RXSUCC(void);
+        void UART1RXSUCC(void);
+        void UART2RXSUCC(void);
+        void UART3RXSUCC(void);
+        void UART4RXSUCC(void);
+        void UART5RXSUCC(void);
 
-    void API_UART0_DO(uint8_t *buf, uint16_t len);
-    void API_UART1_DO(uint8_t *buf, uint16_t len);
-    void API_UART2_DO(uint8_t *buf, uint16_t len);
-    void API_UART3_DO(uint8_t *buf, uint16_t len);
-    void API_UART4_DO(uint8_t *buf, uint16_t len);
-    void API_UART5_DO(uint8_t *buf, uint16_t len);
+        void API_UART0_DO(uint8_t *buf, uint16_t len);
+        void API_UART1_DO(uint8_t *buf, uint16_t len);
+        void API_UART2_DO(uint8_t *buf, uint16_t len);
+        void API_UART3_DO(uint8_t *buf, uint16_t len);
+        void API_UART4_DO(uint8_t *buf, uint16_t len);
+        void API_UART5_DO(uint8_t *buf, uint16_t len);
 
 #ifdef __cplusplus
 }

@@ -16,7 +16,7 @@
 */
 #include "useevent.h"
 
-#if Use_Event > 0
+#if 1 /* Use_Event > 0 */
 
 #ifndef Quelen
 #define Quelen 25
