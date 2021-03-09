@@ -23,6 +23,7 @@ extern "C"
 #endif
 
 #include "api_define_all.h"
+#include "bsp_def.h"
 
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
 #define MAX_CMD_NAME_LENGTH 10 /* 字典命令名最大字符长度 */

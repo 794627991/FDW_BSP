@@ -280,7 +280,7 @@ bool Check_date(uint16_t w_year, uint8_t w_month, uint8_t w_date)
 */
 char GY_IsLegal(RTC_TimeDateTypeDef *para)
 {
-    uint16_t year = BCDtoHEX(para->Year) + 2000;
+    uint16_t year = BCDtoHEX(para->Year) + 2000; 
     uint8_t month = BCDtoHEX(para->Month);
     uint8_t date = BCDtoHEX(para->Date);
     uint8_t hour = BCDtoHEX(para->Hour);

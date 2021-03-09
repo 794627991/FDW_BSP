@@ -2,6 +2,7 @@
 #define __Event_H__
 
 #include "api_define_all.h"
+#include "bsp_def.h"
 
 #define Uart_Sent(buff, len) API_Uart_Send(UART1, buff, len)
 

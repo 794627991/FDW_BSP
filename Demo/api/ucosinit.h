@@ -7,6 +7,8 @@ extern "C"
 #endif
 
 #include "api_define_all.h"
+#include "malloc.h"
+#include "bsp_uart.h"
 
 #if Use_uCOS > 0 && ThisBoot == 0
 #include "includes.h"

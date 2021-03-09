@@ -19,6 +19,7 @@
 
 /* include */
 #include "api_define_all.h"
+#include "bsp_def.h"
 #include "event.h"
 #include "12864.h"
 #include "malloc.h"

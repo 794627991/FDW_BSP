@@ -25,6 +25,7 @@ extern "C"
 #endif
 
 #include "api_define_all.h"
+#include "malloc.h"
 
     typedef struct
     {

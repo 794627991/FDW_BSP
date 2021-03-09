@@ -7,6 +7,7 @@ extern "C"
 #endif
 
 #include "api_define_all.h"
+#include "bsp_def.h"
 
 #define LCD_12864_CS_GPIO GPIOG
 #define LCD_12864_CS_PIN GPIO_Pin_2

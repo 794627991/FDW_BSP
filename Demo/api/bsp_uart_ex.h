@@ -23,6 +23,9 @@ extern "C"
 #endif
 
 #include "api_define_all.h"
+#include "bsp_uart.h"
+#include "bsp_etim.h"
+#include "ucosinit.h"
 
 /* 串口超时定时器选择配置 */
 #if Use_uCOS > 0 && Use32BitEtim > 0
