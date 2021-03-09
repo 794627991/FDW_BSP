@@ -267,6 +267,7 @@ extern void Refresh(void); /* GUI，mem模式刷新显示 */
 #include "bsp_rtc.h"
 #include "bsp_spi.h"
 #include "bsp_uart.h"
+#include "bsp_uart_ex.h"
 #include "bsp_interrupt.h"
 #include "bsp_init.h"
 
@@ -275,8 +276,7 @@ extern void Refresh(void); /* GUI，mem模式刷新显示 */
 #include "myprintf.h"
 #include "ucosinit.h"
 #include "useevent.h"
-#include "uarttimeout.h"
-#include "iotnew_api.h"
+#include "iot_core.h"
 #include "bootfixapi.h"
 #include "sha256.h"
 

@@ -6,7 +6,7 @@ extern "C"
 {
 #endif
 
-#include "iotnew_api.h"
+#include "iot_core.h"
 
 #ifndef MODULE
 #define MODULE bc260
