@@ -22,7 +22,7 @@ extern "C"
 {
 #endif
 
-#include "api_define_all.h"
+#include "bsp_def.h"
 
 #define FLASHOPKEY 0x12ABF00F
 #define FlashEraseSize 0x200 /* ÉÈÇø¿é´óÐ¡ */

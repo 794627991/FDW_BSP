@@ -22,7 +22,7 @@ extern "C"
 {
 #endif
 
-#include "api_define_all.h"
+#include "bsp_def.h"
 
 #ifndef MONI_SPI_NSS_GPIO
 #define MONI_SPI_NSS_GPIO GPIOF

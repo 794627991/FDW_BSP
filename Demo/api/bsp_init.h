@@ -22,8 +22,8 @@ extern "C"
 {
 #endif
 
-#include "api_define_all.h"
 #include "bsp_def.h"
+#include "bsp_inc.h"
 
     void User_IO_Init(void);
     void API_ShowEvery(char *ledbuf);

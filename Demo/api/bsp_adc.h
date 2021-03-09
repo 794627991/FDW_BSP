@@ -22,7 +22,7 @@ extern "C"
 {
 #endif
 
-#include "api_define_all.h"
+#include "bsp_def.h"
 
 #define SmpSpd_Fast 0 /* AD采样速度 */
 #define SmpSpd_Medium 1

@@ -22,7 +22,7 @@ extern "C"
 {
 #endif
 
-#include "api_define_all.h"
+#include "bsp_def.h"
 
 #define SSP_TBIT (20 * clkmode) /* 注意根据cpu主频调整延时量 */
 #define I2CREAD 1               /* I2C读操作 */

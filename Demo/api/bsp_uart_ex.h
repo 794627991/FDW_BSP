@@ -22,7 +22,7 @@ extern "C"
 {
 #endif
 
-#include "api_define_all.h"
+#include "bsp_def.h"
 #include "bsp_uart.h"
 #include "bsp_etim.h"
 #include "ucosinit.h"

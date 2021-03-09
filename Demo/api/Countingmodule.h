@@ -6,7 +6,7 @@ extern "C"
 {
 #endif
 
-#include "api_define_all.h"
+#include "bsp_def.h"
 
 #define PulseEquivalent 10 /* Âö³åµ±Á¿ */
 

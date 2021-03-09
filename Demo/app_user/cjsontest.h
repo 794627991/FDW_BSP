@@ -3,7 +3,6 @@
 
 /*include*/
 #include "api_define_all.h"
-#include "bsp_def.h"
 #include "cJSON.h"
 
 typedef struct

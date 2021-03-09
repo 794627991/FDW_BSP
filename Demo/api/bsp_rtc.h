@@ -23,7 +23,6 @@ extern "C"
 {
 #endif
 
-#include "api_define_all.h"
 #include "bsp_def.h"
 
     /* 日期存储结构 */

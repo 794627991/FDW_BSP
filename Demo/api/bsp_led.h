@@ -23,7 +23,7 @@ extern "C"
 {
 #endif
 
-#include "api_define_all.h"
+#include "bsp_def.h"
 
 #define _LCD_X_EFGDP(x) LCD_##x##_EFGDP
 #define LCD_X_EFGDP(x) _LCD_X_EFGDP(x)

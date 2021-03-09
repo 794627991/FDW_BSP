@@ -22,7 +22,7 @@ extern "C"
 {
 #endif
 
-#include "api_define_all.h"
+#include "bsp_def.h"
 
 #define AESECBMODE 0 /* ECBģʽ */
 #define AESCTRMODE 1 /* CTRģʽ */

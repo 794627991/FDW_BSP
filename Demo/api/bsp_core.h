@@ -22,7 +22,7 @@ extern "C"
 {
 #endif
 
-#include "api_define_all.h"
+#include "bsp_def.h"
 
 #define MAX_NVIC_PRIO 3 /* 中断优先级最大值 */
 
