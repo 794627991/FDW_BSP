@@ -270,7 +270,6 @@ extern void Refresh(void); /* GUI，mem模式刷新显示 */
 
 #include "useevent.h"
 #include "uarttimeout.h"
-#include "iot_api.h"
 #include "iotnew_api.h"
 #include "bootfixapi.h"
 #include "bsp_init.h"

@@ -22,6 +22,8 @@ extern "C"
 {
 #endif
 
+#if API_UseNB > 0
+
 #include "api_define_all.h"
 
 #define WEIGOU IWDT_Clr()
@@ -164,6 +166,7 @@ extern "C"
         uint8_t minute;
         uint8_t hour;
     } TIME;
+    
     typedef struct
     {
         uint8_t day;
@@ -377,6 +380,8 @@ extern "C"
     int NB_Start(NB_IP_Type configcoe, input Hook);
     void NBRxDeal(void);
     void NBTxDeal(void);
+
+#endif
 
 #ifdef __cplusplus
 }
