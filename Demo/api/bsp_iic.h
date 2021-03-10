@@ -43,8 +43,8 @@ extern "C"
 
     typedef struct /* 使用结构体存读数据时使用 */
     {
-        uint32_t IICBaseAdr;
-        uint32_t IICStartAdr;
+        uint32_t IICBaseAdr; /* 使用结构体存储时，iic偏移基址 */
+        uint32_t IICStartAdr; /* 使用结构体存储时，结构体的内存地址 */
     } IICBase;
     extern IICBase IICDATA;
 

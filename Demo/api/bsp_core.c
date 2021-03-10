@@ -19,7 +19,21 @@
 #ifdef SYSCORE
 
 const uint8_t UpgradeCode[] = {0x68, 0x00, 0x06, 0x68, 0x15, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x50, 0x52, 0x16};
-IOEXTI_Type IOEXTI; /* 跑系统需要读出中断线状态 */
+static uCOS_IO_Type uCOS_IO; /* 跑系统需要读出中断线状态 */
+
+/*
+*********************************************************************************************************
+*	函 数 名: uCOS_Get_IO
+*	功能说明: 获取 uCOS_IO 的指针
+*	形    参: 无
+*	返 回 值: uCOS_IO 的指针
+*	备    注：无
+*********************************************************************************************************
+*/
+uCOS_IO_Type *uCOS_Get_IO(void)
+{
+    return &uCOS_IO;
+}
 /*
 *********************************************************************************************************
 *	函 数 名: 函数名称：GPIO_EXTI_EXTIxIF_ChkEx_Ucos
@@ -48,28 +62,28 @@ FlagStatus GPIO_EXTI_EXTIxIF_ChkEx_Ucos(GPIOx_Type *GPIOx, uint32_t GPIO_Pin)
     {
     case (uint32_t)GPIOA:
     case (uint32_t)GPIOB:
-        if (IOEXTI.EXTI0IF & (0x00000001 << (pin_num & 0x07)))
+        if (uCOS_IO.EXTI0IF & (0x00000001 << (pin_num & 0x07)))
         {
             Result = SET;
-            IOEXTI.EXTI0IF ^= (0x00000001 << (pin_num & 0x07));
+            uCOS_IO.EXTI0IF ^= (0x00000001 << (pin_num & 0x07));
         }
         break;
 
     case (uint32_t)GPIOC:
-        if (IOEXTI.EXTI1IF & (0x00000001 << (pin_num & 0x07)))
+        if (uCOS_IO.EXTI1IF & (0x00000001 << (pin_num & 0x07)))
         {
             Result = SET;
-            IOEXTI.EXTI1IF ^= (0x00000001 << (pin_num & 0x07));
+            uCOS_IO.EXTI1IF ^= (0x00000001 << (pin_num & 0x07));
         }
         break;
 
     case (uint32_t)GPIOD: /* 0~10 */
         if (pin_num <= 10)
         {
-            if (IOEXTI.EXTI1IF & (0x00000001 << (pin_num & 0x07)))
+            if (uCOS_IO.EXTI1IF & (0x00000001 << (pin_num & 0x07)))
             {
                 Result = SET;
-                IOEXTI.EXTI1IF ^= (0x00000001 << (pin_num & 0x07));
+                uCOS_IO.EXTI1IF ^= (0x00000001 << (pin_num & 0x07));
             }
         }
         break;
@@ -77,10 +91,10 @@ FlagStatus GPIO_EXTI_EXTIxIF_ChkEx_Ucos(GPIOx_Type *GPIOx, uint32_t GPIO_Pin)
     case (uint32_t)GPIOE: /* 2~9(-2) */
         if ((pin_num >= 2) && (pin_num <= 9))
         {
-            if (IOEXTI.EXTI2IF & (0x00000001 << (pin_num - 2)))
+            if (uCOS_IO.EXTI2IF & (0x00000001 << (pin_num - 2)))
             {
                 Result = SET;
-                IOEXTI.EXTI2IF ^= (0x00000001 << (pin_num - 2));
+                uCOS_IO.EXTI2IF ^= (0x00000001 << (pin_num - 2));
             }
         }
         break;
@@ -88,18 +102,18 @@ FlagStatus GPIO_EXTI_EXTIxIF_ChkEx_Ucos(GPIOx_Type *GPIOx, uint32_t GPIO_Pin)
     case (uint32_t)GPIOF: /* 1~7   8~11(-4) */
         if ((pin_num >= 1) && (pin_num <= 7))
         {
-            if (IOEXTI.EXTI2IF & (0x00000001 << (pin_num & 0x07)))
+            if (uCOS_IO.EXTI2IF & (0x00000001 << (pin_num & 0x07)))
             {
                 Result = SET;
-                IOEXTI.EXTI2IF ^= (0x00000001 << (pin_num & 0x07));
+                uCOS_IO.EXTI2IF ^= (0x00000001 << (pin_num & 0x07));
             }
         }
         else if ((pin_num >= 8) && (pin_num <= 11))
         {
-            if (IOEXTI.EXTI2IF & (0x00000001 << (pin_num - 4)))
+            if (uCOS_IO.EXTI2IF & (0x00000001 << (pin_num - 4)))
             {
                 Result = SET;
-                IOEXTI.EXTI2IF ^= (0x00000001 << (pin_num - 4));
+                uCOS_IO.EXTI2IF ^= (0x00000001 << (pin_num - 4));
             }
         }
         break;
@@ -107,18 +121,18 @@ FlagStatus GPIO_EXTI_EXTIxIF_ChkEx_Ucos(GPIOx_Type *GPIOx, uint32_t GPIO_Pin)
     case (uint32_t)GPIOG: /* 2(+1) 5~8(-1) */
         if (pin_num == 2)
         {
-            if (IOEXTI.EXTI1IF & (0x00000001 << (pin_num + 1)))
+            if (uCOS_IO.EXTI1IF & (0x00000001 << (pin_num + 1)))
             {
                 Result = SET;
-                IOEXTI.EXTI1IF ^= (0x00000001 << (pin_num + 1));
+                uCOS_IO.EXTI1IF ^= (0x00000001 << (pin_num + 1));
             }
         }
         else if ((pin_num >= 5) && (pin_num <= 8))
         {
-            if (IOEXTI.EXTI1IF & (0x00000001 << (pin_num - 1)))
+            if (uCOS_IO.EXTI1IF & (0x00000001 << (pin_num - 1)))
             {
                 Result = SET;
-                IOEXTI.EXTI1IF ^= (0x00000001 << (pin_num - 1));
+                uCOS_IO.EXTI1IF ^= (0x00000001 << (pin_num - 1));
             }
         }
         break;

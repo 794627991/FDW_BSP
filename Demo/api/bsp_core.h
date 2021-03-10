@@ -64,8 +64,7 @@ extern "C"
 		uint8_t EXTI0IF;
 		uint8_t EXTI1IF;
 		uint8_t EXTI2IF;
-	} IOEXTI_Type; /* 跑系统时读取IO口中断用 */
-	extern IOEXTI_Type IOEXTI;
+	} uCOS_IO_Type; /* 跑系统时读取IO口中断用 */
 
 	/**************************函数指针定义*************************/
 	typedef int (*ConditionHook)(void);
@@ -96,6 +95,8 @@ extern "C"
 
 	uint32_t ReadResetState(void);
 	void GotoBoot(uint8_t *buf, uint8_t len);
+
+	uCOS_IO_Type *uCOS_Get_IO(void);
 
 #ifdef __cplusplus
 }

@@ -256,9 +256,9 @@ void GPIO_IRQHandler(void)
 #endif
 
 #if Use_uCOS > 0
-    IOEXTI.EXTI0IF |= GPIO->EXTI0IF;
-    IOEXTI.EXTI1IF |= GPIO->EXTI1IF;
-    IOEXTI.EXTI2IF |= GPIO->EXTI2IF;
+    uCOS_Get_IO()->EXTI0IF |= GPIO->EXTI0IF;
+    uCOS_Get_IO()->EXTI1IF |= GPIO->EXTI1IF;
+    uCOS_Get_IO()->EXTI2IF |= GPIO->EXTI2IF;
     GPIO->EXTI0IF = 0xff; /* Ð´1Çå±êÖ¾ */
     GPIO->EXTI1IF = 0xff;
     GPIO->EXTI2IF = 0xff;

@@ -20,7 +20,7 @@
 
 #if API_UseIIC > 0
 
-uint8_t IICLOCK = 0; /* iic锁，伪进程安全保护 */
+static uint8_t IICLOCK = 0; /* iic锁，伪进程安全保护 */
 IICBase IICDATA;
 
 /*
