@@ -653,10 +653,11 @@ void LPTIM_IRQHandler(void)
     {
         LPTIM_LPTIF_OVIF_Clr();
 #if Use_uCOS > 0
-        uCOS_Clk.lptim = 1;
+        uCOS_CLKType *clk = uCOS_Get_Clk();
+        clk->lptim = 1;
         OSTaskQPost((OS_TCB *)&TaskClockTCB,
-                    (void *)&uCOS_Clk.up,
-                    (OS_MSG_SIZE)sizeof(uCOS_Clk.up),
+                    (void *)clk,
+                    (OS_MSG_SIZE)sizeof(uCOS_CLKType),
                     (OS_OPT)OS_OPT_POST_FIFO,
                     (OS_ERR *)&os_err);
 #else
@@ -684,13 +685,14 @@ void RTC_IRQHandler(void)
     CPU_CRITICAL_ENTER();
     OSIntEnter();
     CPU_CRITICAL_EXIT();
+    uCOS_CLKType *clk = uCOS_Get_Clk();
 #endif
     /* 查询秒钟断标志是否置起 */
     if ((SET == RTC_RTCIF_ChkEx(RTC_RTCIF_SEC_IF_Msk)) && (ENABLE == RTC_RTCIE_GetableEx(RTC_RTCIE_SEC_IE_Msk)))
     {
         RTC_RTCIF_ClrEx(RTC_RTCIE_SEC_IE_Msk); /* 清除秒中断标志 */
 #if Use_uCOS > 0
-        uCOS_Clk.rtc_sec = 1;
+        clk->rtc_sec = 1;
 #else
         RTC_IRQ_SEC_CallBack();
 #endif
@@ -700,7 +702,7 @@ void RTC_IRQHandler(void)
     {
         RTC_RTCIF_ClrEx(RTC_RTCIE_MIN_IE_Msk); /* 清除分中断标志 */
 #if Use_uCOS > 0
-        uCOS_Clk.rtc_min = 1;
+        clk->rtc_min = 1;
 #else
         RTC_IRQ_MIN_CallBack();
 #endif
@@ -710,7 +712,7 @@ void RTC_IRQHandler(void)
     {
         RTC_RTCIF_ClrEx(RTC_RTCIE_HOUR_IE_Msk); /* 清除时中断标志 */
 #if Use_uCOS > 0
-        uCOS_Clk.rtc_hour = 1;
+        clk->rtc_hour = 1;
 #else
         RTC_IRQ_HOUR_CallBack();
 #endif
@@ -719,18 +721,18 @@ void RTC_IRQHandler(void)
     {
         RTC_RTCIF_ClrEx(RTC_RTCIE_DATE_IE_Msk); /* 清除天中断标志 */
 #if Use_uCOS > 0
-        uCOS_Clk.rtc_day = 1;
+        clk->rtc_day = 1;
 #else
         RTC_IRQ_DATE_CallBack();
 #endif
     }
 
 #if Use_uCOS > 0
-    if (uCOS_Clk.up != 0)
+    if (clk->up != 0)
     {
         OSTaskQPost((OS_TCB *)&TaskClockTCB,
-                    (void *)&uCOS_Clk.up,
-                    (OS_MSG_SIZE)sizeof(uCOS_Clk.up),
+                    (void *)clk,
+                    (OS_MSG_SIZE)sizeof(uCOS_CLKType),
                     (OS_OPT)OS_OPT_POST_FIFO,
                     (OS_ERR *)&os_err);
     }

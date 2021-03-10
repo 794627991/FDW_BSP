@@ -68,8 +68,8 @@ void uCOS_SystemInit(void)
 void uCOS_LowPower(void)
 {
     /* ø’œ–»ŒŒÒ */
-    // if (!notintosleep)
-    //     Sleep(0);
+    // LowPower_IO_Init();
+    // Sleep(0);
 }
 
 void UART1_IRQ_Rx_CallBack(uint8_t data)
@@ -212,7 +212,7 @@ void uCOS_APP_1m(void)
         }
     }
 #endif
-
+    printf("memuse:%d%%", mem_perused());
     RchfAdjust(ETIM4, clkmode);
 }
 

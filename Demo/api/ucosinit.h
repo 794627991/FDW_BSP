@@ -70,7 +70,31 @@ extern "C"
             char lptim : 1;
         };
     } uCOS_CLKType;
-    extern uCOS_CLKType uCOS_Clk;
+
+    typedef union
+    {
+        uint16_t State;
+        struct
+        {
+            uint8_t Task1 : 1;
+            uint8_t Task2 : 1;
+            uint8_t Task3 : 1;
+            uint8_t Task4 : 1;
+            uint8_t Task5 : 1;
+            uint8_t Task6 : 1;
+            uint8_t Task7 : 1;
+            uint8_t Task8 : 1;
+
+            uint8_t Task9 : 1;
+            uint8_t Task10 : 1;
+            uint8_t Task11 : 1;
+            uint8_t Task12 : 1;
+            uint8_t Task13 : 1;
+            uint8_t Task14 : 1;
+            uint8_t Task15 : 1;
+            uint8_t Task16 : 1;
+        };
+    } Task_Bit;
 
     void App_TaskIdleHook(void);
     void uCOS_Start(void);
@@ -95,6 +119,11 @@ extern "C"
                       OS_PRIO prio,
                       CPU_STK_SIZE stk_size);
     void MyTaskDel(OS_TCB *p_tcb);
+
+    uCOS_CLKType *uCOS_Get_Clk(void);
+    Task_Bit *uCOS_Read_Task_Bit(void);
+    uint8_t uCOS_Set_Task_Busy(uint8_t num);
+    uint8_t uCOS_Set_Task_Free(uint8_t num);
 
 #endif
 

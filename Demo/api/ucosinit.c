@@ -21,7 +21,8 @@
 
 #if Use_uCOS > 0
 
-uCOS_CLKType uCOS_Clk;
+static uCOS_CLKType uCOS_Clk;
+static Task_Bit NotIntoSleep;
 
 OS_TCB TaskTempTCB;  /* 临时任务TCB，可重复使用 */
 OS_TCB TaskIOTCB;    /* IO任务TCB */
@@ -54,9 +55,8 @@ static void uCOS_TaskUart3(void *p_arg);
 #endif
 
 #if UseUart4 > 0
-OS_Q uCOS_Uart4Mbox;
-static void uCOS_TaskUart4(void *p_arg);
 OS_TCB TaskUart4TCB;
+static void uCOS_TaskUart4(void *p_arg);
 #endif
 
 #if UseUart5 > 0
@@ -72,7 +72,64 @@ void HardFault_Handler(void)
     while (1)
         ;
 }
-
+/*
+*********************************************************************************************************
+*	函 数 名: uCOS_Set_Task_Busy
+*	功能说明: 设置某个任务为繁忙态
+*	形    参: num：1-16
+*	返 回 值: 0：失败，1：成功
+*	备    注：当 NotIntoSleep.State != 0 时，系统将不会运行 uCOS_LowPower
+*********************************************************************************************************
+*/
+uint8_t uCOS_Set_Task_Busy(uint8_t num)
+{
+    if (num == 0 || num > 16)
+        return 0;
+     NotIntoSleep.State |= (1 << (num - 1));
+     return 1;
+}
+/*
+*********************************************************************************************************
+*	函 数 名: uCOS_Set_Task_Free
+*	功能说明: 设置某个任务为空闲态
+*	形    参: num：1-16
+*	返 回 值: 0：失败，1：成功
+*	备    注：当 NotIntoSleep.State = 0 时，可以运行 uCOS_LowPower
+*********************************************************************************************************
+*/
+uint8_t uCOS_Set_Task_Free(uint8_t num)
+{
+    if (num == 0 || num > 16)
+        return 0;
+    NotIntoSleep.State &= ~(1 << (num - 1));
+    return 1;
+}
+/*
+*********************************************************************************************************
+*	函 数 名: uCOS_Read_Task_Bit
+*	功能说明: 获取 NotIntoSleep 的指针
+*	形    参: 无
+*	返 回 值: NotIntoSleep 的指针
+*	备    注：无
+*********************************************************************************************************
+*/
+Task_Bit *uCOS_Read_Task_Bit(void)
+{
+    return &NotIntoSleep;
+}
+/*
+*********************************************************************************************************
+*	函 数 名: uCOS_Get_Clk
+*	功能说明: 获取 uCOS_Clk 的指针
+*	形    参: 无
+*	返 回 值: uCOS_Clk 的指针
+*	备    注：无
+*********************************************************************************************************
+*/
+uCOS_CLKType *uCOS_Get_Clk(void)
+{
+    return &uCOS_Clk;
+}
 /*
 *********************************************************************************************************
 *	函 数 名: CPU_TS_TmrRd
@@ -496,7 +553,8 @@ void App_TaskIdleHook(void)
     OSSchedLock(&os_err);               /* 禁止任务调度 */
     if (TaskTempTCB.StkBasePtr == NULL) /* 启动任务不存在调度，直接空跑给统计任务计算CPU利用率 */
     {
-        uCOS_LowPower();
+        if (!NotIntoSleep.State)
+            uCOS_LowPower();
     }
     IWDT_Clr();
     OS_CPU_SysTickInit(SYSTICKPRE); /* systick重新初始化 非常重要的，否则跑飞 */
