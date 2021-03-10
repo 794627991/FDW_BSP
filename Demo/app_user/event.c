@@ -208,7 +208,7 @@ void PressureAndTempTest(void)
         /* 3-4为温度，大端，最高位为符号位，后8位为小数位 */
         float Pressure, Temp;
 
-        printf("采集到的温度为：%.3f℃，压力为：%.3fKPa\r\n", Temp = getTemporPre(0, buf), Pressure = getTemporPre(1, buf));
+        debug("采集到的温度为：%.3f℃，压力为：%.3fKPa\r\n", Temp = getTemporPre(0, buf), Pressure = getTemporPre(1, buf));
 
         table.temp[table.curloc] = Temp;
         table.pre[table.curloc] = Pressure;

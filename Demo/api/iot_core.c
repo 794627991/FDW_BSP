@@ -40,10 +40,10 @@ __weak uint8_t iotRxDeal(void)
     if ((len = _iotRxData("68")) != 0)
     {
         /* 数据接收处理在这里写 */
-        printf("\r\n解析完成后接收到的数据为:\r\n");
+        debug("\r\n解析完成后接收到的数据为:\r\n");
         for (uint16_t j = 0; j < len; j++)
         {
-            printf("%x ", IOTRXBUF[j]);
+            debug("%x ", IOTRXBUF[j]);
         }
 
         thisend = 1;

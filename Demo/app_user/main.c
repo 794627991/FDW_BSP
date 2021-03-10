@@ -61,7 +61,7 @@ void uCOS_SystemInit(void)
     LowPower_IO_Init();
     uCOS_LEDCreate();
     GUI_Init();
-    printf("\r\n程序已开始运行\r\n");
+    debug("\r\n程序已开始运行\r\n");
     SIMLT_I2C_OP_INIT();
 }
 
@@ -163,13 +163,13 @@ void uCOS_APP_1s(void)
     // if (ss % 2)
     // {
     //     API_LPTIM_Start();
-    //     printf("lptim start\r\n");
+    //     debug("lptim start\r\n");
     // }
     // else
     // {
-    //     printf("lptim end\r\n");
+    //     debug("lptim end\r\n");
     // }
-    // printf("lptim cnt:%d,tar:%d\r\n", LPTIM_LPTCNT_Read(), LPTIM_LPTTARGET_Read());
+    // debug("lptim cnt:%d,tar:%d\r\n", LPTIM_LPTCNT_Read(), LPTIM_LPTTARGET_Read());
 
     GETTIME;
     iotTim();
@@ -177,7 +177,7 @@ void uCOS_APP_1s(void)
     sysvdd = ADC_Exp(CH_VDD);
     systemp = Temp_Exp();
 
-    //printf("\r\n当前时间为：%d%d年 %d月 %d日 %d:%d:%d\r\n",Hex_YearH,Hex_YearL,Hex_Mon,Hex_Day,Hex_Hour,Hex_Min,Hex_Sec);
+    //debug("\r\n当前时间为：%d%d年 %d月 %d日 %d:%d:%d\r\n",Hex_YearH,Hex_YearL,Hex_Mon,Hex_Day,Hex_Hour,Hex_Min,Hex_Sec);
 }
 
 void uCOS_APP_1m(void)
@@ -192,13 +192,13 @@ void uCOS_APP_1m(void)
     CPU_CRITICAL_ENTER();
     p_tcb = OSTaskDbgListPtr;
     CPU_CRITICAL_EXIT();
-    printf("\r\n已用栈(B)   剩余栈(B)   栈使用率(%%)  优先级  CPU使用率(%%)   CPU最大使用率(%%)   调用次数     任务名\r\n");
+    debug("\r\n已用栈(B)   剩余栈(B)   栈使用率(%%)  优先级  CPU使用率(%%)   CPU最大使用率(%%)   调用次数     任务名\r\n");
     for (;;)
     {
         if (p_tcb != (OS_TCB *)0)
         {
             OSTaskStkChk(p_tcb, &free, &used, &err);
-            printf("%4d        %4d         %3d%%        %3d  %10.2f%%      %10.2f%%       %8d       %s   \r\n",
+            debug("%4d        %4d         %3d%%        %3d  %10.2f%%      %10.2f%%       %8d       %s   \r\n",
                    used, free, (used * 100) / (used + free), p_tcb->Prio,
                    p_tcb->CPUUsage / 100.0, p_tcb->CPUUsageMax / 100.0, p_tcb->CtxSwCtr, p_tcb->NamePtr);
             CPU_CRITICAL_ENTER();
@@ -212,7 +212,7 @@ void uCOS_APP_1m(void)
         }
     }
 #endif
-    printf("memuse:%d%%", mem_perused());
+    debug("memuse:%d%%", mem_perused());
     RchfAdjust(ETIM4, clkmode);
 }
 
@@ -227,7 +227,7 @@ void uCOS_APP_1d(void)
 void uCOS_APP_Lptim(void)
 {
     static uint32_t a = 0;
-    printf("lptim:%d\r\n", ++a);
+    debug("lptim:%d\r\n", ++a);
 }
 
 void uCOS_APP_IO(void)

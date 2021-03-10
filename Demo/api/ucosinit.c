@@ -3,13 +3,13 @@
 *
 *	模块名称 : ucosiii相关程序
 *	文件名称 : ucosinit.c
-*	版    本 : V1.0.0
-*	说    明 : ucosiii初始化，任务配置等，调用malloc.c中的函数，调用重定向printf
+*	版    本 : V1.0.1
+*	说    明 : ucosiii初始化，任务配置等，调用malloc.c中的函数，debug:调用重定向printf
 *	修改记录 :
 *
 *		版本号     日期      作者    说明
 *		V1.0.0  2020-1-6    高屹    正式发布
-*		V1.0.0  2020-1-7    高屹    修复ucosiii在使用低功耗的情况下，有统计任务启动时间过长的问题。
+*		V1.0.1  2020-1-7    高屹    修复ucosiii在使用低功耗的情况下，有统计任务启动时间过长的问题。
 *                                   原因在于调用 OSStatTaskCPUUsageInit(&err) 时会切进空闲任务，
 *                                   因此在空闲任务钩子中增加 if (TaskTempTCB.StkBasePtr == NULL)的条件
 *
@@ -68,7 +68,7 @@ void HardFault_Handler(void)
 {
     OS_ERR os_err;
     OSSchedLock(&os_err); /* 禁止任务调度 */
-    printf("硬件错误\r\n");
+    debug("硬件错误\r\n");
     while (1)
         ;
 }
@@ -189,7 +189,7 @@ void MyTaskCreate(OS_TCB *p_tcb,
         CPU_STK *p_stk_base = (CPU_STK *)mymallocpro(sizeof(CPU_STK) * stk_size);
         if (p_stk_base == NULL)
         {
-            printf("\r\n创建任务%s堆空间不足\r\n", p_name);
+            debug("\r\n创建任务%s堆空间不足\r\n", p_name);
         }
         else
         {
@@ -206,12 +206,12 @@ void MyTaskCreate(OS_TCB *p_tcb,
                          (void *)0,
                          (OS_OPT)(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
                          (OS_ERR *)&err);
-            printf("\r\n创建任务%s成功\r\n", p_name);
+            debug("\r\n创建任务%s成功\r\n", p_name);
         }
     }
     else
     {
-        printf("\r\n任务%s已存在\r\n", p_name);
+        debug("\r\n任务%s已存在\r\n", p_name);
     }
 
     CPU_CRITICAL_EXIT();
@@ -231,9 +231,8 @@ void MyTaskDel(OS_TCB *p_tcb)
     CPU_SR_ALLOC();
     CPU_CRITICAL_ENTER();
 #if OS_CFG_DBG_EN > 0
-    char *name = p_tcb->NamePtr;
-    printf("\r\n删除任务%s堆成功\r\n", name);
-#endif
+    debug("\r\n删除任务%s堆成功\r\n", p_tcb->NamePtr);
+#endif  
 
     CPU_STK *TempStk = p_tcb->StkBasePtr;
     OSTaskDel(p_tcb, &err); /* 删除自己 */

@@ -38,7 +38,7 @@
 	typedef struct _tag_##type type; \
 	struct _tag_##type
 
-#ifdef DEBUG
+#ifdef __DEBUG
 #define debug(format, ...) printf(format, ##__VA_ARGS__)
 #else
 #define debug(format, ...)
