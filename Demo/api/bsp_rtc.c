@@ -371,7 +371,7 @@ __weak uint8_t API_SetTIME(RTC_TimeDateTypeDef *para)
 *	功能说明: 初始化RTC
 *	形    参: RTC_INIT_Type *init
 *	返 回 值: 无
-*	备    注：无
+*	备    注：只要RTC时间符合格式，就不进行初始化，因此刚上电的RTC可能出现时间异常，建议及时校时
 *********************************************************************************************************
 */
 __weak void API_RTC_Init(RTC_INIT_Type *init)

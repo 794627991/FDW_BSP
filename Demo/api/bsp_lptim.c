@@ -28,9 +28,9 @@
 */
 void API_LPTIM_Start(void)
 {
-    // LPTIM_LPTIE_OVIE_Setable(DISABLE);    /* 使能LPTIMER的溢出中断 */
-    // LPTIM_LPTCTRL_LPTEN_Setable(DISABLE); /* LPTIMER模块使能 */
-    // LPTIM_LPTIE_OVIE_Setable(ENABLE);     /* 使能LPTIMER的溢出中断 */
+    LPTIM_LPTIE_OVIE_Setable(DISABLE);    /* 使能LPTIMER的溢出中断 */
+    LPTIM_LPTCTRL_LPTEN_Setable(DISABLE); /* LPTIMER模块使能 */
+    LPTIM_LPTIE_OVIE_Setable(ENABLE);     /* 使能LPTIMER的溢出中断 */
     LPTIM_LPTCTRL_LPTEN_Setable(ENABLE);  /* LPTIMER模块使能 */
 }
 /*
@@ -79,35 +79,6 @@ __weak void API_LPTIM_Init(LPTIM_INIT_Type *init)
     {
         init_para.LPTIM_CLK_DIV = LPTIM_LPTCFG_DIVSEL_128;
     }
-
-    // switch (init->PRE)
-    // {
-    // case 0:
-    //     init_para.LPTIM_CLK_DIV = LPTIM_LPTCFG_DIVSEL_1; //设置分频值
-    //     break;
-    // case 1:
-    //     init_para.LPTIM_CLK_DIV = LPTIM_LPTCFG_DIVSEL_2; //设置分频值
-    //     break;
-    // case 2:
-    //     init_para.LPTIM_CLK_DIV = LPTIM_LPTCFG_DIVSEL_4; //设置分频值
-    //     break;
-    // case 3:
-    //     init_para.LPTIM_CLK_DIV = LPTIM_LPTCFG_DIVSEL_8; //设置分频值
-    //     break;
-    // case 4:
-    //     init_para.LPTIM_CLK_DIV = LPTIM_LPTCFG_DIVSEL_16; //设置分频值
-    //     break;
-    // case 5:
-    //     init_para.LPTIM_CLK_DIV = LPTIM_LPTCFG_DIVSEL_32; //设置分频值
-    //     break;
-    // case 6:
-    //     init_para.LPTIM_CLK_DIV = LPTIM_LPTCFG_DIVSEL_64; //设置分频值
-    //     break;
-    // case 7:
-    // default:
-    //     init_para.LPTIM_CLK_DIV = LPTIM_LPTCFG_DIVSEL_128; //设置分频值
-    //     break;
-    // }
 
     init_para.LPTIM_compare_value = 0;          /* 设置比较值 */
     init_para.LPTIM_target_value = init->count; /* 设置目标值 */
