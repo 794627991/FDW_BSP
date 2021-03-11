@@ -41,9 +41,16 @@ extern "C"
 #define I2C_Write(Addr, Buf, Len) API_EEPROM_Write(DEVICE_EE256, Addr, ADDRLEN_EE256, Buf, Len)
 #endif
 
+#ifndef EPROM_POWER_ON
+#define EPROM_POWER_ON /* 硬件iic上电，需要配置 */
+#endif
+#ifndef EPROM_POWER_OFF
+#define EPROM_POWER_OFF /* 硬件iic下电，需要配置 */
+#endif
+
     typedef struct /* 使用结构体存读数据时使用 */
     {
-        uint32_t IICBaseAdr; /* 使用结构体存储时，iic偏移基址 */
+        uint32_t IICBaseAdr;  /* 使用结构体存储时，iic偏移基址 */
         uint32_t IICStartAdr; /* 使用结构体存储时，结构体的内存地址 */
     } IICBase;
     extern IICBase IICDATA;
@@ -54,25 +61,36 @@ extern "C"
 #define GetLen(len) sizeof(len) /* 获取结构体成员长度 */
 #define GetAdr (uint8_t *)&     /* 获取结构体成员相对地址 */
 
-#ifndef _API_IIC_SAVE_TO /* 将buf中数据存入结构体成员name所在的地址 */
-#define _API_IIC_SAVE_TO(name, buf) API_I2CSave(I2CBaseAdr + (uint32_t)GetAdr(name) - I2CStartAdr, buf, GetLen(name))
-#endif
-#ifndef _API_IIC_READ_TO /* 将结构体成员name所在的地址数据读取到buf */
-#define _API_IIC_READ_TO(name, buf) API_ReadData(I2CBaseAdr + (uint32_t)GetAdr(name) - I2CStartAdr, buf, GetLen(name))
-#endif
+    void __API_EPROM_Read(uint32_t base, uint8_t *Buf, uint16_t len);
+    void __API_EPROM_Save(uint32_t base, uint8_t *Buf, uint16_t len);
+    void API_SaveAdr_Init(void);
 
-#ifndef _API_IIC_SAVE /* 使用结构体存储变量时，可以直接通过结构体成员名进行存储 */
-#define _API_IIC_SAVE(name) API_I2CSave(I2CBaseAdr + (uint32_t)GetAdr(name) - I2CStartAdr, GetAdr(name), GetLen(name))
-#endif
-#ifndef _API_IIC_READ /* 使用结构体读取变量时，可以直接通过结构体成员名进行读取 */
-#define _API_IIC_READ(name) API_ReadData(I2CBaseAdr + (uint32_t)GetAdr(name) - I2CStartAdr, GetAdr(name), GetLen(name))
-#endif
+#define API_EPROM_Save(base, Buf, len)    \
+    {                                     \
+        API_SaveAdr_Init();               \
+        __API_EPROM_Save(base, Buf, len); \
+    }
+
+#define API_EPROM_Read(base, Buf, len)    \
+    {                                     \
+        API_SaveAdr_Init();               \
+        __API_EPROM_Read(base, Buf, len); \
+    }
+
+// 将 buf 中数据存入 结构体成员变量 name
+#define API_IIC_SAVE_TO(name, buf) API_EPROM_Save(I2CBaseAdr + (uint32_t)GetAdr(name) - I2CStartAdr, buf, GetLen(name))
+// 将 结构体成员变量 name 数据读出到 buf
+#define API_IIC_READ_TO(name, buf) API_EPROM_Read(I2CBaseAdr + (uint32_t)GetAdr(name) - I2CStartAdr, buf, GetLen(name))
+// 直接将结构体成员变量 name 数据存入到EEPROM
+#define API_IIC_SAVE(name) API_EPROM_Save(I2CBaseAdr + (uint32_t)GetAdr(name) - I2CStartAdr, GetAdr(name), GetLen(name))
+// 从EEPROM中将数据读出到 结构体成员变量 name
+#define API_IIC_READ(name) API_EPROM_Read(I2CBaseAdr + (uint32_t)GetAdr(name) - I2CStartAdr, GetAdr(name), GetLen(name))
 
 #ifndef IIC_SPEED
 #define IIC_SPEED 100 /* 单位k  即100k的速度 */
 #endif
 
-#define SIMLT_IIC_TT 5 /* 模拟IIC使用 */
+#define SIMLT_IIC_TT 5 /* 模拟IIC延时时间 */
 
 #ifndef MONI_IIC_SDA_GPIO
 #define MONI_IIC_SDA_GPIO GPIOA

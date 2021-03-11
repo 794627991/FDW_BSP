@@ -60,9 +60,9 @@ void API_SaveAdr_Init(void)
 */
 void __API_EPROM_Save(uint32_t base, uint8_t *Buf, uint16_t len)
 {
-    POWER_2402_ON;
+    EPROM_POWER_ON;
     API_I2CSave(base, Buf, len);
-    POWER_2402_OFF;
+    EPROM_POWER_OFF;
 }
 /*
 *********************************************************************************************************
@@ -75,9 +75,9 @@ void __API_EPROM_Save(uint32_t base, uint8_t *Buf, uint16_t len)
 */
 void __API_EPROM_Read(uint32_t base, uint8_t *Buf, uint16_t len)
 {
-    POWER_2402_ON;
+    EPROM_POWER_ON;
     API_I2CRead(base, Buf, len);
-    POWER_2402_OFF;
+    EPROM_POWER_OFF;
 }
 
 void NBTxDeal(void)

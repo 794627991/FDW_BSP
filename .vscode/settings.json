@@ -3,6 +3,7 @@
         "*.h": "c",
         "makefile": "makefile",
         "*.tcc": "c",
-        "limits": "c"
+        "limits": "c",
+        "typeinfo": "c"
     }
 }

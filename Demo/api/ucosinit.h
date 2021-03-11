@@ -46,8 +46,6 @@ extern "C"
 #define uCOS_TaskUart5_PRIO 4
 #define uCOS_TaskUart5_STK_SIZE 128
 
-#if Use_uCOS > 0
-
     extern OS_TCB TaskTempTCB;
     extern OS_TCB TaskIOTCB;
     extern OS_TCB TaskClockTCB;
@@ -124,8 +122,6 @@ extern "C"
     Task_Bit *uCOS_Read_Task_Bit(void);
     uint8_t uCOS_Set_Task_Busy(uint8_t num);
     uint8_t uCOS_Set_Task_Free(uint8_t num);
-
-#endif
 
 #ifdef __cplusplus
 }

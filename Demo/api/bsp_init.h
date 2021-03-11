@@ -41,27 +41,6 @@ extern "C"
     void LPUart_Init_Macro(uint32_t baudrate);
     void LPTIM_Init_Macro(uint8_t pre, uint32_t cnt);
 
-    void __API_EPROM_Read(uint32_t base, uint8_t *Buf, uint16_t len);
-    void __API_EPROM_Save(uint32_t base, uint8_t *Buf, uint16_t len);
-    void API_SaveAdr_Init(void);
-
-#define API_EPROM_Save(base, Buf, len)    \
-    {                                     \
-        API_SaveAdr_Init();               \
-        __API_EPROM_Save(base, Buf, len); \
-    }
-
-#define API_EPROM_Read(base, Buf, len)    \
-    {                                     \
-        API_SaveAdr_Init();               \
-        __API_EPROM_Read(base, Buf, len); \
-    }
-
-#define API_IIC_SAVE_TO(name, buf) API_EPROM_Save(I2CBaseAdr + (uint32_t)GetAdr(name) - I2CStartAdr, buf, GetLen(name))
-#define API_IIC_READ_TO(name, buf) API_EPROM_Read(I2CBaseAdr + (uint32_t)GetAdr(name) - I2CStartAdr, buf, GetLen(name))
-#define API_IIC_SAVE(name) API_EPROM_Save(I2CBaseAdr + (uint32_t)GetAdr(name) - I2CStartAdr, GetAdr(name), GetLen(name))
-#define API_IIC_READ(name) API_EPROM_Read(I2CBaseAdr + (uint32_t)GetAdr(name) - I2CStartAdr, GetAdr(name), GetLen(name))
-
 #ifdef __cplusplus
 }
 #endif

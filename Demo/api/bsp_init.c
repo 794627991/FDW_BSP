@@ -325,7 +325,7 @@ void RTC_Init_Exp(void)
 }
 #endif
 
-#if API_UseIIC > 0 /* 硬件IIC例程，使用结构体进行存读，仅供参考 */
+#if 0 /* 硬件IIC例程，使用结构体进行存读，仅供参考 */
 uint32_t epromstart;
 
 #define EPROM_POWER_ON            /* 硬件iic上电，需要配置 */
