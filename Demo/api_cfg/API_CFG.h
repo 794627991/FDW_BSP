@@ -29,7 +29,7 @@
 ***********************************************************************/
 #define API_UseDataUp 0      /* 远程升级 大于0开启 */
 #define FlashAllSize 0x40000 /* G045/48固定0x40000 */
-#define BOOTENDADR 0x4000   /* BOOT区的大小 */
+#define BOOTENDADR 0x4000    /* BOOT区的大小 */
 #define APP1ENDADR 0x20000   /* APP1和APP2的分界地址 */
 
 /***********************************************************************
@@ -82,7 +82,7 @@
 #define U0Baud 115200 /* 需要的波特率 */
 #define U0UseRxIe 1   /* 接收中断 大于0开启 */
 #define U0UseTxIe 0   /* 发送中断 大于0开启 */
-#define U0Stopbit TwoBit 
+#define U0Stopbit TwoBit
 
 #define UseUart1 1    /* UART1 大于0开启 */
 #define U1USEIRMod 0  /* 大于0使用调制红外 */
@@ -137,7 +137,7 @@
 
 #define API_UseLPTIM 0 /* LPTIM 大于0开启 */
 #define LPPRE 7        /* LPTIM分频系数  0-7  2^(pre+1)倍分频 */
-#define LPCount 70    /* 计数目标值  时钟源32.768khz  具体计数时间为 : LPCount/(32768/2^(pre+1)) */
+#define LPCount 70     /* 计数目标值  时钟源32.768khz  具体计数时间为 : LPCount/(32768/2^(pre+1)) */
 
 #define UseETIM1 0 /* ETIMx 大于0开启 用了哪个定时器中断必须开启，否则无法开启中断 */
 #define UseETIM2 0
@@ -162,7 +162,7 @@
 #define vLinkMaxTime 300 /* 连接最大时长(从开始连接就计算)  单位为秒 */
 #define NB_CLK 1         /* 自动校时功能,需和rtc同时使用  大于0开启 */
 #define CoapProfile 0    /* 如果大于1记得自己写profile */
-#define USEBC260         /* USEBC260/USEN23/USEBC28_35_95 */
+#define USEBC28_35_95    /* USEBC260/USEN23/USEBC28_35_95 */
 /***********************************************************************
 //---------------------------LCD相关设置------------------------------//
 ***********************************************************************/

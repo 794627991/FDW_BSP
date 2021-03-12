@@ -8,10 +8,9 @@ extern "C"
 
 #include "iot_core.h"
 
-#ifndef MODULE
+#undef MODULE
 #define MODULE n23
-#endif
-	
+
     typedef struct
     {
         uint8_t Simword[10]; //NCCID
@@ -25,7 +24,7 @@ extern "C"
         uint8_t RSSI;
         uint8_t DGRAM;
     } IOTDATTYPE(MODULE);
-	extern IOTDATTYPE(MODULE) IOTDAT(MODULE);
+    extern IOTDATTYPE(MODULE) IOTDAT(MODULE);
 
     /*外部函数声明:字典获取，数据解析，不同发送方式的发送函数*/
     extern getcmdinfo_type GETCMD(MODULE)(uint8_t linkmode);

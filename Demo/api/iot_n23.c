@@ -39,7 +39,7 @@ const cmd_type DIC_TCUDP(MODULE)[] = {
     {"tcp2", NULL, n23SendUdpTcpIpPort, "TCPSETUP: 0,OK", NULL, 5, 1, "txdat1", "rst", "rst"},
     {"txdat1", NULL, iotSend, ">", NULL, 2, 1, "txdat2", "end", "txdat1"},
     {"txdat2", NULL, n23udptcpsend2, "TCPSEND: 0,", NULL, 10, 1, "wait", "txdat1", "txdat1"},
-    {"wait", NULL, NULL, NULL, n23rxdeal, 60, 60, "txdat1", "end", "end"},
+    {"wait", NULL, NULL, NULL, n23rxdeal, 1, 60, "txdat1", "end", "end"},
     /*{"rxdat", NULL, iotRead, NULL, NULL, 0, 1, "wait", "end", "wait"},*/
     {"end", "AT+RRCRLSREQ\r\n", NULL, "OK", NULL, 2, 1, "end1", "end1", "end1"},
     {"end1", "AT+CFUN=0\r\n", NULL, "OK", NULL, 5, 1, "end2", "end2", "end2"},
@@ -275,86 +275,20 @@ static uint8_t n23rxdeal(iot_type *iot)
     {
 #if NB_CLK > 0 && API_UseRTC > 0
         //+CCLK: "20/11/27,03:37:40+32"
-        Clk_Type CLK;
+        Calendar_Type CLK;
         char *Location;
         int len = strlen("CCLK: \"");
         Location = strstr(buf, "CCLK: \"");
 
-        CLK.g_cur_time.second = (Location[len + 15] - 0x30) * 10 + (Location[len + 16] - 0x30);
-        CLK.g_cur_time.minute = (Location[len + 12] - 0x30) * 10 + (Location[len + 13] - 0x30);
-        CLK.g_cur_time.hour = (Location[len + 9] - 0x30) * 10 + (Location[len + 10] - 0x30) + (((Location[len + 18] - 0x30) * 10 + (Location[len + 19] - 0x30)) / 4);
-        CLK.g_cur_date.day = (Location[len + 6] - 0x30) * 10 + (Location[len + 7] - 0x30);
-        CLK.g_cur_date.month = (MONTH)((Location[len + 3] - 0x30) * 10 + (Location[len + 4] - 0x30));
-        CLK.g_cur_date.year = (Location[len] - 0x30) * 10 + (Location[len + 1] - 0x30) + 2000;
+        CLK.time.second = (Location[len + 15] - 0x30) * 10 + (Location[len + 16] - 0x30);
+        CLK.time.minute = (Location[len + 12] - 0x30) * 10 + (Location[len + 13] - 0x30);
+        CLK.time.hour = (Location[len + 9] - 0x30) * 10 + (Location[len + 10] - 0x30) + (((Location[len + 18] - 0x30) * 10 + (Location[len + 19] - 0x30)) / 4);
+        CLK.date.day = (Location[len + 6] - 0x30) * 10 + (Location[len + 7] - 0x30);
+        CLK.date.month = (MONTH)((Location[len + 3] - 0x30) * 10 + (Location[len + 4] - 0x30));
+        CLK.date.year = (Location[len] - 0x30) * 10 + (Location[len + 1] - 0x30) + 2000;
 
-        if (CLK.g_cur_time.hour >= 24)
-        {
-            CLK.g_cur_time.hour = CLK.g_cur_time.hour - 24;
-            switch (CLK.g_cur_date.month)
-            {
-            case Feb: //平月
-            {
-                if (((CLK.g_cur_date.year % 100 != 0) && (CLK.g_cur_date.year % 4 == 0)) || (CLK.g_cur_date.year % 400 == 0)) //闰年
-                {
-                    if (++CLK.g_cur_date.day > 29)
-                    {
-                        CLK.g_cur_date.day = 1;
-                        ++CLK.g_cur_date.month; //月计数
-                    }
-                }
-                else if (++CLK.g_cur_date.day > 28)
-                {
-                    CLK.g_cur_date.day = 1;
-                    ++CLK.g_cur_date.month; //月计数
-                }
-            }
-            break;
-            case Jan:
-            case Mar:
-            case May:
-            case Jul:
-            case Aug:
-            case Oct:
-            case Dec: //大月
-            {
-                if (++CLK.g_cur_date.day > 31)
-                {
-                    CLK.g_cur_date.day = 1;
-                    if (++CLK.g_cur_date.month > Dec) //月计数
-                    {
-                        CLK.g_cur_date.month = Jan;
-                        CLK.g_cur_date.year++; //年计数
-                    }
-                }
-            }
-            break;
-            case Apr:
-            case Jun:
-            case Sep:
-            case Nov: //小月
-            {
-                if (++CLK.g_cur_date.day > 30)
-                {
-                    CLK.g_cur_date.day = 1;
-                    ++CLK.g_cur_date.month; //月计数
-                }
-            }
-            break;
-            }
-        }
-
-        if ((Check_date(CLK.g_cur_date.year, CLK.g_cur_date.month, CLK.g_cur_date.day)) &&
-            (CLK.g_cur_time.hour < 24) && (CLK.g_cur_time.minute < 60) && (CLK.g_cur_time.second < 60))
-        {
-            RTC_TimeDateTypeDef TempTime;
-            TempTime.Year = HEXtoBCD(CLK.g_cur_date.year - 2000);
-            TempTime.Month = HEXtoBCD(CLK.g_cur_date.month);
-            TempTime.Date = HEXtoBCD(CLK.g_cur_date.day);
-            TempTime.Hour = HEXtoBCD(CLK.g_cur_time.hour);
-            TempTime.Minute = HEXtoBCD(CLK.g_cur_time.minute);
-            TempTime.Second = HEXtoBCD(CLK.g_cur_time.second);
-            API_SetTIME(&TempTime); //设置时间
-        }
+        API_Calendar(&CLK);
+        API_Set_Time_HEX(&CLK);
 
 #endif
         re = 1;

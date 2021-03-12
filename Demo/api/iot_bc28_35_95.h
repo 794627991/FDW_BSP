@@ -8,9 +8,9 @@ extern "C"
 
 #include "iot_core.h"
 
-#ifndef MODULE
+#undef MODULE
 #define MODULE bc28
-#endif
+
 
 	typedef struct
 	{

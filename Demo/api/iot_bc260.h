@@ -8,9 +8,8 @@ extern "C"
 
 #include "iot_core.h"
 
-#ifndef MODULE
+#undef MODULE
 #define MODULE bc260
-#endif
 
     typedef struct
     {

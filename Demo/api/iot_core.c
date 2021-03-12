@@ -8,7 +8,8 @@
 *	修改记录 :
 *
 *		版本号     日期      作者    说明
-*		V1.0.0  2021-1-5    高屹  正式发布
+*		V1.0.0  2021-1-5    高屹    正式发布
+*		V1.0.0  2021-3-12   高屹    在字典核心函数 match_cmd 中增加核心状态 iot.core.iotStart 的判断
 *
 *	Copyright (C), 2020-2030,  辽宁思凯-高屹
 *
@@ -424,7 +425,8 @@ static char *match_cmd(cmd_type *cmd, uint8_t len, iot_type *iot)
             for (j = 0; j < cmd[i].recount; j++) /* 重复次数 */
             {
                 uint32_t timout = 0, timmem = 0;
-
+                if (!iot->core.iotStart)
+                    break;
                 /* 发送处理过程 */
                 if (cmd[i].atcommand != NULL) /* 有对应的AT命令 */
                 {
@@ -453,7 +455,7 @@ static char *match_cmd(cmd_type *cmd, uint8_t len, iot_type *iot)
                 }
                 iot->core.timeout = cmd[i].timeout;
                 timmem = cmd[i].timeout;
-                while (iot->core.timeout != 0) /* 还未超时 */
+                while (iot->core.timeout != 0 && iot->core.iotStart) /* 还未超时 */
                 {
 #if Use_uCOS > 0
                     OS_ERR err;

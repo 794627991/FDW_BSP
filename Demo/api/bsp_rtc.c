@@ -280,7 +280,7 @@ bool Check_date(uint16_t w_year, uint8_t w_month, uint8_t w_date)
 */
 char GY_IsLegal(RTC_TimeDateTypeDef *para)
 {
-    uint16_t year = BCDtoHEX(para->Year) + 2000; 
+    uint16_t year = BCDtoHEX(para->Year) + 2000;
     uint8_t month = BCDtoHEX(para->Month);
     uint8_t date = BCDtoHEX(para->Date);
     uint8_t hour = BCDtoHEX(para->Hour);
@@ -292,38 +292,31 @@ char GY_IsLegal(RTC_TimeDateTypeDef *para)
     if (!Check_date(year, month, date))
         return 0;
     return 1;
-
-    //大：1 3 5 7 8 10 12
-    //小：4 6 9 11
-    //平：2
-    //uint8_t型变量不可能小于零
-    // if (para->Second > 0x59 || para->Minute > 0x59 || para->Hour > 0x23)
-    //     return 0;
-    // if (para->Year > 0x99 || para->Month == 0 || para->Month > 0x12 || para->Date == 0 || para->Date > 0x31)
-    //     return 0;
-    // if ((4 == para->Month || 6 == para->Month || 9 == para->Month || 0x11 == para->Month) && (para->Date > 0x30))
-    //     return 0;
-    // if (1 == para->Month || 3 == para->Month || 5 == para->Month || 7 == para->Month || 8 == para->Month || 0x10 == para->Month || 0x12 == para->Month)
-    // {
-    //     return 1;
-    // }
-    // year = (para->Year & 0xf0) >> 4;
-    // year *= 10;
-    // year += (para->Year & 0x0f);
-    // year += 2000;
-
-    // if (isLeap(year))
-    // {
-    //     if (2 == para->Month && (0x28 == para->Date || 0x30 == para->Date || 0x31 == para->Date))
-    //         return 0;
-    //     return 1;
-    // }
-    // else
-    // {
-    //     if (2 == para->Month && (0x29 == para->Date || 0x30 == para->Date || 0x31 == para->Date))
-    //         return 0;
-    //     return 1;
-    // }
+}
+/*
+*********************************************************************************************************
+*	函 数 名: API_Set_Time_HEX
+*	功能说明: 转成BCD后对RTC校时
+*	形    参: Calendar_Type *TIM
+*	返 回 值: 无
+*	备    注：无
+*********************************************************************************************************
+*/
+void API_Set_Time_HEX(Calendar_Type *TIM)
+{
+    if (TIM->time.second > 59 || TIM->time.minute > 59 || TIM->time.hour > 23)
+        return ;
+    if (Check_date(TIM->date.year, (uint8_t)TIM->date.month, TIM->date.day))
+    {
+        RTC_TimeDateTypeDef TempTime;
+        TempTime.Year = HEXtoBCD(TIM->date.year - 2000);
+        TempTime.Month = HEXtoBCD((uint8_t)TIM->date.month);
+        TempTime.Date = HEXtoBCD(TIM->date.day);
+        TempTime.Hour = HEXtoBCD(TIM->time.hour);
+        TempTime.Minute = HEXtoBCD(TIM->time.minute);
+        TempTime.Second = HEXtoBCD(TIM->time.second);
+        API_SetTIME(&TempTime); //设置时间
+    }
 }
 /*
 *********************************************************************************************************
@@ -459,6 +452,85 @@ __weak void API_GetTime(uint8_t *tim)
     for (i = 7; i < 14; i++)
     {
         tim[i] = BCDtoHEX(tim[i]);
+    }
+}
+/*
+*********************************************************************************************************
+*	函 数 名: API_Calendar
+*	功能说明: 万年历
+*	形    参: Calendar_Type *CLK
+*	返 回 值: 无
+*	备    注：用于处理校时产生万年历进位的情况
+*********************************************************************************************************
+*/
+void API_Calendar(Calendar_Type *CLK)
+{
+    if (CLK->time.second >= 60)
+    {
+        CLK->time.second -= 60;
+        CLK->time.minute++;
+    }
+    if (CLK->time.minute >= 60)
+    {
+        CLK->time.minute -= 60;
+        CLK->time.hour++;
+    }
+    if (CLK->time.hour >= 24)
+    {
+        CLK->time.hour = CLK->time.hour - 24;
+        switch (CLK->date.month)
+        {
+        case Feb: //平月
+        {
+            if (isLeap(CLK->date.year)) //闰年
+            {
+                if (++CLK->date.day > 29)
+                {
+                    CLK->date.day = 1;
+                    ++CLK->date.month; //月计数
+                }
+            }
+            else if (++CLK->date.day > 28)
+            {
+                CLK->date.day = 1;
+                ++CLK->date.month; //月计数
+            }
+        }
+        break;
+        case Jan:
+        case Mar:
+        case May:
+        case Jul:
+        case Aug:
+        case Oct:
+        case Dec: //大月
+        {
+            if (++CLK->date.day > 31)
+            {
+                CLK->date.day = 1;
+                if (++CLK->date.month > Dec) //月计数
+                {
+                    CLK->date.month = Jan;
+                    CLK->date.year++; //年计数
+                }
+            }
+        }
+        break;
+        case Apr:
+        case Jun:
+        case Sep:
+        case Nov: //小月
+        {
+            if (++CLK->date.day > 30)
+            {
+                CLK->date.day = 1;
+                ++CLK->date.month; //月计数
+            }
+        }
+        break;
+        default:
+            break;
+        }
     }
 }
 

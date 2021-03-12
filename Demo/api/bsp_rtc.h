@@ -25,6 +25,54 @@ extern "C"
 
 #include "bsp_def.h"
 
+    typedef enum week
+    {
+        Mon = 1,
+        Tue,
+        Wed,
+        Tur,
+        Fri,
+        Sat,
+        Sun
+    } WEEK;
+
+    typedef enum mon
+    {
+        Jan = 1,
+        Feb,
+        Mar,
+        Apr,
+        May,
+        Jun,
+        Jul,
+        Aug,
+        Sep,
+        Oct,
+        Nov,
+        Dec
+    } MONTH;
+
+    typedef struct
+    {
+        uint8_t second;
+        uint8_t minute;
+        uint8_t hour;
+    } TIME;
+
+    typedef struct
+    {
+        uint8_t day;
+        MONTH month;
+        uint16_t year;
+        WEEK weekday;
+    } DATE;
+
+    typedef struct
+    {
+        DATE date; //NB校时功能
+        TIME time;
+    } Calendar_Type;
+
     /* 日期存储结构 */
     typedef struct
     {
@@ -102,9 +150,11 @@ extern "C"
     DataType dateDelta(DataType start, int delta);
     void API_RTC_Init(RTC_INIT_Type *init);
     void API_GetTime(uint8_t *tim);
+    void API_Set_Time_HEX(Calendar_Type *TIM);
     uint8_t API_SetTIME(RTC_TimeDateTypeDef *para);
     uint32_t GetTimeStamp(DataType day, int cnt);
     int GetTimStmpDif(uint32_t day1, uint32_t day2, uint16_t lmit);
+    void API_Calendar(Calendar_Type *CLK);
 
 #ifdef __cplusplus
 }

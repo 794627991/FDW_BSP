@@ -270,8 +270,8 @@ static uint8_t bc260rxdeal(iot_type *iot)
             IOTDAT(MODULE).RSSI = Location[len] - 0x30;
         else
             IOTDAT(MODULE).RSSI = ((Location[len] - 0x30) << 4) + (Location[len + 1] - 0x30);
-        if ((IOTDAT(MODULE).RSSI > 0) && (IOTDAT(MODULE).RSSI != 0x99))
-            re = 1;
+        if ((IOTDAT(MODULE).RSSI >= 0x20) && (IOTDAT(MODULE).RSSI != 0x99))
+            re = 1; /* 信号大于20才异频 */
         else
             re = 0;
     }
@@ -395,87 +395,21 @@ static uint8_t bc260rxdeal(iot_type *iot)
     {
 #if NB_CLK > 0 && API_UseRTC > 0
         //+CCLK: "2020/08/17,08:33:55+32"
-        Clk_Type CLK;
+        Calendar_Type CLK;
+
         char *Location;
         int len = strlen("CCLK: ");
         Location = strstr(buf, "CCLK: ");
 
-        CLK.g_cur_time.second = (Location[24] - 0x30) * 10 + (Location[25] - 0x30);
-        CLK.g_cur_time.minute = (Location[21] - 0x30) * 10 + (Location[22] - 0x30);
-        CLK.g_cur_time.hour = (Location[18] - 0x30) * 10 + (Location[19] - 0x30) + (((Location[27] - 0x30) * 10 + (Location[28] - 0x30)) / 4);
-        CLK.g_cur_date.day = (Location[15] - 0x30) * 10 + (Location[16] - 0x30);
-        CLK.g_cur_date.month = (MONTH)((Location[12] - 0x30) * 10 + (Location[13] - 0x30));
-        CLK.g_cur_date.year = (Location[9] - 0x30) * 10 + (Location[10] - 0x30) + 2000;
+        CLK.time.second = (Location[24] - 0x30) * 10 + (Location[25] - 0x30);
+        CLK.time.minute = (Location[21] - 0x30) * 10 + (Location[22] - 0x30);
+        CLK.time.hour = (Location[18] - 0x30) * 10 + (Location[19] - 0x30) + (((Location[27] - 0x30) * 10 + (Location[28] - 0x30)) / 4);
+        CLK.date.day = (Location[15] - 0x30) * 10 + (Location[16] - 0x30);
+        CLK.date.month = (MONTH)((Location[12] - 0x30) * 10 + (Location[13] - 0x30));
+        CLK.date.year = (Location[9] - 0x30) * 10 + (Location[10] - 0x30) + 2000;
 
-        if (CLK.g_cur_time.hour >= 24)
-        {
-            CLK.g_cur_time.hour = CLK.g_cur_time.hour - 24;
-            switch (CLK.g_cur_date.month)
-            {
-            case Feb: //平月
-            {
-                if (((CLK.g_cur_date.year % 100 != 0) && (CLK.g_cur_date.year % 4 == 0)) || (CLK.g_cur_date.year % 400 == 0)) //闰年
-                {
-                    if (++CLK.g_cur_date.day > 29)
-                    {
-                        CLK.g_cur_date.day = 1;
-                        ++CLK.g_cur_date.month; //月计数
-                    }
-                }
-                else if (++CLK.g_cur_date.day > 28)
-                {
-                    CLK.g_cur_date.day = 1;
-                    ++CLK.g_cur_date.month; //月计数
-                }
-            }
-            break;
-            case Jan:
-            case Mar:
-            case May:
-            case Jul:
-            case Aug:
-            case Oct:
-            case Dec: //大月
-            {
-                if (++CLK.g_cur_date.day > 31)
-                {
-                    CLK.g_cur_date.day = 1;
-                    if (++CLK.g_cur_date.month > Dec) //月计数
-                    {
-                        CLK.g_cur_date.month = Jan;
-                        CLK.g_cur_date.year++; //年计数
-                    }
-                }
-            }
-            break;
-            case Apr:
-            case Jun:
-            case Sep:
-            case Nov: //小月
-            {
-                if (++CLK.g_cur_date.day > 30)
-                {
-                    CLK.g_cur_date.day = 1;
-                    ++CLK.g_cur_date.month; //月计数
-                }
-            }
-            break;
-            }
-        }
-
-        if ((Check_date(CLK.g_cur_date.year, CLK.g_cur_date.month, CLK.g_cur_date.day)) &&
-            (CLK.g_cur_time.hour < 24) && (CLK.g_cur_time.minute < 60) && (CLK.g_cur_time.second < 60))
-        {
-            RTC_TimeDateTypeDef TempTime;
-            TempTime.Year = HEXtoBCD(CLK.g_cur_date.year - 2000);
-            TempTime.Month = HEXtoBCD(CLK.g_cur_date.month);
-            TempTime.Date = HEXtoBCD(CLK.g_cur_date.day);
-            TempTime.Hour = HEXtoBCD(CLK.g_cur_time.hour);
-            TempTime.Minute = HEXtoBCD(CLK.g_cur_time.minute);
-            TempTime.Second = HEXtoBCD(CLK.g_cur_time.second);
-            API_SetTIME(&TempTime); //设置时间
-        }
-
+        API_Calendar(&CLK);
+        API_Set_Time_HEX(&CLK);
 #endif
         re = 1;
     }
@@ -538,7 +472,7 @@ static uint8_t FAILDO(MODULE)(char *name)
         /*没信号*/
         return 3;
     }
-    if ((strcmp(name, "coap4") == 0)||(strcmp(name, "coap5") == 0))
+    if ((strcmp(name, "coap4") == 0) || (strcmp(name, "coap5") == 0))
     {
         /*没注册到平台*/
         return 4;

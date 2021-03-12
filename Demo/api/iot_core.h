@@ -94,53 +94,6 @@ extern "C"
 #define _IOTDAT(x) x##dat
 #define IOTDAT(x) _IOTDAT(x)
 
-    typedef enum week
-    {
-        Mon = 1,
-        Tue,
-        Wed,
-        Tur,
-        Fri,
-        Sat,
-        Sun
-    } WEEK;
-    typedef enum mon
-    {
-        Jan = 1,
-        Feb,
-        Mar,
-        Apr,
-        May,
-        Jun,
-        Jul,
-        Aug,
-        Sep,
-        Oct,
-        Nov,
-        Dec
-    } MONTH;
-
-    typedef struct
-    {
-        uint8_t second;
-        uint8_t minute;
-        uint8_t hour;
-    } TIME;
-    
-    typedef struct
-    {
-        uint8_t day;
-        MONTH month;
-        unsigned short int year;
-        WEEK weekday;
-    } DATE;
-
-    typedef struct
-    {
-        DATE g_cur_date; //NB校时功能
-        TIME g_cur_time;
-    } Clk_Type;
-
     typedef struct
     {
         uint8_t LinkMode;     /* 连接方式 */
