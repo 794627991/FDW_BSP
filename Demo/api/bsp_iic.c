@@ -22,8 +22,8 @@
 
 static uint8_t IICLOCK = 0; /* iic锁，伪进程安全保护 */
 IICBase IICDATA;
-
-uint32_t epromstart; /* 结构体名，或者结构体的第一个成员 */
+iic_op_type SIMLT_IIC; /* 模拟IIC */
+uint32_t epromstart;   /* 结构体名，或者结构体的第一个成员 */
 
 /*
 *********************************************************************************************************
@@ -96,14 +96,6 @@ void API_I2CSave(uint32_t base, uint8_t *Buf, uint32_t len)
         API_I2C_Init();
         /* __disable_irq(); */
         I2C_Write(base, Buf, len);
-        // if (base != I2CBaseAdr)
-        // {
-        //     I2C_Write(base, Buf, len);
-        // }
-        // else
-        // {
-        //     I2C_Write(base + (uint32_t)Buf - I2CStartAdr, Buf, len);
-        // }
         /* __enable_irq(); */
         IICLOCK = 0;
         CloseeIO(GPIOA, GPIO_Pin_14);
@@ -129,14 +121,6 @@ void API_I2CRead(uint32_t base, uint8_t *Buf, uint32_t len)
         API_I2C_Init();
         /* __disable_irq(); */
         I2C_Read(base, Buf, len);
-        // if (base != I2CBaseAdr)
-        // {
-        //     I2C_Read(base, Buf, len);
-        // }
-        // else
-        // {
-        //     I2C_Read(base + (uint32_t)Buf - I2CStartAdr, Buf, len);
-        // }
         /* __enable_irq(); */
         IICLOCK = 0;
         CloseeIO(GPIOA, GPIO_Pin_14);
@@ -646,7 +630,6 @@ __weak void API_I2C_Init(void)
 
 #endif
 
-iic_op_type SIMLT_IIC;
 /*
 *********************************************************************************************************
 *	函 数 名: iic_op_sda_out

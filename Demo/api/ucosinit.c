@@ -76,46 +76,49 @@ void HardFault_Handler(void)
 *********************************************************************************************************
 *	函 数 名: uCOS_Set_Task_Busy
 *	功能说明: 设置某个任务为繁忙态
-*	形    参: num：1-16
+*	形    参: num：0-15
 *	返 回 值: 0：失败，1：成功
 *	备    注：当 NotIntoSleep.State != 0 时，系统将不会运行 uCOS_LowPower
 *********************************************************************************************************
 */
 uint8_t uCOS_Set_Task_Busy(uint8_t num)
 {
-    if (num == 0 || num > 16)
+    if (num > 15)
         return 0;
-     NotIntoSleep.State |= (1 << (num - 1));
-     return 1;
+    NotIntoSleep.State |= (1 << num);
+    return 1;
 }
 /*
 *********************************************************************************************************
 *	函 数 名: uCOS_Set_Task_Free
 *	功能说明: 设置某个任务为空闲态
-*	形    参: num：1-16
+*	形    参: num：0-15
 *	返 回 值: 0：失败，1：成功
 *	备    注：当 NotIntoSleep.State = 0 时，可以运行 uCOS_LowPower
 *********************************************************************************************************
 */
 uint8_t uCOS_Set_Task_Free(uint8_t num)
 {
-    if (num == 0 || num > 16)
+    if (num > 15)
         return 0;
-    NotIntoSleep.State &= ~(1 << (num - 1));
+    NotIntoSleep.State &= ~(1 << num);
     return 1;
 }
 /*
 *********************************************************************************************************
 *	函 数 名: uCOS_Read_Task_Bit
 *	功能说明: 获取 NotIntoSleep 的指针
-*	形    参: 无
-*	返 回 值: NotIntoSleep 的指针
+*	形    参: num：0-15
+*	返 回 值: 1:任务启动中，0：任务停止
 *	备    注：无
 *********************************************************************************************************
 */
-Task_Bit *uCOS_Read_Task_Bit(void)
+uint8_t uCOS_Read_Task_Bit(uint8_t num)
 {
-    return &NotIntoSleep;
+    if (NotIntoSleep.State & (1 << num))
+        return 1;
+    else
+        return 0;
 }
 /*
 *********************************************************************************************************
@@ -232,7 +235,7 @@ void MyTaskDel(OS_TCB *p_tcb)
     CPU_CRITICAL_ENTER();
 #if OS_CFG_DBG_EN > 0
     debug("\r\n删除任务%s堆成功\r\n", p_tcb->NamePtr);
-#endif  
+#endif
 
     CPU_STK *TempStk = p_tcb->StkBasePtr;
     OSTaskDel(p_tcb, &err); /* 删除自己 */

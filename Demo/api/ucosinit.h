@@ -119,7 +119,7 @@ extern "C"
     void MyTaskDel(OS_TCB *p_tcb);
 
     uCOS_CLKType *uCOS_Get_Clk(void);
-    Task_Bit *uCOS_Read_Task_Bit(void);
+    uint8_t uCOS_Read_Task_Bit(uint8_t num);
     uint8_t uCOS_Set_Task_Busy(uint8_t num);
     uint8_t uCOS_Set_Task_Free(uint8_t num);
 
