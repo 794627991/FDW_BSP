@@ -19,7 +19,6 @@
 extern void yasuotest(void);
 extern void PressureAndTempTest(void);
 extern iot_foo_type FOO;
-extern uint8_t notintosleep;
 
 uint8_t showemu = 0;
 uint32_t sysvdd;

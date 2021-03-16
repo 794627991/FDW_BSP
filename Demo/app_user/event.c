@@ -16,7 +16,6 @@ char NB_APN[10];
 char NB_IP[15];
 char NB_PORT[5];
 iot_foo_type FOO;
-uint8_t notintosleep = 0;
 
 uint8_t NBTxBuf[72] = {NULL};
 SaveBase Save;
@@ -127,7 +126,7 @@ void uCOS_TaskNB(void *p_arg)
     uint8_t aaa;
 
     iot_net_type NET;
-    notintosleep = 1;
+    uCOS_Set_Task_Busy(0);
     NB_ON;
     memcpy(NB_APN, "CMIOT", 5);
     if (FOO.LinkMode == CoapNum)
@@ -149,7 +148,7 @@ void uCOS_TaskNB(void *p_arg)
     aaa = iot_start(&FOO, &NET);
     aaa++;
     NB_OFF;
-    notintosleep = 0;
+    uCOS_Set_Task_Free(0);
     MyTaskDel(&TaskTempTCB);
 }
 
