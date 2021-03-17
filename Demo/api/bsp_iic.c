@@ -22,7 +22,6 @@
 
 static uint8_t IICLOCK = 0; /* iic锁，伪进程安全保护 */
 IICBase IICDATA;
-iic_op_type SIMLT_IIC; /* 模拟IIC */
 uint32_t epromstart;   /* 结构体名，或者结构体的第一个成员 */
 
 /*
@@ -630,6 +629,7 @@ __weak void API_I2C_Init(void)
 
 #endif
 
+iic_op_type SIMLT_IIC; /* 模拟IIC */
 /*
 *********************************************************************************************************
 *	函 数 名: iic_op_sda_out

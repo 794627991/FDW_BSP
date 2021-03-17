@@ -4,7 +4,7 @@
             "name": "APP",
             "includePath": [
                 "${workspaceFolder}/**",
-                "../ALL_API_V2.1.0/Demo/app_user"
+                "../BSP_DEMO/Demo/app_user"
             ],
             "defines": [
                 "_DEBUG",
@@ -20,7 +20,7 @@
             "name": "BOOT",
             "includePath": [
                 "${workspaceFolder}/**",
-                "../ALL_API_V2.1.0/Demo/boot_user"
+                "../BSP_DEMO/Demo/boot_user"
             ],
             "defines": [
                 "_DEBUG",

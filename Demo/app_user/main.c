@@ -133,7 +133,19 @@ void uCOS_APP_Uart3(uint8_t *buf, uint16_t len)
 {
     GotoBoot(buf, len);
 
-    if (strstr((char *)buf, "coap") || strstr((char *)buf, "COAP"))
+    if (strstr((char *)buf, "pro:"))
+    {
+        int pro = 0;
+        char *Location = strstr((char *)buf, "pro:");
+        sscanf(Location, "%*[^:]:%d\r\n", &pro);
+        printf("收到的数据为:%d\r\n", pro);
+        meter_address[0] = HEXtoBCD(pro / 1000000);
+        meter_address[1] = HEXtoBCD((pro % 1000000) / 10000);
+        meter_address[2] = HEXtoBCD((pro % 10000) / 100);
+        meter_address[3] = HEXtoBCD(pro % 100);
+        printf("修改后的表号为：%x %x %x %x\r\n", meter_address[0], meter_address[1], meter_address[2], meter_address[3]);
+    }
+    else if (strstr((char *)buf, "coap") || strstr((char *)buf, "COAP"))
     {
         FOO.LinkMode = CoapNum;
         uCOS_NBTaskCreate();
@@ -198,8 +210,8 @@ void uCOS_APP_1m(void)
         {
             OSTaskStkChk(p_tcb, &free, &used, &err);
             debug("%4d        %4d         %3d%%        %3d  %10.2f%%      %10.2f%%       %8d       %s   \r\n",
-                   used, free, (used * 100) / (used + free), p_tcb->Prio,
-                   p_tcb->CPUUsage / 100.0, p_tcb->CPUUsageMax / 100.0, p_tcb->CtxSwCtr, p_tcb->NamePtr);
+                  used, free, (used * 100) / (used + free), p_tcb->Prio,
+                  p_tcb->CPUUsage / 100.0, p_tcb->CPUUsageMax / 100.0, p_tcb->CtxSwCtr, p_tcb->NamePtr);
             CPU_CRITICAL_ENTER();
             p_tcb->CPUUsageMax = 0;
             p_tcb = p_tcb->DbgNextPtr; //指向下一个任务的TCB

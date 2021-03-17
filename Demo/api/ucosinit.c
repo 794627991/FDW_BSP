@@ -3,7 +3,7 @@
 *
 *	模块名称 : ucosiii相关程序
 *	文件名称 : ucosinit.c
-*	版    本 : V1.0.1
+*	版    本 : V1.0.3
 *	说    明 : ucosiii初始化，任务配置等，调用malloc.c中的函数，debug:调用重定向printf
 *	修改记录 :
 *
@@ -12,6 +12,9 @@
 *		V1.0.1  2020-1-7    高屹    修复ucosiii在使用低功耗的情况下，有统计任务启动时间过长的问题。
 *                                   原因在于调用 OSStatTaskCPUUsageInit(&err) 时会切进空闲任务，
 *                                   因此在空闲任务钩子中增加 if (TaskTempTCB.StkBasePtr == NULL)的条件
+*		V1.0.2  2020-3-10   高屹    新增 uCOS_Set_Task_Busy 、uCOS_Set_Task_Free、uCOS_Read_Task_Bit
+*                                   根据任务状态判断是否进入休眠任务函数回调
+*		V1.0.3  2020-3-17   高屹    新增 GetSysTick 可根据 系统时钟频率变化自动改变配置
 *
 *	Copyright (C), 2020-2030,  辽宁思凯-高屹
 *
@@ -64,6 +67,44 @@ OS_TCB TaskUart5TCB;
 static void uCOS_TaskUart5(void *p_arg);
 #endif
 
+/*
+*********************************************************************************************************
+*	函 数 名: GetSysTick
+*	功能说明: 获取硬件 SYSTICK
+*	形    参: 无
+*	返 回 值: SYSTICK 频率
+*	备    注：根据不同的硬件进行改写
+*********************************************************************************************************
+*/
+uint32_t GetSysTick(void)
+{
+    uint32_t tmp32 = 0;
+    /* Get RCHF FSEL */
+    if (ENABLE == RCC_RCHFCON_RCHFEN_Getable())
+    {
+        tmp32 = RCC_RCHFCON_FSEL_Get();
+        tmp32 = tmp32 >> RCC_RCHFCON_FSEL_Pos;
+        /* RCHF clock frequency */
+        if (tmp32 == 0xf)
+        {
+            return 36000000;
+        }
+        else
+        {
+            return __RCHF_INITIAL_CLOCK * (tmp32 + 1);
+        }
+    }
+    return __SYSTEM_CLOCK;
+}
+/*
+*********************************************************************************************************
+*	函 数 名: HardFault_Handler
+*	功能说明: 硬件错误中断
+*	形    参: 无
+*	返 回 值: 无
+*	备    注：当产生硬件错误时，进入，并停止任务调度
+*********************************************************************************************************
+*/
 void HardFault_Handler(void)
 {
     OS_ERR os_err;
@@ -296,7 +337,7 @@ static void uCOS_TaskStart(void *p_arg)
     OS_ERR err;
     (void)p_arg;
 
-    OS_CPU_SysTickInit(SYSTICKPRE);
+    OS_CPU_SysTickInit(GetSysTick() / OS_CFG_TICK_RATE_HZ);
 
 #if OS_CFG_STAT_TASK_EN > 0u
     OSStatTaskCPUUsageInit(&err); /* 统计任务 */
@@ -559,8 +600,8 @@ void App_TaskIdleHook(void)
             uCOS_LowPower();
     }
     IWDT_Clr();
-    OS_CPU_SysTickInit(SYSTICKPRE); /* systick重新初始化 非常重要的，否则跑飞 */
-    OSSchedUnlock(&os_err);         /* 允许任务调度 */
+    OS_CPU_SysTickInit(GetSysTick() / OS_CFG_TICK_RATE_HZ); /* systick重新初始化 非常重要的，否则跑飞 */
+    OSSchedUnlock(&os_err);                                 /* 允许任务调度 */
 }
 /*
 *********************************************************************************************************

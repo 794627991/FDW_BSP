@@ -14,7 +14,7 @@
 */
 
 /* Includes ------------------------------------------------------------------*/
-#include "fm33g0xx_rcc.h" 
+#include "fm33g0xx_rcc.h"
 
 /** @addtogroup fm33g0xx_StdPeriph_Driver
   * @{
@@ -23,7 +23,7 @@
 /** @defgroup RCC 
   * @brief RCC driver modules
   * @{
-  */ 
+  */
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -31,15 +31,12 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 
-
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
 /** @defgroup RCC_Private_Functions
   * @{
   */
- 
- 
 
 /********************************
 休眠模式下对RCLP操作函数
@@ -217,7 +214,6 @@ uint32_t RCC_SYSCLKSEL_AHBPRES_Get(void)
 	return (RCC->SYSCLKSEL & RCC_SYSCLKSEL_AHBPRES_Msk);
 }
 
-
 /********************************
 系统时钟源选择函数
 功能:系统时钟源选择
@@ -231,7 +227,6 @@ void RCC_SYSCLKSEL_SYSCLKSEL_Set(uint32_t SetValue)
 	tmpreg |= (SetValue & RCC_SYSCLKSEL_SYSCLKSEL_Msk);
 	RCC->SYSCLKSEL = tmpreg;
 }
-
 
 /********************************
 读取系统时钟源选择函数
@@ -264,7 +259,6 @@ uint32_t RCC_RCHFCON_FSEL_Get(void)
 {
 	return (RCC->RCHFCON & RCC_RCHFCON_FSEL_Msk);
 }
-
 
 /********************************
 RCHF使能函数
@@ -340,7 +334,6 @@ uint32_t RCC_PLLCON_PLLDB_Get(void)
 {
 	return (RCC->PLLCON & RCC_PLLCON_PLLDB_Msk);
 }
-
 
 /********************************
 PLL输出选择函数
@@ -439,7 +432,6 @@ FlagStatus RCC_RCLPCON_RCLP_EN_B_Chk(void)
 	}
 }
 
-
 /********************************
 RCLP调教函数
 功能:调教RCLP频率
@@ -483,7 +475,6 @@ uint32_t RCC_XTLFIPW_XTLFIPW_Get(void)
 	return (RCC->XTLFIPW & RCC_XTLFIPW_XTLFIPW_Msk);
 }
 
-
 /********************************
 ADC工作时钟选择函数
 功能:ADC工作时钟选择
@@ -506,7 +497,6 @@ uint32_t RCC_PERCLKCON2_ADCCKSEL_Get(void)
 {
 	return (RCC->PERCLKCON2 & RCC_PERCLKCON2_ADCCKSEL_Msk);
 }
-
 
 /********************************
 AHB Master优先级配置函数
@@ -612,7 +602,7 @@ void RCC_Deinit(void)
 	RCC->PERCLKCON3 = 0x00000000;
 	RCC->PERCLKCON4 = 0x00000000;
 	RCC->MPRIL = 0x80000000;
-  RCC->RCLFCON = 0x00000000;
+	RCC->RCLFCON = 0x00000000;
 	//RCC->RCLFTRIM = 0x00000020;
 }
 //Code_End
@@ -626,25 +616,25 @@ SYSCLK_Frequency
 AHBCLK_Frequency 
 APBCLK_Frequency 
 ********************************/
-void RCC_GetClocksFreq(RCC_ClocksType* para)
+void RCC_GetClocksFreq(RCC_ClocksType *para)
 {
-    uint32_t tmp32 = 0,tmp_value = 0;
+	uint32_t tmp32 = 0, tmp_value = 0;
 
 	para->RCHF_Frequency = 0;
 	para->PLL_Frequency = 0;
 	para->SYSCLK_Frequency = 0;
 	para->AHBCLK_Frequency = 0;
 	para->APBCLK_Frequency = 0;
-	
+
 	/* Get RCHF FSEL */
-	if(ENABLE == RCC_RCHFCON_RCHFEN_Getable())
+	if (ENABLE == RCC_RCHFCON_RCHFEN_Getable())
 	{
 		tmp32 = RCC_RCHFCON_FSEL_Get();
-		tmp32 = tmp32 >> RCC_RCHFCON_FSEL_Pos;  
+		tmp32 = tmp32 >> RCC_RCHFCON_FSEL_Pos;
 		/* RCHF clock frequency */
-		if(tmp32==0xf)
+		if (tmp32 == 0xf)
 		{
-			para->RCHF_Frequency = 36000000 ;	
+			para->RCHF_Frequency = 36000000;
 		}
 		else
 		{
@@ -652,98 +642,98 @@ void RCC_GetClocksFreq(RCC_ClocksType* para)
 		}
 	}
 
-	if(ENABLE == RCC_PLLCON_PLLEN_Getable())
+	if (ENABLE == RCC_PLLCON_PLLEN_Getable())
 	{
 		/* Get Pll frequency */
 		tmp32 = RCC_PLLCON_PLLINSEL_Get();
 		tmp32 = tmp32 >> RCC_PLLCON_PLLINSEL_Pos;
-		switch(tmp32)
+		switch (tmp32)
 		{
-			case 0x01: //01:RCLP
-				tmp_value = __RCLP_CLOCK;
-				break;
-			case 0x02: //10:RCHF/256
-				tmp_value = para->RCHF_Frequency/256;
-				break;
-			default: //00/11:XTLF
-				tmp_value = __XTLF_CLOCK;
-				break;
+		case 0x01: //01:RCLP
+			tmp_value = __RCLP_CLOCK;
+			break;
+		case 0x02: //10:RCHF/256
+			tmp_value = para->RCHF_Frequency / 256;
+			break;
+		default: //00/11:XTLF
+			tmp_value = __XTLF_CLOCK;
+			break;
 		}
 		tmp32 = RCC_PLLCON_PLLDB_Get();
 		tmp32 = tmp32 >> RCC_PLLCON_PLLDB_Pos;
 		para->PLL_Frequency = (tmp32 + 1) * tmp_value;
-		if( RCC_PLLCON_PLLOSEL_MUL2 == RCC_PLLCON_PLLOSEL_Get() )
+		if (RCC_PLLCON_PLLOSEL_MUL2 == RCC_PLLCON_PLLOSEL_Get())
 		{
-			para->PLL_Frequency = para->PLL_Frequency*2;
+			para->PLL_Frequency = para->PLL_Frequency * 2;
 		}
 	}
-	
+
 	/* Get SYSCLK source */
-    tmp32 = RCC_SYSCLKSEL_SYSCLKSEL_Get();
-    tmp32 = tmp32 >> RCC_SYSCLKSEL_SYSCLKSEL_Pos;
-    switch (tmp32)
-    {
-        case 0x00:  /* RCHF used as system clock source */
-            para->SYSCLK_Frequency = para->RCHF_Frequency;
-            break;
-        case 0x01:  /* RCLP used as system clock  source */
-            para->SYSCLK_Frequency = __RCLF_CLOCK;
-            break;
-        case 0x02:  /* LSCLK used as system clock  source */
-            para->SYSCLK_Frequency = __XTLF_CLOCK;
-            break;
-        case 0x03:  /* PLL used as system clock  source */
-            para->SYSCLK_Frequency = para->PLL_Frequency;
-            break;
-        default:
-            para->SYSCLK_Frequency = para->RCHF_Frequency;
-            break;
-    }
-	
+	tmp32 = RCC_SYSCLKSEL_SYSCLKSEL_Get();
+	tmp32 = tmp32 >> RCC_SYSCLKSEL_SYSCLKSEL_Pos;
+	switch (tmp32)
+	{
+	case 0x00: /* RCHF used as system clock source */
+		para->SYSCLK_Frequency = para->RCHF_Frequency;
+		break;
+	case 0x01: /* RCLP used as system clock  source */
+		para->SYSCLK_Frequency = __RCLF_CLOCK;
+		break;
+	case 0x02: /* LSCLK used as system clock  source */
+		para->SYSCLK_Frequency = __XTLF_CLOCK;
+		break;
+	case 0x03: /* PLL used as system clock  source */
+		para->SYSCLK_Frequency = para->PLL_Frequency;
+		break;
+	default:
+		para->SYSCLK_Frequency = para->RCHF_Frequency;
+		break;
+	}
+
 	/* Get AHB PRES */
-    tmp32 = RCC_SYSCLKSEL_AHBPRES_Get();
-    tmp32 = tmp32 >> RCC_SYSCLKSEL_AHBPRES_Pos;  
-    switch(tmp32)
-    {
-        case 0x04: //100:DIV2
-            para->AHBCLK_Frequency = para->SYSCLK_Frequency/2;
-            break;
-        case 0x05: //101:DIV4
-            para->AHBCLK_Frequency = para->SYSCLK_Frequency/4;
-            break;
-        case 0x06: //110:DIV8
-            para->AHBCLK_Frequency = para->SYSCLK_Frequency/8;
-            break;
-        case 0x07: //111:DIV16
-            para->AHBCLK_Frequency = para->SYSCLK_Frequency/16;
-            break;
-        default: //0XX:DIV1
-            para->AHBCLK_Frequency = para->SYSCLK_Frequency;
-            break;
-    }
+	tmp32 = RCC_SYSCLKSEL_AHBPRES_Get();
+	tmp32 = tmp32 >> RCC_SYSCLKSEL_AHBPRES_Pos;
+	switch (tmp32)
+	{
+	case 0x04: //100:DIV2
+		para->AHBCLK_Frequency = para->SYSCLK_Frequency / 2;
+		break;
+	case 0x05: //101:DIV4
+		para->AHBCLK_Frequency = para->SYSCLK_Frequency / 4;
+		break;
+	case 0x06: //110:DIV8
+		para->AHBCLK_Frequency = para->SYSCLK_Frequency / 8;
+		break;
+	case 0x07: //111:DIV16
+		para->AHBCLK_Frequency = para->SYSCLK_Frequency / 16;
+		break;
+	default: //0XX:DIV1
+		para->AHBCLK_Frequency = para->SYSCLK_Frequency;
+		break;
+	}
 
 	/* Get APB PRES */
-    tmp32 = RCC_SYSCLKSEL_APBPRES_Get();
-    tmp32 = tmp32 >> RCC_SYSCLKSEL_APBPRES_Pos; 
+	tmp32 = RCC_SYSCLKSEL_APBPRES_Get();
+	tmp32 = tmp32 >> RCC_SYSCLKSEL_APBPRES_Pos;
 	/* APB clock frequency */
-    switch(tmp32)
-    {
-        case 0x04: //100:DIV2
-            para->APBCLK_Frequency = para->AHBCLK_Frequency/2;
-            break;
-        case 0x05: //101:DIV4
-            para->APBCLK_Frequency = para->AHBCLK_Frequency/4;
-            break;
-        case 0x06: //110:DIV8
-            para->APBCLK_Frequency = para->AHBCLK_Frequency/8;
-            break;
-        case 0x07: //111:DIV16
-            para->APBCLK_Frequency = para->AHBCLK_Frequency/16;
-            break;
-        default: //0XX:DIV1
-            para->APBCLK_Frequency = para->AHBCLK_Frequency;
-            break;
-    }
+	switch (tmp32)
+	{
+	case 0x04: //100:DIV2
+		para->APBCLK_Frequency = para->AHBCLK_Frequency / 2;
+		break;
+	case 0x05: //101:DIV4
+		para->APBCLK_Frequency = para->AHBCLK_Frequency / 4;
+		break;
+	case 0x06: //110:DIV8
+		para->APBCLK_Frequency = para->AHBCLK_Frequency / 8;
+		break;
+	case 0x07: //111:DIV16
+		para->APBCLK_Frequency = para->AHBCLK_Frequency / 16;
+		break;
+	default: //0XX:DIV1
+		para->APBCLK_Frequency = para->AHBCLK_Frequency;
+		break;
+	}
 }
 
 /********************************
@@ -756,33 +746,33 @@ void RCC_PERCLK_SetableEx(uint32_t periph_def, FunState NewState)
 {
 	__IO uint32_t *p_reg = 0;
 	uint32_t TempREG;
-	
-    switch((periph_def & 0x0F000000))
-    {
-		case 0x01000000:
-			p_reg = &(RCC->PERCLKCON1);
-			break;
-		
-		case 0x02000000:
-			p_reg = &(RCC->PERCLKCON2);
-			break;
-		
-		case 0x03000000:
-			p_reg = &(RCC->PERCLKCON3);
-			break;
-		
-		case 0x04000000:
-			p_reg = &(RCC->PERCLKCON4);
-			break;
-		
-		default:
-			break;
-    }
-	if(p_reg)
+
+	switch ((periph_def & 0x0F000000))
+	{
+	case 0x01000000:
+		p_reg = &(RCC->PERCLKCON1);
+		break;
+
+	case 0x02000000:
+		p_reg = &(RCC->PERCLKCON2);
+		break;
+
+	case 0x03000000:
+		p_reg = &(RCC->PERCLKCON3);
+		break;
+
+	case 0x04000000:
+		p_reg = &(RCC->PERCLKCON4);
+		break;
+
+	default:
+		break;
+	}
+	if (p_reg)
 	{
 		periph_def &= 0x000000FF;
 		TempREG = (0x1U << periph_def);
-		
+
 		if (NewState != DISABLE)
 		{
 			*p_reg |= TempREG;
@@ -799,7 +789,7 @@ RCHF初始化函数
 功能:对RCHF进行初始化
 输入：RCHF频率和使能
  ********************************/
-void RCC_RCHF_Init(RCC_RCHF_InitTypeDef* para)
+void RCC_RCHF_Init(RCC_RCHF_InitTypeDef *para)
 {
 	RCC_RCHFCON_FSEL_Set(para->FSEL);
 	RCC_RCHFCON_RCHFEN_Setable(para->RCHFEN);
@@ -811,8 +801,8 @@ void RCC_RCHF_Init(RCC_RCHF_InitTypeDef* para)
 输入：PLL倍频数
  ********************************/
 void RCC_PLLDB_WriteEx(uint32_t SetValue)
-{	
-	RCC_PLLCON_PLLDB_Set(SetValue<<RCC_PLLCON_PLLDB_Pos);
+{
+	RCC_PLLCON_PLLDB_Set(SetValue << RCC_PLLCON_PLLDB_Pos);
 }
 /********************************
 读取PLL倍频函数
@@ -822,9 +812,9 @@ void RCC_PLLDB_WriteEx(uint32_t SetValue)
 uint32_t RCC_PLLDB_ReadEx(void)
 {
 	uint32_t tmpreg;
-	
+
 	tmpreg = RCC_PLLCON_PLLDB_Get();
-	return (tmpreg>>RCC_PLLCON_PLLDB_Pos);
+	return (tmpreg >> RCC_PLLCON_PLLDB_Pos);
 }
 
 /********************************
@@ -832,7 +822,7 @@ PLL初始化函数
 功能:对PLL进行初始化
 输入：对PLL设置的相关参数
  ********************************/
-void RCC_PLL_Init(RCC_PLL_InitTypeDef* para)
+void RCC_PLL_Init(RCC_PLL_InitTypeDef *para)
 {
 	RCC_PLLDB_WriteEx(para->PLLDB);
 	RCC_PLLCON_PLLOSEL_Set(para->PLLOSEL);
@@ -841,7 +831,7 @@ void RCC_PLL_Init(RCC_PLL_InitTypeDef* para)
 }
 
 /* 系统时钟初始化 */
-void RCC_SysClk_Init(RCC_SYSCLK_InitTypeDef* para)
+void RCC_SysClk_Init(RCC_SYSCLK_InitTypeDef *para)
 {
 	RCC_SYSCLKSEL_SYSCLKSEL_Set(para->SYSCLKSEL);
 	RCC_SYSCLKSEL_AHBPRES_Set(para->AHBPRES);
@@ -860,35 +850,35 @@ rchf常温校准值载入函数
 			ClkMode 3 = 24M
 			ClkMode 4 = 32M
  ********************************/
-void RCC_Init_RCHF_Trim( uint8_t ClkMode )
+void RCC_Init_RCHF_Trim(uint8_t ClkMode)
 {
 	uint32_t Temp32;
-	
-	if( ClkMode == 1 )	//8M
+
+	if (ClkMode == 1) //8M
 	{
 		Temp32 = const_rchf_Trim8;
 	}
-	else if( ClkMode == 2 )//16M
+	else if (ClkMode == 2) //16M
 	{
 		Temp32 = const_rchf_Trim16;
 	}
-	else if( ClkMode == 3 )//24M
+	else if (ClkMode == 3) //24M
 	{
 		Temp32 = const_rchf_Trim24;
 	}
-	else if( ClkMode == 4 )//36M
+	else if (ClkMode == 4) //36M
 	{
 		Temp32 = const_rchf_Trim36;
 	}
-	else//默认8M
+	else //默认8M
 	{
 		Temp32 = const_rchf_Trim8;
 	}
-	
-	if( ((Temp32>>16)&0x0000FFFF) == ((~Temp32)&0x0000FFFF) )	//正反码校验判断
+
+	if (((Temp32 >> 16) & 0x0000FFFF) == ((~Temp32) & 0x0000FFFF)) //正反码校验判断
 	{
-		RCC_RCHFTRIM_Write(Temp32&0x0000007F);
-	}	
+		RCC_RCHFTRIM_Write(Temp32 & 0x0000007F);
+	}
 	else
 	{
 		RCC_RCHFTRIM_Write(0x00000040);
