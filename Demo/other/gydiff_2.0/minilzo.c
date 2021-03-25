@@ -31,8 +31,6 @@
  *   http://www.oberhumer.com/opensource/lzo/
  */
 
-#define D_BITS 8 /* 决定压缩等级的关键因素 即给work区 2^8*2 的空间 该值需要保持在 6-18 */
-
 #define __LZO_IN_MINILZO 1
 
 #if defined(LZO_CFG_FREESTANDING)

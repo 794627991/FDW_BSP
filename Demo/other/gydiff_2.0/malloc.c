@@ -16,6 +16,7 @@
 *********************************************************************************************************
 */
 #include "malloc.h"
+#include "stdio.h"
 
 /* 内存池(4字节对齐) */
 /*__align(4)*/ u8 membase[MEM_MAX_SIZE]; /* 内部SRAM内存池 */
@@ -98,7 +99,7 @@ void ram_set(void)
     volatile u32 i = 0;
     for (i = 0; i < memtblsize; i++)
     {
-        if (!(mallco_dev.memmap[i] & Protect))
+        if (!(mallco_dev.memmap[i] & Malloc_Protect))
         {
             mallco_dev.memmap[i] = 0; /* 非保护区清0 */
             mymemset(&mallco_dev.membase[i * memblksize], 0, memblksize);
@@ -149,32 +150,6 @@ u32 mem_malloc(u32 size, u8 needprotect)
     if (size % memblksize)
         nmemb++;
 
-    // for (offset = memtblsize - 1; offset >= 0; offset--) /* 搜索整个内存控制区 */
-    // {
-    //     if (!mallco_dev.memmap[offset])
-    //         cmemb++; /* 连续空内存块数增加 */
-    //     else
-    //     {
-    //         cmemb = 0; //连续内存块清零
-    //         if (offset >= (mallco_dev.memmap[offset] & ReProtect))
-    //             offset -= ((mallco_dev.memmap[offset] & ReProtect) - 1); /* 当内存块占用的大小 */
-    //         else
-    //             break; /* 如果不够减，说明内存池已经不够用了 */
-    //     }
-    //     if (cmemb == nmemb) /* 找到了连续nmemb个空内存块 */
-    //     {
-    //         for (i = 0; i < nmemb; i++) /* 标注内存块非空 */
-    //         {
-    //             if (needprotect)
-    //                 mallco_dev.memmap[offset + i] = (nmemb | Protect);
-    //             else
-    //                 mallco_dev.memmap[offset + i] = nmemb;
-    //         }
-    //         enable_irq;
-    //         return (offset * memblksize); /* 返回偏移地址 */
-    //     }
-    // }
-
     if (memtblsize > nmemb)
     {
         offset = memtblsize - nmemb;
@@ -187,8 +162,8 @@ u32 mem_malloc(u32 size, u8 needprotect)
                     if (mallco_dev.memmap[offset + i - 1] == mallco_dev.memmap[offset + i])
                     {
                         /* 说明落点在连续已被占有内存块内 */
-                        if (offset + i > (mallco_dev.memmap[offset + i] & ReProtect))
-                            offset = offset + i - (mallco_dev.memmap[offset + i] & ReProtect);
+                        if (offset + i > (mallco_dev.memmap[offset + i] & Malloc_ReProtect))
+                            offset = offset + i - (mallco_dev.memmap[offset + i] & Malloc_ReProtect);
                         else
                             break;
                     }
@@ -211,7 +186,7 @@ u32 mem_malloc(u32 size, u8 needprotect)
             for (i = 0; i < nmemb; i++) /* 标注内存块非空 */
             {
                 if (needprotect)
-                    mallco_dev.memmap[offset + i] = (nmemb | Protect);
+                    mallco_dev.memmap[offset + i] = (nmemb | Malloc_Protect);
                 else
                 {
                     mallco_dev.memmap[offset + i] = nmemb;
@@ -244,9 +219,9 @@ u8 mem_free(u32 offset)
     }
     if (offset < memsize) /* 偏移在内存池内 */
     {
-        int index = offset / MEM_BLOCK_SIZE;                /* 偏移所在内存块号码 */
-        int nmemb = (mallco_dev.memmap[index] & ReProtect); /* 内存块数量 */
-        for (i = 0; i < nmemb; i++)                         /* 内存块清零 */
+        int index = offset / MEM_BLOCK_SIZE;                       /* 偏移所在内存块号码 */
+        int nmemb = (mallco_dev.memmap[index] & Malloc_ReProtect); /* 内存块数量 */
+        for (i = 0; i < nmemb; i++)                                /* 内存块清零 */
         {
             mallco_dev.memmap[index + i] = 0;
         }
@@ -271,6 +246,7 @@ void __myfree(void *ptr)
         return;
     offset = (u32)((u8 *)ptr - mallco_dev.membase);
     mem_free(offset); /* 释放内存 */
+    printf("memuse:%d\r\n", mem_perused());
 }
 /*
 *********************************************************************************************************
@@ -284,6 +260,7 @@ void __myfree(void *ptr)
 void *__mymalloc(u32 size)
 {
     u32 offset = mem_malloc(size, 0);
+    printf("memuse:%d\r\n", mem_perused());
     if (offset == 0XFFFFFFFF)
         return 0;
     else
@@ -325,7 +302,7 @@ void *__myrealloc(void *ptr, u32 size, u8 needprotect)
     else
     {
         mymemcpy((void *)(mallco_dev.membase + offset), ptr, size); /* 拷贝旧内存内容到新内存 */
-        myfree(ptr);                                                     /* 释放旧内存 */
+        myfree(ptr);                                                /* 释放旧内存 */
         return (void *)(mallco_dev.membase + offset);               /* 返回新内存首地址 */
     }
 }

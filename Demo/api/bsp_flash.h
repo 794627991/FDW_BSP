@@ -46,8 +46,14 @@ extern "C"
 #define APP1ENDADR 0X28000
 #endif
 
-#define FlashStartAdr (BOOTENDADR - FlashEraseSize)    /* 在BOOT区，用于存储当前运行的APP的起始地址 */
-#define BOOTSIZE (BOOTENDADR / FlashEraseSize)         /* BOOT区扇区块大小  */
+#ifndef PATCHSIZE
+#define PATCHSIZE 0
+#endif
+
+#define PATCHADR (BOOTENDADR - PATCHSIZE)
+#define FlashStartAdr (BOOTENDADR - PATCHSIZE - FlashEraseSize) /* 在BOOT区，用于存储当前运行的APP的起始地址 */
+#define BOOTSIZE (BOOTENDADR / FlashEraseSize)                  /* BOOT区扇区块大小  */
+#define PATCHDIVSIZE (PATCHSIZE / FlashEraseSize)
 #define APPDIVSIZE (APP1ENDADR / FlashEraseSize)       /* APP分界扇区块大小,即 APP1ENDADR/0x200 APPMAXDIVSIZE-APPDIVSIZE 就是APP2扇区块大小 APPDIVSIZE - BOOTSIZE 就是 APP1扇区块大小*/
 #define APP2ENDADR (FlashAllSize - FlashEraseSize * 2) /* 全部可用APP块大小(包含BOOT区大小)，因为Flash的最后两个扇区留作备用 */
 #define APPMAXDIVSIZE (APP2ENDADR / FlashEraseSize)    /* 全部可用扇区块大小 */
@@ -80,9 +86,11 @@ extern "C"
     typedef uint8_t (*gy_updata)(uint8_t *buf, uint16_t len, Upstruct *UpStc);
 
     /****************************函数声明****************************/
+    void FlashMakeSureBoot(void);
     void API_Erase_Sector(uint32_t Adr);
     uint8_t API_UpData(uint8_t *buf, uint16_t len, Upstruct *UpStc);
     uint8_t Flash_Erase_Sector(uint16_t SectorNum, uint32_t OperateKey);
+    uint8_t Flash_App_Erase_Sector(uint16_t SectorNum, uint32_t OperateKey, uint32_t APP_Start_Adr);
     uint8_t Flsah_Write_String(uint32 prog_addr, uint8_t *prog_data, uint16_t Len, uint32_t OperateKey);
 
 #ifdef __cplusplus

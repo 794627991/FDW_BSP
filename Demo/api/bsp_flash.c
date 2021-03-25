@@ -107,9 +107,6 @@ uint8_t Flash_Erase_Sector(uint16_t SectorNum, uint32_t OperateKey)
     return 0;
 }
 
-#if API_UseDataUp > 0
-Upstruct UPstr; /* 结构体定义 */
-
 /*
 *********************************************************************************************************
 *	函 数 名: Flash_App_Erase_Sector
@@ -164,6 +161,27 @@ uint8_t Flash_App_Erase_Sector(uint16_t SectorNum, uint32_t OperateKey, uint32_t
 }
 /*
 *********************************************************************************************************
+*	函 数 名: FlashMakeSureBoot
+*	功能说明: 保证 boot 保存的是当前 app 的运行地址
+*	形    参: 无
+*	返 回 值: 无
+*	备    注：无
+*********************************************************************************************************
+*/
+void FlashMakeSureBoot(void)
+{
+    uint32_t APP_Start_Adr = 0, OffSet = 0;
+    memcpy(&APP_Start_Adr, (uint8_t *)FlashStartAdr, 4); /* 从Flash读取当前运行的APP起始地址 */
+    OffSet = SCB->VTOR;
+    if (APP_Start_Adr != OffSet)
+    {
+        APP_Start_Adr = OffSet;
+        API_Erase_Sector(FlashStartAdr);
+        Flsah_Write_String(FlashStartAdr, (uint8_t *)&APP_Start_Adr, 4, FLASHOPKEY);
+    }
+}
+/*
+*********************************************************************************************************
 *	函 数 名: FlashErase
 *	功能说明: 完全擦除另一APP分区
 *	形    参: 无
@@ -182,18 +200,9 @@ uint8_t Flash_App_Erase_Sector(uint16_t SectorNum, uint32_t OperateKey, uint32_t
 */
 uint8_t FlashErase(void)
 {
-    uint32_t APP_Start_Adr = 0, OffSet = 0;
+    uint32_t APP_Start_Adr = 0;
     uint16_t i = 0;
     uint8_t Result = 0;
-
-    memcpy(&APP_Start_Adr, (uint8_t *)FlashStartAdr, 4); /* 从Flash读取当前运行的APP起始地址 */
-    OffSet = SCB->VTOR;
-    if (APP_Start_Adr != OffSet)
-    {
-        APP_Start_Adr = OffSet;
-        API_Erase_Sector(FlashStartAdr);
-        Flsah_Write_String(FlashStartAdr, (uint8_t *)&APP_Start_Adr, 4, FLASHOPKEY);
-    }
 
     if (APP_Start_Adr < APP1ENDADR)
     {
@@ -228,17 +237,8 @@ uint8_t FlashErase(void)
 */
 uint8_t CtsFlashWrite(uint32_t WRADR, uint8_t *buf, uint16_t len)
 {
-    uint32_t APP_Start_Adr = 0, OffSet = 0;
+    uint32_t APP_Start_Adr = 0;
     uint8_t Result = 0;
-    /* 从Flash读取当前运行的APP起始地址 */
-    memcpy(&APP_Start_Adr, (uint8_t *)FlashStartAdr, 4);
-    OffSet = SCB->VTOR;
-    if (APP_Start_Adr != OffSet)
-    {
-        APP_Start_Adr = OffSet;
-        API_Erase_Sector(FlashStartAdr);
-        Flsah_Write_String(FlashStartAdr, (uint8_t *)&APP_Start_Adr, 4, FLASHOPKEY);
-    }
 
     if (APP_Start_Adr < APP1ENDADR)
     {
@@ -261,6 +261,9 @@ uint8_t CtsFlashWrite(uint32_t WRADR, uint8_t *buf, uint16_t len)
 
     return Result;
 }
+
+#if API_UseDataUp > 0
+Upstruct UPstr; /* 结构体定义 */
 /*
 *********************************************************************************************************
 *	函 数 名: API_UpData
