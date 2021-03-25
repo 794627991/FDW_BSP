@@ -1,0 +1,11 @@
+..\..\fdw_download\hex\cjson.o: ..\other\cjson\cJSON.c
+..\..\fdw_download\hex\cjson.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\fdw_download\hex\cjson.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\fdw_download\hex\cjson.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+..\..\fdw_download\hex\cjson.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\fdw_download\hex\cjson.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\float.h
+..\..\fdw_download\hex\cjson.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\limits.h
+..\..\fdw_download\hex\cjson.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\ctype.h
+..\..\fdw_download\hex\cjson.o: ..\other\cjson\cJSON.h
+..\..\fdw_download\hex\cjson.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+..\..\fdw_download\hex\cjson.o: ..\api\malloc.h
