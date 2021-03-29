@@ -26,17 +26,25 @@
  */
 
 #ifndef BSPATCH_H
-# define BSPATCH_H
+#define BSPATCH_H
 
-# include <stdint.h>
+#include <stdint.h>
 
 struct bspatch_stream
 {
-	void* opaque;
-	int (*read)(const struct bspatch_stream* stream, void* buffer, int length);
+	void *opaque;
+	int (*read)(const struct bspatch_stream *stream, void *buffer, int length, uint8_t op);
 };
 
-int bspatch(const uint8_t* old, int64_t oldsize, uint8_t* new, int64_t newsize, struct bspatch_stream* stream);
+typedef struct bspatch
+{
+	uint32_t OldAdr;
+	uint32_t NewAdr;
+	int64_t OldSize;
+	int64_t NewSize;
+} bspatchtype;
+
+int bspatch(bspatchtype *bspatch, struct bspatch_stream *stream);
 int patch(void);
 
 #endif

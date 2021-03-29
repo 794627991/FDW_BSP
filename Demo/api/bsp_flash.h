@@ -53,10 +53,9 @@ extern "C"
 #define PATCHADR (BOOTENDADR - PATCHSIZE)
 #define FlashStartAdr (BOOTENDADR - PATCHSIZE - FlashEraseSize) /* 在BOOT区，用于存储当前运行的APP的起始地址 */
 #define BOOTSIZE (BOOTENDADR / FlashEraseSize)                  /* BOOT区扇区块大小  */
-#define PATCHDIVSIZE (PATCHSIZE / FlashEraseSize)
-#define APPDIVSIZE (APP1ENDADR / FlashEraseSize)       /* APP分界扇区块大小,即 APP1ENDADR/0x200 APPMAXDIVSIZE-APPDIVSIZE 就是APP2扇区块大小 APPDIVSIZE - BOOTSIZE 就是 APP1扇区块大小*/
-#define APP2ENDADR (FlashAllSize - FlashEraseSize * 2) /* 全部可用APP块大小(包含BOOT区大小)，因为Flash的最后两个扇区留作备用 */
-#define APPMAXDIVSIZE (APP2ENDADR / FlashEraseSize)    /* 全部可用扇区块大小 */
+#define APPDIVSIZE (APP1ENDADR / FlashEraseSize)                /* APP分界扇区块大小,即 APP1ENDADR/0x200 APPMAXDIVSIZE-APPDIVSIZE 就是APP2扇区块大小 APPDIVSIZE - BOOTSIZE 就是 APP1扇区块大小*/
+#define APP2ENDADR (FlashAllSize - FlashEraseSize * 2)          /* 全部可用APP块大小(包含BOOT区大小)，因为Flash的最后两个扇区留作备用 */
+#define APPMAXDIVSIZE (APP2ENDADR / FlashEraseSize)             /* 全部可用扇区块大小 */
 
     typedef struct
     {

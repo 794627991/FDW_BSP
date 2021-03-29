@@ -22,3 +22,4 @@
 ..\..\fdw_download\hex\gylzo.o: ..\api_cfg\API_CFG.h
 ..\..\fdw_download\hex\gylzo.o: ..\app_user\isthisboot.h
 ..\..\fdw_download\hex\gylzo.o: ..\other\gydiff_2.0\patchflash.h
+..\..\fdw_download\hex\gylzo.o: ..\other\gydiff_2.0\bspatch.h

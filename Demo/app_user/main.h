@@ -23,5 +23,6 @@
 #include "12864.h"
 #include "malloc.h"
 #include "cjsontest.h"
+#include "patchflash.h"
 
 #endif

@@ -56,21 +56,25 @@ static int64_t offtin(uint8_t *buf)
     return y;
 }
 
-int bspatch(const uint8_t *old, int64_t oldsize, uint8_t *_new, int64_t newsize, struct bspatch_stream *stream)
+int bspatch(bspatchtype *bspatch, struct bspatch_stream *stream)
 {
+    uint8_t *_new;
     uint8_t buf[8];
     int64_t oldpos, newpos;
     int64_t ctrl[3];
     int64_t i;
 
+    /* old = (uint8_t *)oldadr;*/
+    _new = (uint8_t *)bspatch->NewAdr;
+
     oldpos = 0;
     newpos = 0;
-    while (newpos < newsize)
+    while (newpos < bspatch->NewSize)
     {
         /* Read control data */
         for (i = 0; i <= 2; i++)
         {
-            if (stream->read(stream, buf, 8))
+            if (stream->read(stream, buf, 8, 1))
                 return -1;
             ctrl[i] = offtin(buf);
         };
@@ -78,34 +82,31 @@ int bspatch(const uint8_t *old, int64_t oldsize, uint8_t *_new, int64_t newsize,
         /* Sanity-check */
         if (ctrl[0] < 0 || ctrl[0] > INT_MAX ||
             ctrl[1] < 0 || ctrl[1] > INT_MAX ||
-            newpos + ctrl[0] > newsize)
+            newpos + ctrl[0] > bspatch->NewSize)
             return -1;
 
         /* Read diff string */
-        if (stream->read(stream, _new + newpos, ctrl[0]))
+        if (stream->read(stream, _new + newpos, ctrl[0], 0))
             return -1;
 
         /* Add old data to diff string */
-        patchFlashStart();
-        for (i = 0; i < ctrl[0]; i++)
-            if ((oldpos + i >= 0) && (oldpos + i < oldsize))
-            {
-                patchFlashWDog(i);
-                // _new[newpos + i] += old[oldpos + i];
-                patchFlashAddData(&_new[newpos + i], (uint8_t*)&old[oldpos + i], 0);
-            }
-        patchFlashEnd();
+        // for (i = 0; i < ctrl[0]; i++)
+        //     if ((oldpos + i >= 0) && (oldpos + i < oldsize))
+        //     {
+        //         _new[newpos + i] += old[oldpos + i];
+        //     }
+        patchAddDiff(bspatch, newpos, oldpos, ctrl[0]);
 
         /* Adjust pointers */
         newpos += ctrl[0];
         oldpos += ctrl[0];
 
         /* Sanity-check */
-        if (newpos + ctrl[1] > newsize)
+        if (newpos + ctrl[1] > bspatch->NewSize)
             return -1;
 
         /* Read extra string */
-        if (stream->read(stream, _new + newpos, ctrl[1]))
+        if (stream->read(stream, _new + newpos, ctrl[1], 0))
             return -1;
 
         /* Adjust pointers */
@@ -116,12 +117,12 @@ int bspatch(const uint8_t *old, int64_t oldsize, uint8_t *_new, int64_t newsize,
     return 0;
 }
 
-static int lzo_read(const struct bspatch_stream *stream, void *buffer, int length)
+static int lzo_read(const struct bspatch_stream *stream, void *buffer, int length, uint8_t op)
 {
     int n, err;
     lzoRead *lzo;
     lzo = (lzoRead *)stream->opaque;
-    n = myLzoRead(&err, lzo, buffer, length);
+    n = myLzoRead(&err, lzo, buffer, length, op);
     if (n != length)
         return -1;
     return 0;
@@ -131,36 +132,52 @@ static int lzo_read(const struct bspatch_stream *stream, void *buffer, int lengt
 int patch(void)
 {
     int lzoerr;
-    uint8_t *old, *_new, *patch;
+    uint8_t *old, *_new, *_patch;
     lzoRead *lzo;
     struct bspatch_stream stream;
+    bspatchtype Spatch;
     uint16_t crc1, crc2, level;
-    int64_t oldsize = 0, newsize = 0;
-    uint32_t tsize = 0;
+    uint16_t oldcrc, newcrc;
+    uint32_t patchadr;
 
     /* 打开 patch 文件 ,如果在单片机里，这里需要改成一个地址指针 直接指向 patch */
-    patch = patchGetAdr(2, &tsize);
+    patchadr = patchGetAdr(2, NULL, NULL);
+    _patch = (uint8_t *)patchadr;
 
     /* 打开 old 文件 ,如果在单片机里，这里需要改成一个地址指针 直接指向 OLD APP */
-    old = patchGetAdr(0, (uint32_t *)&oldsize);
+    Spatch.OldAdr = patchGetAdr(0, NULL, NULL);
+    old = (uint8_t *)Spatch.OldAdr;
 
     /* Check for appropriate magic */
-    if (memcmp(patch, "CFSJ", 4) != 0)
+    if (memcmp(_patch, "GYCFSJ", 6) != 0)
     {
         printf("Check for appropriate magic error\r\n");
         return 0;
     }
-    memcpy(&level, patch + 4, 2);
-    memcpy(&crc1, patch + 6, 2);
-    newsize = offtin(patch + 8);
-    if (newsize < 0)
+    memcpy(&level, _patch + 6, 2);
+    memcpy(&crc1, _patch + 8, 2);  /* oldcrc */
+    memcpy(&crc2, _patch + 10, 2); /* newcrc */
+    Spatch.OldSize = offtin(_patch + 16);
+    Spatch.NewSize = offtin(_patch + 24);
+    if (judgeSize(Spatch.OldSize, Spatch.NewSize) == 0)
     {
-        printf("Read lengths from header error\r\n");
+        printf("file size error\r\n");
         return 0;
     }
 
-    /* 模拟 FLASH 的缓存 */
-    _new = patchGetAdr(1, &tsize);
+    oldcrc = LzoCRC(old, Spatch.OldSize);
+    if (oldcrc != crc1)
+    {
+        printf("oldcrc err\r\n");
+        return 0;
+    }
+
+    if ((Spatch.NewAdr = patchGetAdr(1, (uint32_t *)&Spatch.OldSize, (uint32_t *)&Spatch.NewSize)) == 0)
+    {
+        printf("get newadr err\r\n");
+        return 0;
+    }
+    _new = (uint8_t *)Spatch.NewAdr;
 
     if ((NULL == (lzo = myLzoReadOpen(&lzoerr, level))) || (lzoerr != MYLZO_OK))
     {
@@ -169,10 +186,12 @@ int patch(void)
     }
 
     stream.read = lzo_read;
-    lzo->block = patch + 16;
+    lzo->block = _patch + 32;
     stream.opaque = lzo;
-    if (bspatch(old, oldsize, _new, newsize, &stream))
+
+    if (bspatch(&Spatch, &stream))
     {
+        myLzoReadClose(lzo);
         printf("bspatch fail\r\n");
         return 0;
     }
@@ -180,8 +199,8 @@ int patch(void)
     /* Clean up the lzo reads */
     myLzoReadClose(lzo);
 
-    crc2 = LzoCRC(_new, newsize);
-    if (crc1 != crc2)
+    newcrc = LzoCRC(_new, Spatch.NewSize);
+    if (newcrc != crc2)
     {
         printf("crc err\r\n");
         return 0;

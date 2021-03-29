@@ -1,6 +1,7 @@
 ..\..\fdw_download\hex\patchflash.o: ..\other\gydiff_2.0\patchflash.c
 ..\..\fdw_download\hex\patchflash.o: ..\other\gydiff_2.0\patchflash.h
 ..\..\fdw_download\hex\patchflash.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\fdw_download\hex\patchflash.o: ..\other\gydiff_2.0\bspatch.h
 ..\..\fdw_download\hex\patchflash.o: ..\api\bsp_flash.h
 ..\..\fdw_download\hex\patchflash.o: ..\api\bsp_def.h
 ..\..\fdw_download\hex\patchflash.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
@@ -52,3 +53,11 @@
 ..\..\fdw_download\hex\patchflash.o: ..\api\bsp_lib.h
 ..\..\fdw_download\hex\patchflash.o: ..\api\bsp_core.h
 ..\..\fdw_download\hex\patchflash.o: ..\api\bsp_def.h
+..\..\fdw_download\hex\patchflash.o: ..\other\gydiff_2.0\gylzo.h
+..\..\fdw_download\hex\patchflash.o: ..\other\gydiff_2.0\minilzo.h
+..\..\fdw_download\hex\patchflash.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\limits.h
+..\..\fdw_download\hex\patchflash.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+..\..\fdw_download\hex\patchflash.o: ..\other\gydiff_2.0\lzodefs.h
+..\..\fdw_download\hex\patchflash.o: ..\other\gydiff_2.0\lzoconf.h
+..\..\fdw_download\hex\patchflash.o: ..\other\gydiff_2.0\malloc.h
+..\..\fdw_download\hex\patchflash.o: ..\api\myprintf.h

@@ -45,6 +45,6 @@ uint32_t mylzo_d(uint8_t *inbuf, uint8_t *outbuf, uint32_t *dlen, uint32_t limit
 
 lzoRead *myLzoReadOpen(int *err, int level);
 void myLzoReadClose(lzoRead *lzo);
-uint32_t myLzoRead(int *err, lzoRead *lzo, void *buf, uint32_t len);
+uint32_t myLzoRead(int *err, lzoRead *lzo, void *buf, uint32_t len, uint8_t op);
 
 #endif

@@ -85,6 +85,6 @@ void SystemInit (void)
          do not use global variables because this function is called before
          reaching pre-main. RW section maybe overwritten afterwards.          */
   SystemCoreClock = __SYSTEM_CLOCK;
-	SCB->VTOR = 0X4000;//0;//
+	SCB->VTOR = 0x10000;//0;//
   //return;
 }

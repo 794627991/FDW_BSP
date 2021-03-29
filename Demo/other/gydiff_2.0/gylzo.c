@@ -3,30 +3,31 @@
 
 /*
 *********************************************************************************************************
-*	å‡½ æ•° å: LzoCRC
-*	åŠŸèƒ½è¯´æ˜: CRC16
-*	å½¢    å‚:
-*	è¿” å› å€¼:
-*	å¤‡    æ³¨ï¼šæ— 
+*	º¯ Êı Ãû: LzoCRC
+*	¹¦ÄÜËµÃ÷: CRC16
+*	ĞÎ    ²Î:
+*	·µ »Ø Öµ:
+*	±¸    ×¢£ºÎŞ
 *********************************************************************************************************
 */
 uint16_t LzoCRC(uint8_t *ptr, int64_t len)
 {
+    uint32_t LEN = (uint32_t)len;
     uint16_t crc_val = 0xffff;
     uint16_t tmp = 0;
     uint16_t i = 0;
-    while (len > 0)
+    while (LEN > 0)
     {
         crc_val ^= *ptr;
         ptr++;
         for (i = 0; i < 8; i++)
         {
             tmp = crc_val;
-            crc_val >>= 1; /* CRC æ ¡éªŒå­—èŠ‚çš„å³ç§»ï¼Œæœ€ä½ä½åˆ° Cï¼Œæœ€é«˜ä½è¡¥ 0 */
+            crc_val >>= 1; /* CRC Ğ£Ñé×Ö½ÚµÄÓÒÒÆ£¬×îµÍÎ»µ½ C£¬×î¸ßÎ»²¹ 0 */
             if ((tmp & 0x01) == 1)
-                crc_val ^= 0xA001; /* é‡‡ç”¨çš„å¤šé¡¹å¼æ˜¯ï¼š 0xA001 */
+                crc_val ^= 0xA001; /* ²ÉÓÃµÄ¶àÏîÊ½ÊÇ£º 0xA001 */
         }
-        len--;
+        LEN--;
     }
     return (crc_val);
 }
@@ -34,24 +35,24 @@ uint16_t LzoCRC(uint8_t *ptr, int64_t len)
 lzo_uint minilzo_decompress(uint8_t *inbuf, uint32_t inlen, uint8_t *outbuf)
 {
     int r;
-    lzo_uint new_len = (lzo_uint)(-1); //åŠ å¯†å
+    lzo_uint new_len = (lzo_uint)(-1); //¼ÓÃÜºó
     if (lzo_init() != LZO_E_OK)
     {
-        printf("\r\nåˆå§‹åŒ–å¤±è´¥\r\n");
+        printf("\r\n³õÊ¼»¯Ê§°Ü\r\n");
     }
     else
-    {
+    { 
         r = lzo1x_decompress_safe(inbuf, inlen, outbuf, &new_len, NULL);
         if (r == LZO_E_OK)
         {
-            // printf("\r\nè§£å‹åçš„é•¿åº¦ä¸ºï¼š%d\r\n", new_len);
+            printf("\r\n½âÑ¹ºóµÄ³¤¶ÈÎª£º%d\r\n", new_len);
         }
     }
 
     return new_len;
 }
 
-/*è¿”å›-1æ„å‘³ç€å‹ç¼©å¤±è´¥*/
+/*·µ»Ø-1ÒâÎ¶×ÅÑ¹ËõÊ§°Ü*/
 lzo_uint minilzo_compress(uint8_t *inbuf, uint32_t inlen)
 {
     int r;
@@ -62,27 +63,27 @@ lzo_uint minilzo_compress(uint8_t *inbuf, uint32_t inlen)
     wrkmem = malloc((lzo_uint32_t)((1 << D_BITS) * lzo_sizeof_dict_t));
     if (wrkmem == NULL || out == NULL)
     {
-        /*æœ‰ä¸€ä¸ªç”³è¯·å¤±è´¥å°±ä¸åŠ å¯†äº†*/
+        /*ÓĞÒ»¸öÉêÇëÊ§°Ü¾Í²»¼ÓÃÜÁË*/
         printf("mem fail\r\n");
     }
     else
     {
         if (lzo_init() != LZO_E_OK)
         {
-            printf("åˆå§‹åŒ–å¤±è´¥\r\n");
+            printf("³õÊ¼»¯Ê§°Ü\r\n");
         }
         else
         {
             r = lzo1x_1_compress(inbuf, inlen, out, &out_len, wrkmem);
             if (r == LZO_E_OK)
             {
-                // printf("\r\nå‹ç¼©åçš„æ•°æ®é•¿åº¦ä¸ºï¼š%d\r\n", out_len);
-                // printf("\r\nå‹ç¼©æ¯”ä¸º: %.2lf%c\r\n", (float)(((int)inlen - (int)out_len) / (float)inlen) * 100.0, '%');
+                // printf("\r\nÑ¹ËõºóµÄÊı¾İ³¤¶ÈÎª£º%d\r\n", out_len);
+                // printf("\r\nÑ¹Ëõ±ÈÎª: %.2lf%c\r\n", (float)(((int)inlen - (int)out_len) / (float)inlen) * 100.0, '%');
                 if (out_len > inlen)
                 {
-                    /*æ„å‘³ç€è´Ÿå‹ç¼©,ä¿æŒåŸæ ·*/
+                    /*ÒâÎ¶×Å¸ºÑ¹Ëõ,±£³ÖÔ­Ñù*/
                     out_len = (lzo_uint)(-1);
-                    // printf("\r\nå‹ç¼©åæ•°æ®é•¿åº¦æ¯”å‹ç¼©å‰å¤§\r\n");
+                    // printf("\r\nÑ¹ËõºóÊı¾İ³¤¶È±ÈÑ¹ËõÇ°´ó\r\n");
                 }
                 else
                 {
@@ -97,7 +98,7 @@ lzo_uint minilzo_compress(uint8_t *inbuf, uint32_t inlen)
     return out_len;
 }
 
-/* åˆ†åŒ…å‹ç¼©ï¼Œslenï¼šæ¯åŒ…é•¿åº¦ mlenï¼šæ€»é•¿åº¦ */
+/* ·Ö°üÑ¹Ëõ£¬slen£ºÃ¿°ü³¤¶È mlen£º×Ü³¤¶È */
 uint32_t mylzo_c(uint8_t *inbuf, uint8_t *outbuf, uint16_t slen, uint32_t mlen)
 {
     uint16_t crc = 0;
@@ -117,7 +118,7 @@ uint32_t mylzo_c(uint8_t *inbuf, uint8_t *outbuf, uint16_t slen, uint32_t mlen)
         ll = minilzo_compress(inbuf + mm, ss);
         if (ll == (uint32_t)-1)
         {
-            /* æ„å‘³ç€æ›¾ç»å‹ç¼©å¤±è´¥ */
+            /* ÒâÎ¶×ÅÔø¾­Ñ¹ËõÊ§°Ü */
             ll = ss;
             memcpy(outbuf + tll, &G, 1);
             memcpy(outbuf + tll + 5 + ll, &Y, 1);
@@ -128,7 +129,7 @@ uint32_t mylzo_c(uint8_t *inbuf, uint8_t *outbuf, uint16_t slen, uint32_t mlen)
             memcpy(outbuf + tll + 5 + ll, &y, 1);
         }
 
-        /* æ–‡ä»¶æ ¼å¼: g+å‹ç¼©åé•¿åº¦+dat+å‹ç¼©å‰æ•°æ®crc+y */
+        /* ÎÄ¼ş¸ñÊ½: g+Ñ¹Ëõºó³¤¶È+dat+Ñ¹ËõÇ°Êı¾İcrc+y */
         memcpy(outbuf + tll + 1, &ll, 2);
         memcpy(outbuf + tll + 3, inbuf + mm, ll);
         memcpy(outbuf + tll + 3 + ll, &crc, 2);
@@ -139,11 +140,12 @@ uint32_t mylzo_c(uint8_t *inbuf, uint8_t *outbuf, uint16_t slen, uint32_t mlen)
     return tll;
 }
 
-/* è§£å‹ç¼© dlen:è§£å‹åçš„é•¿åº¦ï¼Œè¿”å›å•ä¸ªå‹ç¼©åŒ…é•¿åº¦ */
+/* ½âÑ¹Ëõ dlen:½âÑ¹ºóµÄ³¤¶È£¬·µ»Øµ¥¸öÑ¹Ëõ°ü³¤¶È */
 uint32_t mylzo_d(uint8_t *inbuf, uint8_t *outbuf, uint32_t *dlen, uint32_t limit)
 {
     uint32_t len = 0;
     uint16_t crc1 = 0, crc2 = 0;
+    uint8_t *mbuf;
     *dlen = 0;
     if (inbuf[0] == 'g' || inbuf[0] == 'G')
     {
@@ -152,9 +154,14 @@ uint32_t mylzo_d(uint8_t *inbuf, uint8_t *outbuf, uint32_t *dlen, uint32_t limit
             return 0;
         if (inbuf[5 + len] == 'y' || inbuf[5 + len] == 'Y')
         {
-            if (inbuf[0] == 'g') /* æ›¾ç»åŠ å¯†æˆåŠŸçš„ */
+            if (inbuf[0] == 'g') /* Ôø¾­¼ÓÃÜ³É¹¦µÄ */
             {
-                *dlen = minilzo_decompress(inbuf + 3, len, outbuf);
+                memset(outbuf, 0, limit);
+                if((mbuf = (uint8_t *)mymalloc(len + 1))==NULL)
+                    return 0;
+                memcpy(mbuf, inbuf + 3, len);
+                *dlen = minilzo_decompress(mbuf, len, outbuf);
+                myfree(mbuf);
             }
             else
             {
@@ -231,26 +238,32 @@ uint32_t myLzoWriteClose(int *err, lzoWrite *lzo)
     return lzclen;
 }
 #endif
-
+lzoRead lzo;
 lzoRead *myLzoReadOpen(int *err, int level)
 {
-    lzoRead *lzo = NULL;
+    lzoRead *t = &lzo;
     *err = 0;
-    if ((lzo = (lzoRead *)mymalloc(sizeof(lzoRead))) == NULL)
+    // if ((lzo = (lzoRead *)mymalloc(sizeof(lzoRead))) == NULL)
+    // {
+    //     return NULL;
+    // }
+    // lzo->block = 0;
+    // lzo->level = 0;
+    // lzo->loc = 0;
+    // lzo->lzlen = 0;
+    // lzo->pos = 0;
+    // lzo->work = 0;
+    memset(&lzo, 0, sizeof(lzoRead));
+    if (((lzo.level = level) < 256) || (lzo.work = (uint8_t *)mymalloc(lzo.level + 1)) == NULL)
     {
-        return NULL;
-    }
-    memset(lzo, 0, sizeof(lzoRead));
-    if (((lzo->level = level) < 256) || (lzo->work = (uint8_t *)mymalloc(lzo->level + 1)) == NULL)
-    {
-        myfree(lzo);
+        myfree(t);
         return NULL;
     }
     *err = MYLZO_OK;
-    return lzo;
+    return &lzo;
 }
 
-uint32_t myLzoRead(int *err, lzoRead *lzo, void *buf, uint32_t len)
+uint32_t myLzoRead(int *err, lzoRead *lzo, void *buf, uint32_t len, uint8_t op)
 {
     uint32_t offset = 0;
     lzo->pos = 0;
@@ -258,7 +271,7 @@ uint32_t myLzoRead(int *err, lzoRead *lzo, void *buf, uint32_t len)
 
     while (lzo->pos < len)
     {
-        /* è¿‡ç¨‹ä¸­åªè¦å‡ºç° xloc å¤§äº ONEPACKNUM ä¸€å®šæ˜¯å‡ºç°é—®é¢˜äº† */
+        /* ¹ı³ÌÖĞÖ»Òª³öÏÖ xloc ´óÓÚ ONEPACKNUM Ò»¶¨ÊÇ³öÏÖÎÊÌâÁË */
         if (lzo->loc > lzo->level)
             return 0;
 
@@ -266,7 +279,7 @@ uint32_t myLzoRead(int *err, lzoRead *lzo, void *buf, uint32_t len)
         if (((lzo->loc == 0) && (lzo->lzlen == 0)) ||
             ((lzo->loc == lzo->lzlen) && (lzo->lzlen == lzo->level)))
         {
-            /* è‹¥è§£å‹åé•¿åº¦ä¸åœ¨ç­‰äº lzo->level è¯´æ˜å·²ç»è§£å‹åˆ°æœ€åä¸€åŒ…äº† */
+            /* Èô½âÑ¹ºó³¤¶È²»ÔÚµÈÓÚ lzo->level ËµÃ÷ÒÑ¾­½âÑ¹µ½×îºóÒ»°üÁË */
             if ((offset = mylzo_d(lzo->block, lzo->work, (uint32_t *)&lzo->lzlen, lzo->level)) == 0)
             {
                 *err = 0;
@@ -279,17 +292,29 @@ uint32_t myLzoRead(int *err, lzoRead *lzo, void *buf, uint32_t len)
 
         if ((len + lzo->loc) <= (lzo->lzlen + lzo->pos))
         {
-            if (patchFlashWrite((uint8_t *)buf + lzo->pos, lzo->work + lzo->loc, len - lzo->pos) == 0)
-                return 0;
-
+            if (op)
+            {
+                memcpy((uint8_t *)buf + lzo->pos, lzo->work + lzo->loc, len - lzo->pos);
+            }
+            else
+            {
+                if (patchFlashWrite((uint8_t *)buf + lzo->pos, lzo->work + lzo->loc, len - lzo->pos) == 0)
+                    return 0;
+            }
             lzo->loc += (len - lzo->pos);
             lzo->pos = len;
         }
         else
         {
-            if (patchFlashWrite((uint8_t *)buf + lzo->pos, lzo->work + lzo->loc, lzo->lzlen - lzo->loc) == 0)
-                return 0;
-
+            if (op)
+            {
+                memcpy((uint8_t *)buf + lzo->pos, lzo->work + lzo->loc, lzo->lzlen - lzo->loc);
+            }
+            else
+            {
+                if (patchFlashWrite((uint8_t *)buf + lzo->pos, lzo->work + lzo->loc, lzo->lzlen - lzo->loc) == 0)
+                    return 0;
+            }
             lzo->pos += (lzo->lzlen - lzo->loc);
             lzo->loc = lzo->lzlen;
         }

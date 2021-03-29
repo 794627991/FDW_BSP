@@ -9,3 +9,4 @@
 ..\..\fdw_download\hex\cjson.o: ..\other\cjson\cJSON.h
 ..\..\fdw_download\hex\cjson.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 ..\..\fdw_download\hex\cjson.o: ..\api\malloc.h
+..\..\fdw_download\hex\cjson.o: ..\app_user\isthisboot.h

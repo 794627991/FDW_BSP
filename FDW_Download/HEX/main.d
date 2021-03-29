@@ -99,3 +99,5 @@
 ..\..\fdw_download\hex\main.o: ..\app_user\cjsontest.h
 ..\..\fdw_download\hex\main.o: ..\other\cjson\cJSON.h
 ..\..\fdw_download\hex\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+..\..\fdw_download\hex\main.o: ..\other\gydiff_2.0\patchflash.h
+..\..\fdw_download\hex\main.o: ..\other\gydiff_2.0\bspatch.h

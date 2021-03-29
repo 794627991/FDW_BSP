@@ -6,5 +6,5 @@
 #include "api_define_all.h"
 #include "mian.h"
 #include "uart.h"
-
+#include "patchflash.h"
 #endif

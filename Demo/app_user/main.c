@@ -62,7 +62,7 @@ void uCOS_SystemInit(void)
     GUI_Init();
     debug("\r\n程序已开始运行\r\n");
     SIMLT_I2C_OP_INIT();
-	  debug("\r\n差分升级测试\r\n");
+    //debug("\r\n差分升级测试\r\n");
 }
 
 void uCOS_LowPower(void)
@@ -132,6 +132,16 @@ void uCOS_APP_Uart2(uint8_t *buf, uint16_t len)
 
 void uCOS_APP_Uart3(uint8_t *buf, uint16_t len)
 {
+    uint16_t alen = len;
+    uint8_t re;
+
+    re = patchDownLoad(buf, &alen);
+    if (re == 1)
+    {
+        printf("patchDownLoad ok");
+        return;
+    }
+
     GotoBoot(buf, len);
 
     if (strstr((char *)buf, "pro:"))

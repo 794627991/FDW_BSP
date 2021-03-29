@@ -30,7 +30,7 @@
 #define API_UseDataUp 0      /* 远程升级 大于0开启 */
 #define FlashAllSize 0x40000 /* G045/48固定0x40000 */
 #define BOOTENDADR 0x10000   /* BOOT区的大小 */
-#define PATCHSIZE 0X6000     /* 差分升级块区大小 */
+#define PATCHSIZE 0XB000     /* 差分升级块区大小 */
 #define APP1ENDADR 0x20000   /* APP1和APP2的分界地址 */
 /***********************************************************************
 //---------------------------系统相关设置------------------------------//
@@ -67,7 +67,7 @@
 
 #define U2Rxlen 200
 
-#define U3Rxlen 500
+#define U3Rxlen 700
 
 #define U4Rxlen 1
 

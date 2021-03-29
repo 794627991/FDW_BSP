@@ -165,7 +165,7 @@ int main(void)
     JumpCount = 0;
     //存储在ee或者flash中，操作flash前读取赋值给FlashOpID,平时存非法值，防止误操作
     FlashOpID = 0; //FLASHOPKEY
-
+    patchUpGrade();
     for (;;)
     {
         IWDT_Clr(); //清系统看门狗
