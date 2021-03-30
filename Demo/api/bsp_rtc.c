@@ -202,6 +202,37 @@ int GetTimStmpDif(uint32_t day1, uint32_t day2, uint16_t lmit)
     }
     return i;
 }
+/*
+*********************************************************************************************************
+*	函 数 名: API_StmpToTime
+*	功能说明: 时间戳转时间
+*	形    参: *clk：要转成的时间
+*             Stmp：时间戳
+*	返 回 值: 无
+*	备    注：默认初始时间为1970年1月1日
+*********************************************************************************************************
+*/
+void API_StmpToTime(Calendar_Type *clk, uint32_t Stmp)
+{
+    long d = 0, HH = 0, MM = 0, SS = 0;
+    Calendar_Type tclk;
+    DataType start, end;
+    start.year = 1970;
+    start.month = 1;
+    start.day = 1;
+    SS = Stmp % 60;
+    MM = (Stmp / 60) % 60;
+    HH = (Stmp / 3600) % 24 + 8;
+    d = Stmp / 86400;
+    end = dateDelta(start, d);
+    tclk.time.second = (uint8_t)SS;
+    tclk.time.minute = (uint8_t)MM;
+    tclk.time.hour = (uint8_t)HH;
+    tclk.date.day = (uint8_t)end.day;
+    tclk.date.month = (MONTH)end.month;
+    tclk.date.year = (uint16_t)end.year;
+    API_Calendar(&tclk);
+}
 #if API_UseRTC > 0
 /*
 *********************************************************************************************************

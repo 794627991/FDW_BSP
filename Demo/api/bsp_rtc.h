@@ -155,6 +155,7 @@ extern "C"
     uint32_t GetTimeStamp(DataType day, int cnt);
     int GetTimStmpDif(uint32_t day1, uint32_t day2, uint16_t lmit);
     void API_Calendar(Calendar_Type *CLK);
+    void API_StmpToTime(Calendar_Type *clk, uint32_t Stmp);
 
 #ifdef __cplusplus
 }
