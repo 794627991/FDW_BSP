@@ -2,7 +2,7 @@ Dependencies for Project 'MergeProjectDemo', Target 'APP': (DO NOT MODIFY !)
 CompilerVersion: 5060960::V5.06 update 7 (build 960)::ARMCC
 F (..\api_cfg\API_CFG.h)(0x605D89BB)()
 F (..\api_cfg\user_io_def.h)(0x6051AEF5)()
-F (..\app_user\event.c)(0x6051AEF5)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\event.o --omf_browse ..\..\fdw_download\hex\event.crf --depend ..\..\fdw_download\hex\event.d)
+F (..\app_user\event.c)(0x606EB2B6)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\event.o --omf_browse ..\..\fdw_download\hex\event.crf --depend ..\..\fdw_download\hex\event.d)
 I (..\app_user\event.h)(0x6051AEF5)
 I (..\api\api_define_all.h)(0x6051AEF4)
 I (..\api\bsp_def.h)(0x6051AEF4)
@@ -63,7 +63,7 @@ I (..\api\bsp_iic.h)(0x6051AEF4)
 I (..\api\bsp_led.h)(0x6051AEF5)
 I (..\api\bsp_lptim.h)(0x6051AEF5)
 I (..\api\bsp_lpuart.h)(0x6051AEF5)
-I (..\api\bsp_rtc.h)(0x6051AEF5)
+I (..\api\bsp_rtc.h)(0x6062CD56)
 I (..\api\bsp_spi.h)(0x6051AEF5)
 I (..\api\bsp_uart.h)(0x6051AEF5)
 I (..\api\malloc.h)(0x606172D5)
@@ -91,7 +91,7 @@ I (..\api\useevent.h)(0x6051AEF5)
 I (..\api\bsp_interrupt.h)(0x6051AEF5)
 I (..\api\bsp_init.h)(0x6051AEF4)
 I (..\api\myprintf.h)(0x6051AEF5)
-I (..\api\iot_core.h)(0x6051AEF5)
+I (..\api\iot_core.h)(0x606403A0)
 I (..\api\bootfixapi.h)(0x6051AEF4)
 I (..\api\sha256.h)(0x6051AEF5)
 F (..\app_user\main.c)(0x60617A64)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\main.o --omf_browse ..\..\fdw_download\hex\main.crf --depend ..\..\fdw_download\hex\main.d)
@@ -155,7 +155,7 @@ I (..\api\bsp_iic.h)(0x6051AEF4)
 I (..\api\bsp_led.h)(0x6051AEF5)
 I (..\api\bsp_lptim.h)(0x6051AEF5)
 I (..\api\bsp_lpuart.h)(0x6051AEF5)
-I (..\api\bsp_rtc.h)(0x6051AEF5)
+I (..\api\bsp_rtc.h)(0x6062CD56)
 I (..\api\bsp_spi.h)(0x6051AEF5)
 I (..\api\bsp_uart.h)(0x6051AEF5)
 I (..\api\malloc.h)(0x606172D5)
@@ -183,7 +183,7 @@ I (..\api\useevent.h)(0x6051AEF5)
 I (..\api\bsp_interrupt.h)(0x6051AEF5)
 I (..\api\bsp_init.h)(0x6051AEF4)
 I (..\api\myprintf.h)(0x6051AEF5)
-I (..\api\iot_core.h)(0x6051AEF5)
+I (..\api\iot_core.h)(0x606403A0)
 I (..\api\bootfixapi.h)(0x6051AEF4)
 I (..\api\sha256.h)(0x6051AEF5)
 I (..\app_user\event.h)(0x6051AEF5)
@@ -254,7 +254,7 @@ I (..\api\bsp_iic.h)(0x6051AEF4)
 I (..\api\bsp_led.h)(0x6051AEF5)
 I (..\api\bsp_lptim.h)(0x6051AEF5)
 I (..\api\bsp_lpuart.h)(0x6051AEF5)
-I (..\api\bsp_rtc.h)(0x6051AEF5)
+I (..\api\bsp_rtc.h)(0x6062CD56)
 I (..\api\bsp_spi.h)(0x6051AEF5)
 I (..\api\bsp_uart.h)(0x6051AEF5)
 I (..\api\malloc.h)(0x606172D5)
@@ -282,7 +282,7 @@ I (..\api\useevent.h)(0x6051AEF5)
 I (..\api\bsp_interrupt.h)(0x6051AEF5)
 I (..\api\bsp_init.h)(0x6051AEF4)
 I (..\api\myprintf.h)(0x6051AEF5)
-I (..\api\iot_core.h)(0x6051AEF5)
+I (..\api\iot_core.h)(0x606403A0)
 I (..\api\bootfixapi.h)(0x6051AEF4)
 I (..\api\sha256.h)(0x6051AEF5)
 I (..\other\cjson\cJSON.h)(0x6051AEF9)
@@ -348,7 +348,7 @@ I (..\api\bsp_iic.h)(0x6051AEF4)
 I (..\api\bsp_led.h)(0x6051AEF5)
 I (..\api\bsp_lptim.h)(0x6051AEF5)
 I (..\api\bsp_lpuart.h)(0x6051AEF5)
-I (..\api\bsp_rtc.h)(0x6051AEF5)
+I (..\api\bsp_rtc.h)(0x6062CD56)
 I (..\api\bsp_spi.h)(0x6051AEF5)
 I (..\api\bsp_uart.h)(0x6051AEF5)
 I (..\api\malloc.h)(0x606172D5)
@@ -376,7 +376,7 @@ I (..\api\useevent.h)(0x6051AEF5)
 I (..\api\bsp_interrupt.h)(0x6051AEF5)
 I (..\api\bsp_init.h)(0x6051AEF4)
 I (..\api\myprintf.h)(0x6051AEF5)
-I (..\api\iot_core.h)(0x6051AEF5)
+I (..\api\iot_core.h)(0x606403A0)
 I (..\api\bootfixapi.h)(0x6051AEF4)
 I (..\api\sha256.h)(0x6051AEF5)
 I (..\other\minilzo-2.10\minilzo.h)(0x6051AEF9)
@@ -449,7 +449,7 @@ I (..\api\bsp_iic.h)(0x6051AEF4)
 I (..\api\bsp_led.h)(0x6051AEF5)
 I (..\api\bsp_lptim.h)(0x6051AEF5)
 I (..\api\bsp_lpuart.h)(0x6051AEF5)
-I (..\api\bsp_rtc.h)(0x6051AEF5)
+I (..\api\bsp_rtc.h)(0x6062CD56)
 I (..\api\bsp_spi.h)(0x6051AEF5)
 I (..\api\bsp_uart.h)(0x6051AEF5)
 I (..\api\malloc.h)(0x606172D5)
@@ -477,7 +477,7 @@ I (..\api\useevent.h)(0x6051AEF5)
 I (..\api\bsp_interrupt.h)(0x6051AEF5)
 I (..\api\bsp_init.h)(0x6051AEF4)
 I (..\api\myprintf.h)(0x6051AEF5)
-I (..\api\iot_core.h)(0x6051AEF5)
+I (..\api\iot_core.h)(0x606403A0)
 I (..\api\api_define_all.h)(0x6051AEF4)
 I (..\api\sha256.h)(0x6051AEF5)
 F (..\api\bsp_adc.c)(0x6051AEF4)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\bsp_adc.o --omf_browse ..\..\fdw_download\hex\bsp_adc.crf --depend ..\..\fdw_download\hex\bsp_adc.d)
@@ -845,7 +845,7 @@ I (..\api\bsp_iic.h)(0x6051AEF4)
 I (..\api\bsp_led.h)(0x6051AEF5)
 I (..\api\bsp_lptim.h)(0x6051AEF5)
 I (..\api\bsp_lpuart.h)(0x6051AEF5)
-I (..\api\bsp_rtc.h)(0x6051AEF5)
+I (..\api\bsp_rtc.h)(0x6062CD56)
 I (..\api\bsp_spi.h)(0x6051AEF5)
 I (..\api\bsp_uart.h)(0x6051AEF5)
 I (..\api\malloc.h)(0x606172D5)
@@ -872,7 +872,7 @@ I (..\other\ucosiii\src\os_trace.h)(0x6051AEF9)
 I (..\api\useevent.h)(0x6051AEF5)
 I (..\api\bsp_interrupt.h)(0x6051AEF5)
 I (..\api\myprintf.h)(0x6051AEF5)
-I (..\api\iot_core.h)(0x6051AEF5)
+I (..\api\iot_core.h)(0x606403A0)
 I (..\api\api_define_all.h)(0x6051AEF4)
 I (..\api\bootfixapi.h)(0x6051AEF4)
 I (..\api\sha256.h)(0x6051AEF5)
@@ -1109,8 +1109,8 @@ I (..\lib\fm33G0xx_pmu.h)(0x6051AEF6)
 I (..\lib\fm33G0xx_lpuart.h)(0x6051AEF6)
 I (..\api\bsp_lib.h)(0x6051AEF5)
 I (..\api\bsp_core.h)(0x6051AEF4)
-F (..\api\bsp_rtc.c)(0x6051AEF5)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\bsp_rtc.o --omf_browse ..\..\fdw_download\hex\bsp_rtc.crf --depend ..\..\fdw_download\hex\bsp_rtc.d)
-I (..\api\bsp_rtc.h)(0x6051AEF5)
+F (..\api\bsp_rtc.c)(0x606D68FA)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\bsp_rtc.o --omf_browse ..\..\fdw_download\hex\bsp_rtc.crf --depend ..\..\fdw_download\hex\bsp_rtc.d)
+I (..\api\bsp_rtc.h)(0x6062CD56)
 I (..\api\bsp_def.h)(0x6051AEF4)
 I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E2EB2)
 I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E2EB2)
@@ -1339,9 +1339,9 @@ I (..\other\ucosiii\src\os_trace.h)(0x6051AEF9)
 I (..\api\useevent.h)(0x6051AEF5)
 F (..\api\iot_api.c)(0x6051AEF5)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\iot_api.o --omf_browse ..\..\fdw_download\hex\iot_api.crf --depend ..\..\fdw_download\hex\iot_api.d)
 I (..\api\iot_api.h)(0x6051AEF5)
-F (..\api\iot_bc28_35_95.c)(0x6051AEF5)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\iot_bc28_35_95.o --omf_browse ..\..\fdw_download\hex\iot_bc28_35_95.crf --depend ..\..\fdw_download\hex\iot_bc28_35_95.d)
+F (..\api\iot_bc28_35_95.c)(0x606FEA35)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\iot_bc28_35_95.o --omf_browse ..\..\fdw_download\hex\iot_bc28_35_95.crf --depend ..\..\fdw_download\hex\iot_bc28_35_95.d)
 I (..\api\iot_bc28_35_95.h)(0x6051AEF5)
-I (..\api\iot_core.h)(0x6051AEF5)
+I (..\api\iot_core.h)(0x606403A0)
 I (..\api\api_define_all.h)(0x6051AEF4)
 I (..\api\bsp_def.h)(0x6051AEF4)
 I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E2EB2)
@@ -1401,7 +1401,7 @@ I (..\api\bsp_iic.h)(0x6051AEF4)
 I (..\api\bsp_led.h)(0x6051AEF5)
 I (..\api\bsp_lptim.h)(0x6051AEF5)
 I (..\api\bsp_lpuart.h)(0x6051AEF5)
-I (..\api\bsp_rtc.h)(0x6051AEF5)
+I (..\api\bsp_rtc.h)(0x6062CD56)
 I (..\api\bsp_spi.h)(0x6051AEF5)
 I (..\api\bsp_uart.h)(0x6051AEF5)
 I (..\api\malloc.h)(0x606172D5)
@@ -1433,7 +1433,7 @@ I (..\api\bootfixapi.h)(0x6051AEF4)
 I (..\api\sha256.h)(0x6051AEF5)
 F (..\api\iot_bc260.c)(0x6051AEF5)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\iot_bc260.o --omf_browse ..\..\fdw_download\hex\iot_bc260.crf --depend ..\..\fdw_download\hex\iot_bc260.d)
 I (..\api\iot_bc260.h)(0x6051AEF5)
-I (..\api\iot_core.h)(0x6051AEF5)
+I (..\api\iot_core.h)(0x606403A0)
 I (..\api\api_define_all.h)(0x6051AEF4)
 I (..\api\bsp_def.h)(0x6051AEF4)
 I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E2EB2)
@@ -1493,7 +1493,7 @@ I (..\api\bsp_iic.h)(0x6051AEF4)
 I (..\api\bsp_led.h)(0x6051AEF5)
 I (..\api\bsp_lptim.h)(0x6051AEF5)
 I (..\api\bsp_lpuart.h)(0x6051AEF5)
-I (..\api\bsp_rtc.h)(0x6051AEF5)
+I (..\api\bsp_rtc.h)(0x6062CD56)
 I (..\api\bsp_spi.h)(0x6051AEF5)
 I (..\api\bsp_uart.h)(0x6051AEF5)
 I (..\api\malloc.h)(0x606172D5)
@@ -1523,8 +1523,8 @@ I (..\api\bsp_init.h)(0x6051AEF4)
 I (..\api\myprintf.h)(0x6051AEF5)
 I (..\api\bootfixapi.h)(0x6051AEF4)
 I (..\api\sha256.h)(0x6051AEF5)
-F (..\api\iot_core.c)(0x6051AEF5)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\iot_core.o --omf_browse ..\..\fdw_download\hex\iot_core.crf --depend ..\..\fdw_download\hex\iot_core.d)
-I (..\api\iot_core.h)(0x6051AEF5)
+F (..\api\iot_core.c)(0x6063C972)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\iot_core.o --omf_browse ..\..\fdw_download\hex\iot_core.crf --depend ..\..\fdw_download\hex\iot_core.d)
+I (..\api\iot_core.h)(0x606403A0)
 I (..\api\api_define_all.h)(0x6051AEF4)
 I (..\api\bsp_def.h)(0x6051AEF4)
 I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E2EB2)
@@ -1584,7 +1584,7 @@ I (..\api\bsp_iic.h)(0x6051AEF4)
 I (..\api\bsp_led.h)(0x6051AEF5)
 I (..\api\bsp_lptim.h)(0x6051AEF5)
 I (..\api\bsp_lpuart.h)(0x6051AEF5)
-I (..\api\bsp_rtc.h)(0x6051AEF5)
+I (..\api\bsp_rtc.h)(0x6062CD56)
 I (..\api\bsp_spi.h)(0x6051AEF5)
 I (..\api\bsp_uart.h)(0x6051AEF5)
 I (..\api\malloc.h)(0x606172D5)
@@ -1617,7 +1617,7 @@ I (..\api\sha256.h)(0x6051AEF5)
 I (..\api\iot_bc28_35_95.h)(0x6051AEF5)
 F (..\api\iot_n23.c)(0x6051AEF5)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\iot_n23.o --omf_browse ..\..\fdw_download\hex\iot_n23.crf --depend ..\..\fdw_download\hex\iot_n23.d)
 I (..\api\iot_n23.h)(0x6051AEF5)
-I (..\api\iot_core.h)(0x6051AEF5)
+I (..\api\iot_core.h)(0x606403A0)
 I (..\api\api_define_all.h)(0x6051AEF4)
 I (..\api\bsp_def.h)(0x6051AEF4)
 I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E2EB2)
@@ -1677,7 +1677,7 @@ I (..\api\bsp_iic.h)(0x6051AEF4)
 I (..\api\bsp_led.h)(0x6051AEF5)
 I (..\api\bsp_lptim.h)(0x6051AEF5)
 I (..\api\bsp_lpuart.h)(0x6051AEF5)
-I (..\api\bsp_rtc.h)(0x6051AEF5)
+I (..\api\bsp_rtc.h)(0x6062CD56)
 I (..\api\bsp_spi.h)(0x6051AEF5)
 I (..\api\bsp_uart.h)(0x6051AEF5)
 I (..\api\malloc.h)(0x606172D5)
@@ -2035,7 +2035,7 @@ I (..\device\Include\core_cmfunc.h)(0x6051AEF5)
 I (..\device\Include\system_FM33G0XX.h)(0x6051AEF5)
 I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E2EB2)
 I (..\lib\fm33g0xx_conf.h)(0x6051AEF5)
-F (..\other\gydiff_2.0\bspatch.c)(0x60615D40)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\bspatch.o --omf_browse ..\..\fdw_download\hex\bspatch.crf --depend ..\..\fdw_download\hex\bspatch.d)
+F (..\other\gydiff_2.0\bspatch.c)(0x60617CB5)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\bspatch.o --omf_browse ..\..\fdw_download\hex\bspatch.crf --depend ..\..\fdw_download\hex\bspatch.d)
 I (D:\Keil_v5\ARM\ARMCC\include\limits.h)(0x5E8E2EB2)
 I (..\other\gydiff_2.0\bspatch.h)(0x60615A70)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E2EB2)
@@ -2212,7 +2212,7 @@ I (..\api\bsp_iic.h)(0x6051AEF4)
 I (..\api\bsp_led.h)(0x6051AEF5)
 I (..\api\bsp_lptim.h)(0x6051AEF5)
 I (..\api\bsp_lpuart.h)(0x6051AEF5)
-I (..\api\bsp_rtc.h)(0x6051AEF5)
+I (..\api\bsp_rtc.h)(0x6062CD56)
 I (..\api\bsp_spi.h)(0x6051AEF5)
 I (..\api\bsp_uart.h)(0x6051AEF5)
 I (..\api\malloc.h)(0x606172D5)
@@ -2240,7 +2240,7 @@ I (..\api\useevent.h)(0x6051AEF5)
 I (..\api\bsp_interrupt.h)(0x6051AEF5)
 I (..\api\bsp_init.h)(0x6051AEF4)
 I (..\api\myprintf.h)(0x6051AEF5)
-I (..\api\iot_core.h)(0x6051AEF5)
+I (..\api\iot_core.h)(0x606403A0)
 I (..\api\bootfixapi.h)(0x6051AEF4)
 I (..\api\sha256.h)(0x6051AEF5)
 F (..\device\Source\system_FM33G0XX_boot.c)(0x6051AEF5)()
@@ -2516,7 +2516,7 @@ I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E2EB2)
 F (..\other\GUI\Config\GUIConf.h)(0x6051AEF6)()
 F (..\other\GUI\Config\GUITouchConf.h)(0x6051AEF6)()
 F (..\other\GUI\Config\LCDConf.h)(0x6051AEF6)()
-F (..\other\GUI\LCDDriver\12864.c)(0x6051AEF7)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\12864.o --omf_browse ..\..\fdw_download\hex\12864.crf --depend ..\..\fdw_download\hex\12864.d)
+F (..\other\GUI\LCDDriver\12864.c)(0x606EB16E)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\12864.o --omf_browse ..\..\fdw_download\hex\12864.crf --depend ..\..\fdw_download\hex\12864.d)
 I (..\other\GUI\LCDDriver\12864.h)(0x6051AEF7)
 I (..\api\api_define_all.h)(0x6051AEF4)
 I (..\api\bsp_def.h)(0x6051AEF4)
@@ -2577,7 +2577,7 @@ I (..\api\bsp_iic.h)(0x6051AEF4)
 I (..\api\bsp_led.h)(0x6051AEF5)
 I (..\api\bsp_lptim.h)(0x6051AEF5)
 I (..\api\bsp_lpuart.h)(0x6051AEF5)
-I (..\api\bsp_rtc.h)(0x6051AEF5)
+I (..\api\bsp_rtc.h)(0x6062CD56)
 I (..\api\bsp_spi.h)(0x6051AEF5)
 I (..\api\bsp_uart.h)(0x6051AEF5)
 I (..\api\malloc.h)(0x606172D5)
@@ -2605,7 +2605,7 @@ I (..\api\useevent.h)(0x6051AEF5)
 I (..\api\bsp_interrupt.h)(0x6051AEF5)
 I (..\api\bsp_init.h)(0x6051AEF4)
 I (..\api\myprintf.h)(0x6051AEF5)
-I (..\api\iot_core.h)(0x6051AEF5)
+I (..\api\iot_core.h)(0x606403A0)
 I (..\api\bootfixapi.h)(0x6051AEF4)
 I (..\api\sha256.h)(0x6051AEF5)
 F (..\other\GUI\LCDDriver\LCDMem.c)(0x6051AEF7)(--c99 -c --cpu Cortex-M0 -g -O0 --apcs=interwork --split_sections -I ..\api_cfg -I ..\api -I ..\app_user -I ..\device -I ..\device\Include -I ..\device\Source\ARM -I ..\lib -I ..\other\cjson -I ..\other\GUI\Config -I ..\other\GUI\Core -I ..\other\GUI\LCDDriver -I ..\other\GUI\Widget -I ..\other\GUI\WM -I ..\other\gzip -I ..\other\minilzo-2.10 -I ..\other\quicklz -I ..\other\ucosiii\ports -I ..\other\ucosiii\src -I ..\other\gydiff_2.0-ID:\Keil_v5\ARM\PACK\Keil\FM33G0XX_DFP\0.3.03G\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="533" -D__VTOR_PRESENT -D__DEBUG -D__FILE_INCOMPLETE-o ..\..\fdw_download\hex\lcdmem.o --omf_browse ..\..\fdw_download\hex\lcdmem.crf --depend ..\..\fdw_download\hex\lcdmem.d)

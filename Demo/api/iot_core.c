@@ -59,12 +59,25 @@ __weak uint8_t iotRxDeal(void)
     return 1;
 }
 /* 供参考 */
-__weak void NBTxDeal(void){};
+static uphandle curUpOrder = NULL;
+void iotUpOrder(uphandle order)
+{
+    curUpOrder = order;
+}
+
+uphandle getIotUpOrder(void)
+{
+    return curUpOrder;
+}
+
 /* 供参考 */
 __weak uint8_t iotTxDeal(void)
 {
     /* 心跳在这里添加 */
-    NBTxDeal();
+    if (curUpOrder != NULL)
+    {
+        curUpOrder();
+    }
     return 0;
 }
 /*
@@ -139,6 +152,7 @@ uint8_t iot_init(iot_foo_type *FOO)
     DelComMessage(iotQuene);
 
     memset(&iot, 0, sizeof(iot));
+    curUpOrder = NULL;
     return result;
 }
 /*

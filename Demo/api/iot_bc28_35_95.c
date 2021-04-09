@@ -19,15 +19,15 @@ const cmd_type DIC_INT(MODULE)[] = {
     {"cpsm", "AT+CPSMS=1\r\n", NULL, "OK", NULL, 2, 1, "cfun0", "cfun0", "cfun0"},
     {"cfun0", "AT+CFUN=0\r\n", NULL, "OK", NULL, 10, 1, "ncnf", "end2", "end2"},
     {"ncnf", "AT+NCONFIG=CELL_RESELECTION,TRUE\r\n", NULL, "OK", NULL, 2, 1, "band", "band", "band"},
-#if UseNBBand == USE_Band_3
-    {"band", "AT+NBAND=3\r\n", NULL, "OK", NULL, 2, 1, "end2", "end2", "end2"}, //AT+NBAND=3,5,8\r\n  设置波特率
-#endif
-#if UseNBBand == USE_Band_5
-    {"band", "AT+NBAND=5\r\n", NULL, "OK", NULL, 2, 1, "end2", "end2", "end2"}, //AT+NBAND=3,5,8\r\n  设置波特率
-#endif
-#if UseNBBand == USE_Band_8
-    {"band", "AT+NBAND=8\r\n", NULL, "OK", NULL, 2, 1, "end2", "end2", "end2"}, //AT+NBAND=3,5,8\r\n  设置波特率
-#endif
+// #if UseNBBand == USE_Band_3
+//     {"band", "AT+NBAND=3\r\n", NULL, "OK", NULL, 2, 1, "end2", "end2", "end2"}, //AT+NBAND=3,5,8\r\n  设置波特率
+// #endif
+// #if UseNBBand == USE_Band_5
+//     {"band", "AT+NBAND=5\r\n", NULL, "OK", NULL, 2, 1, "end2", "end2", "end2"}, //AT+NBAND=3,5,8\r\n  设置波特率
+// #endif
+// #if UseNBBand == USE_Band_8
+//     {"band", "AT+NBAND=8\r\n", NULL, "OK", NULL, 2, 1, "end2", "end2", "end2"}, //AT+NBAND=3,5,8\r\n  设置波特率
+// #endif
 #if UseNBBand == USE_Band_All
     {"band", "AT+NBAND=3,5,8\r\n", NULL, "OK", NULL, 2, 1, "end2", "end2", "end2"}, //AT+NBAND=3,5,8\r\n  设置波特率
 #endif
@@ -80,7 +80,7 @@ const cmd_type DIC_COAP(MODULE)[] = {
     {"cpsm", "AT+CPSMS=1\r\n", NULL, "OK", NULL, 2, 1, "psmr", "psmr", "psmr"},
     {"psmr", "AT+NPSMR=1\r\n", NULL, "OK", NULL, 2, 1, "con0", "con0", "con0"},
     {"con0", "AT+CSCON=0\r\n", NULL, "OK", NULL, 2, 1, "qreg", "qreg", "qreg"},
-    {"qreg", "AT+QREGSWT=0\r\n", NULL, "OK", NULL, 2, 1, "cgsn", "cgsn", "cgsn"}, //手动注册平台
+    {"qreg", "AT+QREGSWT=0\r\n", NULL, "OK", NULL, 2, 1, "qcfg", "qcfg", "qcfg"}, //手动注册平台
     {"cgsn", "AT+CGSN=1\r\n", NULL, NULL, bc28rxdeal, 2, 3, "nccid", "nccid", "nccid"},
     {"nccid", "AT+NCCID\r\n", NULL, NULL, bc28rxdeal, 2, 3, "cimi", "cimi", "cimi"},
     {"cimi", "AT+CIMI\r\n", NULL, "OK", NULL, 2, 3, "cgatt", "cgatt", "cgatt"},
@@ -95,13 +95,48 @@ const cmd_type DIC_COAP(MODULE)[] = {
     {"coap2", "AT+QLWSREGIND=0\r\n", NULL, "QLWEVTIND:3", NULL, 15, 1, "con1", "rst", "rst"}, //等15秒如果还不出直接复位
     {"con1", "AT+CSCON=1\r\n", NULL, "OK", NULL, 2, 1, "txdat", "txdat", "txdat"},
     {"txdat", NULL, iotSend, "OK", NULL, 10, 3, "wait", "end", "end"},
-    {"wait", NULL, NULL, NULL, bc28rxdeal, 1, 60, "txdat", "end", "end"},
+    {"wait", NULL, NULL, NULL, bc28rxdeal, 60, 1, "txdat", "end", "end"},
     /*{"rxdat", NULL, iotRead, NULL, NULL, 0, 1, "wait", "end", "wait"},*/
     {"end", "AT+QLWSREGIND=1\r\n", NULL, "QLWEVTIND:1", NULL, 5, 1, "end1", "end1", "end1"}, //从平台注销
     {"end1", "AT+CFUN=0\r\n", NULL, "OK", NULL, 10, 1, "end2", "end2", "end2"},
     {"end2", NULL, iotEnd, NULL, NULL, 0, 1, NULL, NULL, NULL}};
 
 const cmd_type DIC_ONET(MODULE)[] = {NULL}; //待写
+
+const cmd_type DIC_LWM2M(MODULE)[] = {
+    {"rst", NULL, iotRst, NULL, NULL, 0, 1, "nrb", "end1", "end1"},
+    {"nrb", "AT+NRB\r\n", NULL, "Neul", NULL, 15, 1, "at", "at", "at"},
+    {"at", "AT\r\n", NULL, "OK", NULL, 2, 3, "cgmr", "end2", "end2"}, //at不好使就是模块有问题
+    {"cgmr", "AT+CGMR\r\n", NULL, "OK", NULL, 2, 1, "cfun", "cfun", "cfun"},
+    {"cfun", "AT+CFUN=1\r\n", NULL, "OK", NULL, 10, 2, "creg", "end2", "end2"}, //2次都失败意味着没卡
+    {"creg", "AT+CEREG=1\r\n", NULL, "OK", NULL, 2, 3, "cfunx", "cfunx", "cfunx"},
+    {"cfunx", "AT+CFUN?\r\n", NULL, "CFUN:1", NULL, 3, 3, "cmee", "end2", "end2"},
+    {"cmee", "AT+CMEE=1\r\n", NULL, "OK", NULL, 2, 1, "setcg", "setcg", "setcg"},
+    {"setcg", "AT+CGATT=1\r\n", NULL, "OK", NULL, 2, 1, "cpsm", "cpsm", "cpsm"},
+    {"cpsm", "AT+CPSMS=1\r\n", NULL, "OK", NULL, 2, 1, "psmr", "psmr", "psmr"},
+    {"psmr", "AT+NPSMR=1\r\n", NULL, "OK", NULL, 2, 1, "con0", "con0", "con0"},
+    {"con0", "AT+CSCON=0\r\n", NULL, "OK", NULL, 2, 1, "qreg", "qreg", "qreg"},
+    {"qreg", "AT+QREGSWT=0\r\n", NULL, "OK", NULL, 2, 1, "qcfg", "qcfg", "qcfg"},                     //手动注册平台
+    {"qcfg", "AT+QCFG=\"LWM2M/lifetime\",57600\r\n", NULL, "OK", NULL, 2, 1, "cgsn", "cgsn", "cgsn"}, //设置lwm2m生命周期
+    {"cgsn", "AT+CGSN=1\r\n", NULL, NULL, bc28rxdeal, 2, 3, "nccid", "nccid", "nccid"},
+    {"nccid", "AT+NCCID\r\n", NULL, NULL, bc28rxdeal, 2, 3, "cimi", "cimi", "cimi"},
+    {"cimi", "AT+CIMI\r\n", NULL, "OK", NULL, 2, 3, "cgatt", "cgatt", "cgatt"},
+    {"cgatt", "AT+CGATT?\r\n", NULL, NULL, bc28rxdeal, 2, 60, "csq", "end1", "isyp"},
+    {"isyp", "AT+CSQ\r\n", NULL, NULL, bc28rxdeal, 2, 3, "yp1", "end1", "end1"},
+    {"yp1", "AT+CFUN=0\r\n", NULL, "OK", NULL, 10, 2, "yp2", "end2", "end2"},
+    {"yp2", "AT+NCSEARFCN\r\n", NULL, "OK", NULL, 2, 2, "rst", "end2", "end2"}, //清频点
+    {"csq", "AT+CSQ\r\n", NULL, NULL, bc28rxdeal, 2, 1, "clk", "clk", "clk"},
+    {"clk", "AT+CCLK?\r\n", NULL, NULL, bc28rxdeal, 2, 1, "nustat", "nustat", "nustat"},
+    {"nustat", "AT+NUESTATS\r\n", NULL, NULL, bc28rxdeal, 2, 1, "coap1", "coap1", "coap1"},
+    {"coap1", NULL, bc28SendCoapIpPort, "OK", NULL, 2, 2, "coap2", "coap2", "coap2"},
+    {"coap2", "AT+QLWSREGIND=0\r\n", NULL, "QLWEVTIND:3", NULL, 15, 1, "con1", "rst", "rst"}, //等15秒如果还不出直接复位
+    {"con1", "AT+CSCON=1\r\n", NULL, "OK", NULL, 2, 1, "txdat", "txdat", "txdat"},
+    {"txdat", NULL, iotSend, "OK", NULL, 10, 3, "wait", "end", "end"},
+    {"wait", NULL, NULL, NULL, bc28rxdeal, 60, 1, "txdat", "end", "end"},
+    /*{"rxdat", NULL, iotRead, NULL, NULL, 0, 1, "wait", "end", "wait"},*/
+    {"end", "AT+QLWSREGIND=1\r\n", NULL, "QLWEVTIND:1", NULL, 5, 1, "end1", "end1", "end1"}, //从平台注销
+    {"end1", "AT+CFUN=0\r\n", NULL, "OK", NULL, 10, 1, "end2", "end2", "end2"},
+    {"end2", NULL, iotEnd, NULL, NULL, 0, 1, NULL, NULL, NULL}};
 
 static uint8_t bc28rxdeal(iot_type *iot)
 {
@@ -141,6 +176,10 @@ static uint8_t bc28rxdeal(iot_type *iot)
         /*+NSONMI:1,2*/
         IOTDAT(MODULE).readData = 1;
         iotprintf("%s%c%s", "AT+NSORF=", IOTDAT(MODULE).DGRAM, ",512\r\n");
+    }
+    else if (strstr(buf, "NPSMR:1")) //进入psm
+    {
+        re = 0;
     }
     else if (strstr(buf, "NNMI:"))
     {
@@ -365,10 +404,6 @@ static uint8_t bc28rxdeal(iot_type *iot)
 #endif
         re = 1;
     }
-    else if (strstr(buf, "NPSMR:1")) //进入psm
-    {
-        re = 0;
-    }
 
     return re;
 }
@@ -567,6 +602,12 @@ static void COAP_SEND(MODULE)(uint8_t *buf, uint16_t len)
 static void ONET_SEND(MODULE)(uint8_t *buf, uint16_t len)
 {
 }
+
+static void LWM2M_SEND(MODULE)(uint8_t *buf, uint16_t len)
+{
+    iotprintf("%s%d%s%l%a%s", "AT+QLWULDATA=", len, ",", len, buf, "\r\n");
+}
+
 getcmdinfo_type GETCMD(MODULE)(uint8_t linkmode)
 {
     getcmdinfo_type info;
@@ -580,6 +621,12 @@ getcmdinfo_type GETCMD(MODULE)(uint8_t linkmode)
         info.cmd = (cmd_type *)&DIC_COAP(MODULE);
         info.len = ARRAY_SIZE(DIC_COAP(MODULE));
         info.SendFun = COAP_SEND(MODULE);
+    }
+    else if (linkmode == LWM2M)
+    {
+        info.cmd = (cmd_type *)&DIC_LWM2M(MODULE);
+        info.len = ARRAY_SIZE(DIC_COAP(MODULE));
+        info.SendFun = LWM2M_SEND(MODULE);
     }
     else if (linkmode == OneNET)
     {

@@ -36,6 +36,9 @@ extern "C"
 #ifndef TCPNum
 #define TCPNum 33
 #endif
+#ifndef LWM2M
+#define LWM2M 44
+#endif
 #ifndef UDPNum
 #define UDPNum 55
 #endif
@@ -67,6 +70,10 @@ extern "C"
 #define DIC_COAP(x) _DIC_COAP(x)
 #define _COAP_SEND(x) x##coapsend
 #define COAP_SEND(x) _COAP_SEND(x)
+#define _DIC_LWM2M(x) x##lwm2m
+#define DIC_LWM2M(x) _DIC_LWM2M(x)
+#define _LWM2M_SEND(x) x##lwm2msend
+#define LWM2M_SEND(x) _LWM2M_SEND(x)
 #define _DIC_ONET(x) x##onet
 #define DIC_ONET(x) _DIC_ONET(x)
 #define _ONET_SEND(x) x##onetsend
@@ -161,6 +168,7 @@ extern "C"
     } getcmdinfo_type;
 
     typedef getcmdinfo_type (*getcmd)(uint8_t linkmode);
+    typedef void (*uphandle)(void);
 
     /****************************函数声明****************************/
     extern iot_type *getiot(void);                  /* 获取iot结构体指针 */
@@ -177,6 +185,8 @@ extern "C"
     extern uint16_t iotRxData(iot_type *iot, const char *word);     /* 模块数据解析 固定用法: iotRxData(getiot(), "关键字") */
     extern uint8_t iot_init(iot_foo_type *FOO);                     /* 模块初始化 */
     extern uint8_t iot_start(iot_foo_type *FOO, iot_net_type *NET); /* 模块开始连接 */
+    extern void iotUpOrder(uphandle order);
+    extern uphandle getIotUpOrder(void);
 
     /**************************弱函数声明****************************/
     uint8_t iotTxDeal(void);

@@ -216,7 +216,6 @@ int GetTimStmpDif(uint32_t day1, uint32_t day2, uint16_t lmit)
 void API_StmpToTime(Calendar_Type *clk, uint32_t Stmp)
 {
     long d = 0, HH = 0, MM = 0, SS = 0;
-    Calendar_Type tclk;
     DataType start, end;
     start.year = 1970;
     start.month = 1;
@@ -226,13 +225,13 @@ void API_StmpToTime(Calendar_Type *clk, uint32_t Stmp)
     HH = (Stmp / 3600) % 24 + 8;
     d = Stmp / 86400;
     end = dateDelta(start, d);
-    tclk.time.second = (uint8_t)SS;
-    tclk.time.minute = (uint8_t)MM;
-    tclk.time.hour = (uint8_t)HH;
-    tclk.date.day = (uint8_t)end.day;
-    tclk.date.month = (MONTH)end.month;
-    tclk.date.year = (uint16_t)end.year;
-    API_Calendar(&tclk);
+    clk->time.second = (uint8_t)SS;
+    clk->time.minute = (uint8_t)MM;
+    clk->time.hour = (uint8_t)HH;
+    clk->date.day = (uint8_t)end.day;
+    clk->date.month = (MONTH)end.month;
+    clk->date.year = (uint16_t)end.year;
+    API_Calendar(clk);
 }
 #if API_UseRTC > 0
 /*

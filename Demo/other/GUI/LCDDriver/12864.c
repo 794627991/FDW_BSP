@@ -10,6 +10,7 @@ void LCD_12864_Init(void)
 #ifdef USEOLCD
     uint8_t cmd[10];
     membuf = mymalloc(1024);
+    memset(membuf, 0, 1024);
     SoftSPI = SIMLT_SPI_OP_INIT(0);
     cmd[0] = 0xfd;
     cmd[1] = 0;
@@ -82,6 +83,7 @@ void Send(uchar type, uchar transdata)
     LCD_12864_CS_0;
 }
 
+/* 纵向取模，字节倒序 */
 void qumozhuanhuan(uint8_t *buf, const unsigned char *ptr)
 {
     uint8_t i, j, k, q;

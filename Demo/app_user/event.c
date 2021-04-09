@@ -144,7 +144,7 @@ void uCOS_TaskNB(void *p_arg)
     NET.Apn = (char *)NB_APN;
     //FOO.LinkMode = CoapNum;
     FOO.linkmaxtime = vLinkMaxTime;
-
+    iotUpOrder(NBTxDeal);
     aaa = iot_start(&FOO, &NET);
     aaa++;
     NB_OFF;
