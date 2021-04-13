@@ -143,8 +143,7 @@ u32 mem_malloc(u32 size, u8 needprotect)
     if (!mallco_dev.memrdy)
         mallco_dev.init(); /* 未初始化,先执行初始化 */
     if (size == 0)
-        return 0XFFFFFFFF; /* 不需要分配 */
-    disable_irq;
+        return 0XFFFFFFFF;         /* 不需要分配 */
     nmemb = size / MEM_BLOCK_SIZE; /* 获取需要分配的连续内存块数 */
     if (size % memblksize)
         nmemb++;
@@ -208,21 +207,18 @@ u32 mem_malloc(u32 size, u8 needprotect)
 
         if ((cmemb + i) == nmemb)
         {
+            disable_irq;
             for (i = 0; i < nmemb; i++) /* 标注内存块非空 */
             {
                 if (needprotect)
                     mallco_dev.memmap[offset + i] = (nmemb | Protect);
                 else
-                {
                     mallco_dev.memmap[offset + i] = nmemb;
-                }
             }
             enable_irq;
             return (offset * memblksize); /* 返回偏移地址 */
         }
     }
-
-    enable_irq;
     return 0XFFFFFFFF; /* 未找到符合分配条件的内存块 */
 }
 /*
@@ -271,6 +267,16 @@ void __myfree(void *ptr)
         return;
     offset = (u32)((u8 *)ptr - mallco_dev.membase);
     mem_free(offset); /* 释放内存 */
+}
+
+void myfreepro(void **ptr)
+{
+    u32 offset;
+    if (*ptr == 0)
+        return;
+    offset = (u32)((u8 *)*ptr - mallco_dev.membase);
+    mem_free(offset); /* 释放内存 */
+    *ptr = 0;
 }
 /*
 *********************************************************************************************************
@@ -325,7 +331,7 @@ void *__myrealloc(void *ptr, u32 size, u8 needprotect)
     else
     {
         mymemcpy((void *)(mallco_dev.membase + offset), ptr, size); /* 拷贝旧内存内容到新内存 */
-        myfree(ptr);                                                     /* 释放旧内存 */
+        myfree(ptr);                                                /* 释放旧内存 */
         return (void *)(mallco_dev.membase + offset);               /* 返回新内存首地址 */
     }
 }

@@ -91,7 +91,7 @@ ComQueue *InitComMessage(void)
 *	形    参: *queue：串口队列指针
 *             *_dat:串口数据,包括长度和缓存接收的地址(ComData是个柔性数组)
 *	返 回 值: 无
-*	备    注：无
+*	备    注：需要和 GetComMessage 做信号互斥，这里直接进临界区
 *********************************************************************************************************
 */
 void SendComMessage(ComQueue *queue, ComData *_dat)
@@ -105,8 +105,10 @@ void SendComMessage(ComQueue *queue, ComData *_dat)
         myfree(_dat);
         return;
     }
+    __disable_irq();
     queue->dat[(queue->iHead + queue->iCount) % MAXSIZE] = _dat;
     queue->iCount++;
+    __enable_irq();
 }
 /*
 *********************************************************************************************************
@@ -115,13 +117,16 @@ void SendComMessage(ComQueue *queue, ComData *_dat)
 *	形    参: *queue：串口队列指针
 *	返 回 值: ComData* ：串口数据,包括长度和缓存接收的地址(ComData是个柔性数组)
 *	备    注：注意调用该函数之后一定要myfree掉缓存
+*             需要和 SendComMessage 做信号互斥，这里直接进临界区
 *********************************************************************************************************
 */
 ComData *GetComMessage(ComQueue *queue)
 {
+    __disable_irq();
     ComData *_dat = queue->dat[queue->iHead];
     queue->iHead = (queue->iHead + 1) % MAXSIZE;
     queue->iCount--;
+    __enable_irq();
     return _dat;
 }
 /*
@@ -218,9 +223,7 @@ void API_UART_It_Send(uint8_t uartx, uint8_t *data, uint16_t len)
             memcpy(_dat->pData, data, len);
             _dat->maxlen = len;
             (startsend == 1) ? (_dat->len = 1) : (_dat->len = 0);
-            __disable_irq();
             SendComMessage(ComTxInQueue.queue[uartx], _dat);
-            __enable_irq();
             if (startsend)
             {
                 /* 把第一个数据利用中断方式先发走 */
@@ -246,9 +249,8 @@ void UartTxInterupt(uint8_t uartx)
     {
         if (!QueueIsEmpty(ComTxInQueue.queue[uartx])) /* 串口队列不为空 */
         {
-            __disable_irq();
             ComTxInfoManage.dat[uartx] = GetComMessage(ComTxInQueue.queue[uartx]); /* 取出数据 */
-            __enable_irq();
+
             if (ComTxInfoManage.dat[uartx] == NULL)
             {
                 DelComMessage(ComTxInQueue.queue[uartx]); /* 数据取出异常，直接删了队列 */
@@ -382,9 +384,7 @@ void API_UART_Rx_Queue_Send(uint8_t uartx)
         ComData *_dat = myrealloc(ComRxInfoManage.dat[uartx], sizeof(ComData) + ComRxInfoManage.dat[uartx]->len);
         if (_dat != NULL)
         {
-            __disable_irq();
             SendComMessage(ComRxInQueue.queue[uartx], _dat);
-            __enable_irq();
         }
     }
     myfree(ComRxInfoManage.dat[uartx]); /* 无论成不成，都要销毁申请的串口缓存 */
@@ -410,9 +410,7 @@ ComData *API_UART_Rx_Queue_Get(uint8_t uartx)
     {
         if (!QueueIsEmpty(ComRxInQueue.queue[uartx])) /* 串口队列不为空 */
         {
-            __disable_irq();
             ComData *_dat = GetComMessage(ComRxInQueue.queue[uartx]); /* 取出数据 */
-            __enable_irq();
             if (_dat != NULL)
             {
                 return _dat;
@@ -443,9 +441,7 @@ void API_UART_Rx_Queue_Get_Do(uint8_t uartx, rxdohandle rxdo)
 
     while (!QueueIsEmpty(ComRxInQueue.queue[uartx])) /* 串口队列不为空 */
     {
-        __disable_irq();
         ComData *_dat = GetComMessage(ComRxInQueue.queue[uartx]); /* 取出数据 */
-        __enable_irq();
         if (_dat != NULL)
         {
             rxdo(_dat->pData, _dat->len);

@@ -85,17 +85,17 @@ extern "C"
 #define U5Rxlen 500
 #endif
 
-#define MAXSIZE 8 /* 最大缓存数量 */
+#define MAXSIZE 3 /* 最大缓存数量 */
 #define MAXUART 6 /* 最大串口数量 */
 
-    typedef struct
+    typedef struct data
     {
         uint16_t len;
         uint16_t maxlen;
         uint8_t pData[]; /* 柔性数组,必须要C99以上 */
     } ComData;
 
-    typedef struct
+    typedef struct queue
     {
         ComData *dat[MAXSIZE];
         uint8_t iHead;
@@ -103,12 +103,12 @@ extern "C"
         uint8_t intodelete;
     } ComQueue;
 
-    typedef struct
+    typedef struct info
     {
         ComData *dat[MAXUART];
     } COMINFO;
 
-    typedef struct
+    typedef struct all
     {
         ComQueue *queue[MAXUART];
     } COMALL;
@@ -137,7 +137,7 @@ extern "C"
     void UartRxInterupt(uint8_t data, uint8_t uartx, uint16_t maxlen); /* 串口中断收调用 */
     ComData *GetComInfo(uint8_t uartx);                                /* 直接获取串口收中断中的数据 */
     void FreeComInfo(uint8_t uartx);                                   /* 使用GetComInfo后调用 */
-    
+
 #define DelComMessage(x)    \
     {                       \
         __DelComMessage(x); \
