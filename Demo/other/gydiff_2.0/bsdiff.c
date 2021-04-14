@@ -496,7 +496,7 @@ int diff(char *argv1, char *argv2, char *argv3)
 	FILE *pf;
 	struct bsdiff_stream stream;
 	lzoWrite *lzo;
-	const int level = LZOLEVEL;
+	const int level = LZOLEVEL / 2; /* 根据压缩算法计算而来 */
 
 	stream.malloc = malloc;
 	stream.free = free;

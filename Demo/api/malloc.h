@@ -30,7 +30,7 @@ extern "C"
 #if ThisBoot ==0
 #define MEM_MAX_SIZE 9 * 1024							   /* 最大管理内存 nK */
 #else
-#define MEM_MAX_SIZE 15 * 1024
+#define MEM_MAX_SIZE 16 * 1024
 #endif
 #define MEM_ALLOC_TABLE_SIZE MEM_MAX_SIZE / MEM_BLOCK_SIZE /* 内存表大小 */
 

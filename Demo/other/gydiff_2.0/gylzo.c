@@ -41,7 +41,7 @@ lzo_uint minilzo_decompress(uint8_t *inbuf, uint32_t inlen, uint8_t *outbuf)
         printf("\r\n初始化失败\r\n");
     }
     else
-    { 
+    {
         r = lzo1x_decompress_safe(inbuf, inlen, outbuf, &new_len, NULL);
         if (r == LZO_E_OK)
         {
@@ -149,6 +149,7 @@ uint32_t mylzo_d(uint8_t *inbuf, uint8_t *outbuf, uint32_t *dlen, uint32_t limit
     *dlen = 0;
     if (inbuf[0] == 'g' || inbuf[0] == 'G')
     {
+        /* len是压缩后的大小 正常来说，len会远远小于 limit 即按照 level 的压缩空间进行压缩后的大小 */
         memcpy(&len, inbuf + 1, 2);
         if (len > limit)
             return 0;
@@ -157,7 +158,10 @@ uint32_t mylzo_d(uint8_t *inbuf, uint8_t *outbuf, uint32_t *dlen, uint32_t limit
             if (inbuf[0] == 'g') /* 曾经加密成功的 */
             {
                 memset(outbuf, 0, limit);
-                if((mbuf = (uint8_t *)mymalloc(len + 1))==NULL)
+                /* 这里还需要申请一个 len+1 的空间 是因为解压缩数据必须使用 ram，
+                   而 inbuf 的数据实际上是存储在flash 的 patch 文件，由于这个原因，
+                   预留的缓存大小必须是 level 的2倍以上！！！ */
+                if ((mbuf = (uint8_t *)mymalloc(len + 1)) == NULL)
                     return 0;
                 memcpy(mbuf, inbuf + 3, len);
                 *dlen = minilzo_decompress(mbuf, len, outbuf);
@@ -254,6 +258,7 @@ lzoRead *myLzoReadOpen(int *err, int level)
     // lzo->pos = 0;
     // lzo->work = 0;
     memset(&lzo, 0, sizeof(lzoRead));
+    /* 申请工作区 大小是 level+1 */
     if (((lzo.level = level) < 256) || (lzo.work = (uint8_t *)mymalloc(lzo.level + 1)) == NULL)
     {
         myfree(t);

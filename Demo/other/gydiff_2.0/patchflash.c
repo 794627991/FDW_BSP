@@ -24,18 +24,19 @@ const uint32_t PATCH_START = PATCHADR;
 const uint32_t PATCH_END = BOOTENDADR;
 static uint32_t OLDADR, NEWADR, OLDSIZE, NEWSIZE;
 
-typedef struct _patchdownload
-{
-    uint16_t crc;
-    uint16_t num;
-    uint32_t len;
-    uint32_t offset;
-} DownLoadType;
-
 DownLoadType patchdownload;
 
 #define SECTORCNT(size) ((size / FlashEraseSize) + 1)
-
+/*
+*********************************************************************************************************
+*	函 数 名: judgeSize
+*	功能说明: 用于校验新老文件是否满足下载需求
+*	形    参: oldsize：旧文件大小
+*             newsize：新文件大小
+*	返 回 值: 0：失败 1：成功
+*	备    注：详情看 bspatch 函数 使用该函数之前 必须先获取 OLDADR 大小
+*********************************************************************************************************
+*/
 uint8_t judgeSize(int64_t oldsize, int64_t newsize)
 {
     if (oldsize < 0 || newsize < 0)
@@ -49,7 +50,15 @@ uint8_t judgeSize(int64_t oldsize, int64_t newsize)
         return 0;
     return 1;
 }
-
+/*
+*********************************************************************************************************
+*	函 数 名: patchGotoBoot
+*	功能说明: 跳转到boot
+*	形    参: 无
+*	返 回 值: 无
+*	备    注：差分升级的方案为在APP中下载差分包，下载完成后跳转boot，通过boot进行合并
+*********************************************************************************************************
+*/
 void patchGotoBoot(void)
 {
     char magicword[7] = {"GYCFSJ"};
@@ -57,7 +66,15 @@ void patchGotoBoot(void)
     Flsah_Write_String(FlashStartAdr + 8, (uint8_t *)&magicword, 6, FLASHOPKEY);
     RCC->SOFTRST = 0x5c5caabb; /* 测试先把这个屏蔽 */
 }
-
+/*
+*********************************************************************************************************
+*	函 数 名: patchGotoAPP
+*	功能说明: 跳转到app
+*	形    参: 无
+*	返 回 值: 无
+*	备    注：只有完成差分升级才能执行该函数
+*********************************************************************************************************
+*/
 void patchGotoAPP(void)
 {
     uint32_t WrADR;
@@ -65,7 +82,16 @@ void patchGotoAPP(void)
     API_Erase_Sector(FlashStartAdr);
     Flsah_Write_String(FlashStartAdr, (unsigned char *)&WrADR, 4, FLASHOPKEY);
 }
-
+/*
+*********************************************************************************************************
+*	函 数 名: patchFlashErase
+*	功能说明: 用于安全擦除Flash扇区的函数
+*	形    参: start：擦除的起始地址
+*             size：要擦除的扇区数量
+*	返 回 值: 0：失败 1：成功
+*	备    注：可擦除的范围：PATCH_START---FLASH_END
+*********************************************************************************************************
+*/
 uint8_t patchFlashErase(uint32_t start, uint32_t size)
 {
     uint16_t i = 0, j = 0;
@@ -92,8 +118,17 @@ uint8_t patchFlashErase(uint32_t start, uint32_t size)
     }
     return 1;
 }
-
-/* 0:获取old文件 1:获取new文件 2:获取patch文件 */
+/*
+*********************************************************************************************************
+*	函 数 名: patchGetAdr
+*	功能说明: 用于获取文件地址
+*	形    参: op：0:获取old文件 1:获取new文件 2:获取patch文件
+*            *oldlen：传参旧文件长度
+*            *newlen：传参新文件长度
+*	返 回 值: 0：获取地址失败，非0：文件地址
+*	备    注：自动计算或获取合理的地址
+*********************************************************************************************************
+*/
 uint32_t patchGetAdr(uint8_t op, uint32_t *oldlen, uint32_t *newlen)
 {
     if (op == 0)
@@ -146,7 +181,15 @@ uint32_t patchGetAdr(uint8_t op, uint32_t *oldlen, uint32_t *newlen)
         return 0;
     }
 }
-
+/*
+*********************************************************************************************************
+*	函 数 名: patchFlashStart
+*	功能说明: Flash操作
+*	形    参: 无
+*	返 回 值: 无
+*	备    注：无
+*********************************************************************************************************
+*/
 void patchFlashStart(void)
 {
     RCC_PERCLK_SetableEx(FLSEPCLK, ENABLE); /* Flash擦写控制器时钟使能，用完就关 */
@@ -154,7 +197,15 @@ void patchFlashStart(void)
     FLASH_FLSKEY_Write(flash_PROG_key0);
     FLASH_FLSKEY_Write(flash_PROG_key1);
 }
-
+/*
+*********************************************************************************************************
+*	函 数 名: patchFlashAddData
+*	功能说明: Flash操作
+*	形    参: 略
+*	返 回 值: 无
+*	备    注：无
+*********************************************************************************************************
+*/
 void patchFlashAddData(uint8_t *buf, uint8_t *data, uint8_t op)
 {
     uint8_t dd = *data;
@@ -170,19 +221,43 @@ void patchFlashAddData(uint8_t *buf, uint8_t *data, uint8_t op)
     }
     FLASH_FLSIF_PRDIF_Clr();
 }
-
+/*
+*********************************************************************************************************
+*	函 数 名: patchFlashEnd
+*	功能说明: Flash操作
+*	形    参: 无
+*	返 回 值: 无
+*	备    注：无
+*********************************************************************************************************
+*/
 void patchFlashEnd(void)
 {
     FLASH_FLSKEY_Write(0x00000000);
     RCC_PERCLK_SetableEx(FLSEPCLK, DISABLE);
 }
-
+/*
+*********************************************************************************************************
+*	函 数 名: patchFlashWDog
+*	功能说明: Flash操作
+*	形    参: 略
+*	返 回 值: 无
+*	备    注：无
+*********************************************************************************************************
+*/
 void patchFlashWDog(uint32_t cnt)
 {
     if ((cnt % 1000) == 0)
         IWDT_Clr();
 }
-
+/*
+*********************************************************************************************************
+*	函 数 名: patchFlashWrite
+*	功能说明: Flash操作
+*	形    参: 略
+*	返 回 值: 无
+*	备    注：无
+*********************************************************************************************************
+*/
 uint8_t patchFlashWrite(uint8_t *buf, uint8_t *data, uint32_t Len)
 {
     volatile uint32_t i = 0;
@@ -205,7 +280,18 @@ uint8_t patchFlashWrite(uint8_t *buf, uint8_t *data, uint32_t Len)
     }
     return 1;
 }
-
+/*
+*********************************************************************************************************
+*	函 数 名: patchAddDiff
+*	功能说明: 差分升级核心操作
+*	形    参: *bspatch：差分文件块
+*             newpos：新文件偏移地址
+*             oldpos：旧文件偏移地址
+*             len：长度
+*	返 回 值: 0：失败 1：成功
+*	备    注：无
+*********************************************************************************************************
+*/
 uint8_t patchAddDiff(bspatchtype *bspatch, int64_t newpos, int64_t oldpos, int64_t len)
 {
     uint32_t Divisor = newpos / FLASH_BLOCK;
