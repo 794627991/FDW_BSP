@@ -17,7 +17,7 @@ char NB_IP[15];
 char NB_PORT[5];
 iot_foo_type FOO;
 
-uint8_t NBTxBuf[72] = {NULL};
+uint8_t NBTxBuf[700] = {NULL};
 SaveBase Save;
 
 const GUI_POINT showBattery[] = {{0, 0}, {8, 0}, {8, 1}, {10, 1}, {10, 3}, {8, 3}, {8, 4}, {0, 4}};
@@ -81,44 +81,47 @@ void __API_EPROM_Read(uint32_t base, uint8_t *Buf, uint16_t len)
 
 void NBTxDeal(void)
 {
-    uint16_t VersionNum = 100;
-    uint16_t year;
-    uint8_t Systemtime[6];
+	for(int i=0;i<600;i++)
+	{
+		NBTxBuf[i]=i&0xff;
+	}
+//    uint16_t VersionNum = 100;
+//    uint16_t year;
+//    uint8_t Systemtime[6];
+//    memset(NBTxBuf, 0, 72);
+//    NBTxBuf[0] = 0xaa; //命令头(开始计数)
+//    NBTxBuf[1] = 0x11;
+//    NBTxBuf[2] = 0xC5;
+//    NBTxBuf[3] = 0x11;
+//    NBTxBuf[4] = 0x22;
+//    NBTxBuf[5] = 0x33;
+//    NBTxBuf[6] = 0x44;
 
-    memset(NBTxBuf, 0, 72);
-    NBTxBuf[0] = 0xaa; //命令头(开始计数)
-    NBTxBuf[1] = 0x11;
-    NBTxBuf[2] = 0xC5;
-    NBTxBuf[3] = 0x11;
-    NBTxBuf[4] = 0x22;
-    NBTxBuf[5] = 0x33;
-    NBTxBuf[6] = 0x44;
+//    NBTxBuf[7] = 0xAA; //表类型
 
-    NBTxBuf[7] = 0xAA; //表类型
+//    Systemtime[0] = Hex_Sec;
+//    Systemtime[1] = Hex_Min;
+//    Systemtime[2] = Hex_Hour;
+//    Systemtime[3] = Hex_Day;
+//    year = Hex_YearL + 2000;
+//    Systemtime[4] = LOWBYTE(LOWWORD(year)) * 16 + Hex_Mon;
+//    Systemtime[5] = HIGHWORD(year) * 16 + HIGHBYTE(LOWWORD(year));
+//    memcpy(&NBTxBuf[8], Systemtime, 6); //实时时间 6B
+//    NBTxBuf[14] = 1;                    //只取结算日
+//    NBTxBuf[15] = 1;                    //上传原因
 
-    Systemtime[0] = Hex_Sec;
-    Systemtime[1] = Hex_Min;
-    Systemtime[2] = Hex_Hour;
-    Systemtime[3] = Hex_Day;
-    year = Hex_YearL + 2000;
-    Systemtime[4] = LOWBYTE(LOWWORD(year)) * 16 + Hex_Mon;
-    Systemtime[5] = HIGHWORD(year) * 16 + HIGHBYTE(LOWWORD(year));
-    memcpy(&NBTxBuf[8], Systemtime, 6); //实时时间 6B
-    NBTxBuf[14] = 1;                    //只取结算日
-    NBTxBuf[15] = 1;                    //上传原因
+//    memset(&NBTxBuf[16], 0, 12); //累计量
 
-    memset(&NBTxBuf[16], 0, 12); //累计量
+//    NBTxBuf[28] = 0;    //表内运行状态
+//    NBTxBuf[29] = 0x31; //信号强度
+//    memset(&NBTxBuf[30], 0, 49);
+//    //memcpy(&NBTxBuf[57], iotdat.Simword, 10);	   //sim卡号
+//    memcpy(&NBTxBuf[67], (uchar *)&VersionNum, 2); //程序版本号
+//    NBTxBuf[69] = 0;
+//    NBTxBuf[70] = CalCheckSum(NBTxBuf, 70, 0);
+//    NBTxBuf[71] = 0xbb;
 
-    NBTxBuf[28] = 0;    //表内运行状态
-    NBTxBuf[29] = 0x31; //信号强度
-    memset(&NBTxBuf[30], 0, 49);
-    //memcpy(&NBTxBuf[57], iotdat.Simword, 10);	   //sim卡号
-    memcpy(&NBTxBuf[67], (uchar *)&VersionNum, 2); //程序版本号
-    NBTxBuf[69] = 0;
-    NBTxBuf[70] = CalCheckSum(NBTxBuf, 70, 0);
-    NBTxBuf[71] = 0xbb;
-
-    iotTxData(NBTxBuf, 72);
+    iotTxData(NBTxBuf, 600);
 }
 
 void uCOS_TaskNB(void *p_arg)

@@ -20,6 +20,8 @@ extern void yasuotest(void);
 extern void PressureAndTempTest(void);
 extern iot_foo_type FOO;
 
+const uint16_t SoftVer = 1;
+
 uint8_t showemu = 0;
 uint32_t sysvdd;
 float systemp;
@@ -60,9 +62,10 @@ void uCOS_SystemInit(void)
     LowPower_IO_Init();
     uCOS_LEDCreate();
     GUI_Init();
+    patchAppWriteVer(SoftVer);
     debug("\r\n程序已开始运行\r\n");
     SIMLT_I2C_OP_INIT();
-    //debug("\r\n差分升级测试\r\n");
+    debug("\r\n差分升级测试\r\n");
 }
 
 void uCOS_LowPower(void)
@@ -133,12 +136,9 @@ void uCOS_APP_Uart2(uint8_t *buf, uint16_t len)
 void uCOS_APP_Uart3(uint8_t *buf, uint16_t len)
 {
     uint16_t alen = len;
-    uint8_t re;
-
-    re = patchDownLoad(buf, &alen);
-    if (re == 1)
+    if (buf[0] == 'g')
     {
-        printf("patchDownLoad ok");
+        patchDownLoadAnswer(buf, &alen);
         return;
     }
 

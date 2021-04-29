@@ -246,7 +246,7 @@ void __myfree(void *ptr)
         return;
     offset = (u32)((u8 *)ptr - mallco_dev.membase);
     mem_free(offset); /* ÊÍ·ÅÄÚ´æ */
-    printf("memuse:%d\r\n", mem_perused());
+    debug("memuse:%d\r\n", mem_perused());
 }
 /*
 *********************************************************************************************************
@@ -260,7 +260,7 @@ void __myfree(void *ptr)
 void *__mymalloc(u32 size)
 {
     u32 offset = mem_malloc(size, 0);
-    printf("memuse:%d\r\n", mem_perused());
+    debug("memuse:%d\r\n", mem_perused());
     if (offset == 0XFFFFFFFF)
         return 0;
     else

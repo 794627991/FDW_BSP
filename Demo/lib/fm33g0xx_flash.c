@@ -595,6 +595,7 @@ void FLASH_Deinit(void)
 ********************************/
 void FLASH_Erase_Sector(uint32_t erase_addr)
 {
+	int i=0;
     //set to sector erase
     FLASH_EPCON_ERTYPE_Set(FLASH_EPCON_ERTYPE_SECTOR);
 	
@@ -609,7 +610,13 @@ void FLASH_Erase_Sector(uint32_t erase_addr)
     *(uint32_t*)erase_addr = flash_erase_data;
 	
 	//wait for finish
-	while(SET != FLASH_FLSIF_ERDIF_Chk()){__NOP();}
+	while(SET != FLASH_FLSIF_ERDIF_Chk())
+		{
+				i++;
+				__NOP();
+			if(i>0xfffff)
+				break;
+		}
 	FLASH_FLSIF_ERDIF_Clr();
 	
     FLASH_FLSKEY_Write(0x00000000);

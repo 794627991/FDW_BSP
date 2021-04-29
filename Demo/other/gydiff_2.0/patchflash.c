@@ -17,6 +17,7 @@
 #include "patchflash.h"
 #include "bsp_flash.h"
 #include "gylzo.h"
+#include "bsp_uart.h"
 
 const uint32_t FLASH_BLOCK = FlashEraseSize;
 const uint32_t FLASH_END = APP2ENDADR;
@@ -42,11 +43,11 @@ uint8_t judgeSize(int64_t oldsize, int64_t newsize)
     if (oldsize < 0 || newsize < 0)
         return 0;
     /* 如果两个文件大小加一起比 app区还大，肯定不能行 */
-    if (oldsize + newsize > FLASH_END - PATCH_END)
+    if ((oldsize + newsize) > (FLASH_END - PATCH_END))
         return 0;
     memcpy(&OLDADR, (unsigned char *)FlashStartAdr, 4);
     /* new最后一定是要放在old原位置的，要确保old到flash末尾的大小要大于newsize */
-    if (FLASH_END - OLDADR < newsize)
+    if ((FLASH_END - OLDADR) < newsize)
         return 0;
     return 1;
 }
@@ -162,7 +163,7 @@ uint32_t patchGetAdr(uint8_t op, uint32_t *oldlen, uint32_t *newlen)
             NEWADR += 2; /* 预留出两个扇区 */
             NEWADR *= FLASH_BLOCK;
             NEWADR += PATCH_END;
-            if (NEWADR + NEWSIZE > FLASH_END)
+            if ((NEWADR + SECTORCNT(NEWSIZE) * FLASH_BLOCK) > FLASH_END)
             {
                 /* 在 old 文件后加 new 的长度超过了 flash 的大小 */
                 return 0;
@@ -357,7 +358,7 @@ uint8_t patchAddDiff(bspatchtype *bspatch, int64_t newpos, int64_t oldpos, int64
 *	功能说明: 差分包升级
 *	形    参: 无
 *	返 回 值: 无
-*	备    注：无
+*	备    注：这个函数放在boot里
 *********************************************************************************************************
 */
 void patchUpGrade(void)
@@ -375,6 +376,7 @@ void patchUpGrade(void)
     {
         if (patch())
         {
+            debug("Differential upgrade complete, copying new files \r\n");
             /* 能走到这里说明差分升级的新文件已经合成完毕 */
             /* 擦除 old 区,按照 NEWSIZE 进行擦除 */
             for (i = 0; i < 3; i++)
@@ -392,21 +394,24 @@ void patchUpGrade(void)
             API_Erase_Sector(FlashStartAdr);
         }
     }
+    debug("Differential upgrade failed \r\n");
 }
 /*
 *********************************************************************************************************
 *	函 数 名: patchDownLoad
-*	功能说明: 下载差分包
+*	功能说明: 下载差分包，这个函数放在APP串口数据接收解析里
 *	形    参: buf：数据缓存
 *             len：数据长度  
-*	返 回 值: 0:失败,1:成功
+*	返 回 值: 0:失败,1:成功,2:读版本号
 *	备    注：协议：'g'+cmd(1b)+datalen(2b)+data(datalen)+crc(2b)+'y' 
 *                   crc='g'+cmd+datalen+data
+*                   cmd=0xff:获取当前软件版本 data: ver(2b)
 *                   cmd=0:开始下载 data: patchlen(4b)+patchcrc(2b) 
 *                   cmd=1:数据包 data: packnum(2b)+data(max=512)
 *                   cmd=2:下载完成 data: "gycfsjsucc"
-*                   成功应答：cmd=3 data="gycfsjsucc"
-*                   失败应答：cmd=4 data="gycfsjfail"
+*                   成功应答：cmd=3 data:"gycfsjsucc"
+*                   失败应答：cmd=4 data:"gycfsjfail"
+*                   读取应答：对应cmd+data
 *********************************************************************************************************
 */
 uint8_t patchDownLoad(uint8_t *buf, uint16_t *len)
@@ -430,7 +435,11 @@ uint8_t patchDownLoad(uint8_t *buf, uint16_t *len)
 
     data = buf + 4;
     cmd = buf[1];
-    if (cmd == 0)
+    if (cmd == 0xff)
+    {
+        return 2;
+    }
+    else if (cmd == 0)
     {
         memset(&patchdownload, 0, sizeof(patchdownload));
         memcpy(&patchdownload.len, data, 4);
@@ -450,8 +459,8 @@ uint8_t patchDownLoad(uint8_t *buf, uint16_t *len)
         if ((patchdownload.num & 0x8000) != 0x8000)
             return 0;
         memcpy(&num, data, 2);
-        /* 必须保证下一包数据的包号比记录的包号大 */
-        if ((patchdownload.num & 0x7fff) > num)
+        /* 必须保证下一包数据的包号比记录的包号大并且只能大1个 */
+        if (((patchdownload.num & 0x7fff) > num) && ((patchdownload.num & 0x7fff) < num + 1))
             return 0;
         patchdownload.num = 0x8000 + num;
         patchFlashWrite((uint8_t *)(PATCH_START + patchdownload.offset), data + 2, datalen - 2);
@@ -468,34 +477,59 @@ uint8_t patchDownLoad(uint8_t *buf, uint16_t *len)
             return 0;
         patchGotoBoot();
     }
+    else
+    {
+        return 0;
+    }
     return 1;
 }
 
 void patchDownLoadAnswer(uint8_t *buf, uint16_t *len)
 {
+    uint8_t re;
     uint16_t tlen, crc;
-    if (patchDownLoad(buf, len))
+    uint8_t txbuf[50];
+    re = patchDownLoad(buf, len);
+    if (re == 1)
     {
-        buf[0] = 'g';
-        buf[1] = 3;
+        txbuf[1] = 3;
         tlen = strlen("gycfsjsucc");
-        memcpy(buf + 2, &tlen, 2);
-        memcpy(buf + 4, "gycfsjsucc", tlen);
-        crc = LzoCRC(buf, 4 + tlen);
-        memcpy(buf + 4 + tlen, &crc, 2);
-        buf[tlen + 6] = 'y';
-        *len = tlen + 7;
+        memcpy(txbuf + 4, "gycfsjsucc", tlen);
+    }
+    else if (re == 2)
+    {
+        uint16_t v;
+        memcpy(&v, (unsigned char *)FlashStartAdr + 16, 2);
+        txbuf[1] = 0xff;
+        tlen = 2;
+        memcpy(txbuf + 4, (unsigned char *)FlashStartAdr + 16, 2);
     }
     else
     {
-        buf[0] = 'g';
-        buf[1] = 4;
+        txbuf[1] = 4;
         tlen = strlen("gycfsjfail");
-        memcpy(buf + 2, &tlen, 2);
-        memcpy(buf + 4, "gycfsjfail", tlen);
-        crc = LzoCRC(buf, 4 + tlen);
-        memcpy(buf + 4 + tlen, &crc, 2);
-        buf[tlen + 6] = 'y';
-        *len = tlen + 7;
+        memcpy(txbuf + 4, "gycfsjfail", tlen);
     }
+    txbuf[0] = 'g';
+    memcpy(txbuf + 2, &tlen, 2);
+    crc = LzoCRC(txbuf, 4 + tlen);
+    memcpy(txbuf + 4 + tlen, &crc, 2);
+    txbuf[tlen + 6] = 'y';
+
+    /* 这个根据实际使用的串口改 */
+    API_Uart_Send(UART3, txbuf, tlen + 7);
+}
+/*
+*********************************************************************************************************
+*	函 数 名: patchAppWriteVer
+*	功能说明: 写当前APP的软件版本
+*	形    参: ver：版本号
+*	返 回 值: 无
+*	备    注：这个函数放在APP里，并且在上电初始化的时候就调用
+*********************************************************************************************************
+*/
+void patchAppWriteVer(uint16_t ver)
+{
+    uint16_t v = ver;
+    patchFlashWrite((uint8_t *)FlashStartAdr + 16, (uint8_t *)&v, 2);
 }

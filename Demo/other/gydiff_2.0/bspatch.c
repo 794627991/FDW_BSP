@@ -151,7 +151,7 @@ int patch(void)
     /* Check for appropriate magic */
     if (memcmp(_patch, "GYCFSJ", 6) != 0)
     {
-        printf("Check for appropriate magic error\r\n");
+        debug("Check for appropriate magic error\r\n");
         return 0;
     }
     memcpy(&level, _patch + 6, 2);
@@ -161,27 +161,27 @@ int patch(void)
     Spatch.NewSize = offtin(_patch + 24);
     if (judgeSize(Spatch.OldSize, Spatch.NewSize) == 0)
     {
-        printf("file size error\r\n");
+        debug("file size error\r\n");
         return 0;
     }
 
     oldcrc = LzoCRC(old, Spatch.OldSize);
     if (oldcrc != crc1)
     {
-        printf("oldcrc err\r\n");
+        debug("oldcrc err\r\n");
         return 0;
     }
 
     if ((Spatch.NewAdr = patchGetAdr(1, (uint32_t *)&Spatch.OldSize, (uint32_t *)&Spatch.NewSize)) == 0)
     {
-        printf("get newadr err\r\n");
+        debug("get newadr err\r\n");
         return 0;
     }
     _new = (uint8_t *)Spatch.NewAdr;
 
     if ((NULL == (lzo = myLzoReadOpen(&lzoerr, level))) || (lzoerr != MYLZO_OK))
     {
-        printf("myLzoReadOpen fail\r\n");
+        debug("myLzoReadOpen fail\r\n");
         return 0;
     }
 
@@ -192,7 +192,7 @@ int patch(void)
     if (bspatch(&Spatch, &stream))
     {
         myLzoReadClose(lzo);
-        printf("bspatch fail\r\n");
+        debug("bspatch fail\r\n");
         return 0;
     }
 
@@ -202,7 +202,7 @@ int patch(void)
     newcrc = LzoCRC(_new, Spatch.NewSize);
     if (newcrc != crc2)
     {
-        printf("crc err\r\n");
+        debug("crc err\r\n");
         return 0;
     }
     return 1;

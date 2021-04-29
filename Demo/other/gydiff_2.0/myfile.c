@@ -11,7 +11,7 @@ uint8_t *myFileRead(char *filename, uint64_t *len)
         ((tobuf = (uint8_t *)malloc(*len + 1)) == NULL) ||
         (lseek(fd, 0, SEEK_SET) != 0))
     {
-        printf("read %s fail\r\n", filename);
+        debug("read %s fail\r\n", filename);
         return 0;
     }
 
@@ -20,7 +20,7 @@ uint8_t *myFileRead(char *filename, uint64_t *len)
         r -= i;
     if (r > 0 || close(fd) == -1)
     {
-        printf("close %s fail\r\n", filename);
+        debug("close %s fail\r\n", filename);
         return 0;
     }
     return tobuf;
@@ -32,7 +32,7 @@ int myFileWrite(char *filename, uint8_t *buf, uint64_t len)
     if (((fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY | O_BINARY, 0666)) < 0) ||
         (write(fd, buf, len) != len) || (close(fd) == -1))
     {
-        printf("write %s fail\r\n", filename);
+        debug("write %s fail\r\n", filename);
         return 0;
     }
     return 1;

@@ -490,13 +490,13 @@ int diff(char *argv1, char *argv2, char *argv3)
 	int lzoerr;
 	uint8_t *old, *new;
 	uint64_t oldsize, newsize;
-	uint8_t buf[16];
-	uint16_t crc;
+	uint8_t buf[33];
+	uint16_t crc1, crc2, crc3, oldver, newver;
 	uint32_t lzlen;
 	FILE *pf;
 	struct bsdiff_stream stream;
 	lzoWrite *lzo;
-	const int level = LZOLEVEL / 2; /* 根据压缩算法计算而来 */
+	const int level = LZOLEVEL / 2;
 
 	stream.malloc = malloc;
 	stream.free = free;
@@ -508,6 +508,7 @@ int diff(char *argv1, char *argv2, char *argv3)
 	{
 		return 0;
 	}
+	crc1 = LzoCRC((uint8_t *)old, oldsize);
 
 	/* Allocate newsize+1 bytes instead of newsize bytes to ensure
 		that we never try to malloc(0) and get a NULL pointer */
@@ -516,7 +517,7 @@ int diff(char *argv1, char *argv2, char *argv3)
 		return 0;
 	}
 	printf("NewFlie Len:%d\r\n", newsize);
-	crc = LzoCRC((uint8_t *)new, newsize);
+	crc2 = LzoCRC((uint8_t *)new, newsize);
 
 	/* Create the patch file */
 	if ((pf = fopen(argv3, "wb")) == NULL)
@@ -526,11 +527,15 @@ int diff(char *argv1, char *argv2, char *argv3)
 	}
 
 	/* Write header (signature+newsize)*/
-	memcpy(buf, "CFSJ", 4);
-	memcpy(buf + 4, &level, 2);
-	memcpy(buf + 6, &crc, 2);
-	offtout(newsize, buf + 8);
-	if (fwrite(buf, 16, 1, pf) != 1)
+	memcpy(buf, "GYCFSJ", 6);
+	memcpy(buf + 6, &level, 2);
+	memcpy(buf + 8, &crc1, 2);	  /* oldfile crc */
+	memcpy(buf + 10, &crc2, 2);	  /* newfile crc */
+	memcpy(buf + 12, &oldver, 2); /* oldfile ver */
+	memcpy(buf + 14, &newver, 2); /* newfile ver */
+	offtout(oldsize, buf + 16);
+	offtout(newsize, buf + 24);
+	if (fwrite(buf, 32, 1, pf) != 1)
 	{
 		printf("write header fail\r\n");
 		return 0;

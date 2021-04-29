@@ -65,7 +65,7 @@
 
 #define U1Rxlen 60
 
-#define U2Rxlen 200
+#define U2Rxlen 1300
 
 #define U3Rxlen 700
 
@@ -103,7 +103,7 @@
 #define U3USEIRMod 0  /* 大于0使用调制红外 */
 #define U3Baud 115200 /* 需要的波特率 */
 #define U3UseRxIe 1   /* 接收中断 大于0开启 */
-#define U3UseTxIe 1   /* 发送中断 大于0开启 */
+#define U3UseTxIe 0   /* 发送中断 大于0开启 */
 #define U3Stopbit TwoBit
 
 #define UseUart4 0   /* UART4 大于0开启 */

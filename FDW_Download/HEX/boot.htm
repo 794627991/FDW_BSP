@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\..\FDW_Download\HEX\boot.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\..\FDW_Download\HEX\boot.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Mon Mar 29 14:55:10 2021
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Mon Apr 19 11:29:34 2021
 <BR><P>
 <H3>Maximum Stack Usage =        628 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -391,9 +391,10 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_file
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;minilzo_decompress
+<BR>[Called By]<UL><LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchUpGrade
+<LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;minilzo_decompress
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoRead
-<LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
+<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
 </UL>
 
 <P><STRONG><a name="[53]"></a>__printf</STRONG> (Thumb, 108 bytes, Stack size 24 bytes, __printf.o(.text))
@@ -416,11 +417,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_d
 </UL>
 
-<P><STRONG><a name="[127]"></a>memcmp</STRONG> (Thumb, 90 bytes, Stack size 8 bytes, memcmp.o(.text))
+<P><STRONG><a name="[126]"></a>memcmp</STRONG> (Thumb, 90 bytes, Stack size 8 bytes, memcmp.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = memcmp
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchUpGrade
-<LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
+<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
 </UL>
 
 <P><STRONG><a name="[59]"></a>__aeabi_memcpy</STRONG> (Thumb, 130 bytes, Stack size 24 bytes, rt_memcpy.o(.text))
@@ -429,7 +430,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart_Proc
-<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
+<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
 <LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchAddDiff
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoRead
 </UL>
@@ -450,14 +451,14 @@ Global Symbols
 <P><STRONG><a name="[5d]"></a>__aeabi_memclr</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, rt_memclr.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_memset
 </UL>
-<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
+<BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
 </UL>
 
 <P><STRONG><a name="[158]"></a>__rt_memclr</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memclr.o(.text), UNUSED)
 
 <P><STRONG><a name="[102]"></a>__aeabi_memclr4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memclr.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart_Proc
-<LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoReadOpen
+<LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoReadOpen
 </UL>
 
 <P><STRONG><a name="[159]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memclr.o(.text), UNUSED)
@@ -468,9 +469,8 @@ Global Symbols
 
 <P><STRONG><a name="[15a]"></a>__aeabi_uidiv</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, aeabi_sdiv.o(.text), UNUSED)
 
-<P><STRONG><a name="[11d]"></a>__aeabi_uidivmod</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, aeabi_sdiv.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mem_perused
-<LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWDog
+<P><STRONG><a name="[12d]"></a>__aeabi_uidivmod</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, aeabi_sdiv.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWDog
 </UL>
 
 <P><STRONG><a name="[15b]"></a>__aeabi_idiv</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, aeabi_sdiv.o(.text), UNUSED)
@@ -690,7 +690,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[76]"></a>API_Erase_Sector</STRONG> (Thumb, 30 bytes, Stack size 16 bytes, bsp_flash.o(i.API_Erase_Sector))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = API_Erase_Sector &rArr; RCC_PERCLK_SetableEx
+<BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = API_Erase_Sector &rArr; FLASH_Erase_Sector
 </UL>
 <BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_PERCLK_SetableEx
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_Erase_Sector
@@ -700,7 +700,7 @@ Global Symbols
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchGotoAPP
 </UL>
 
-<P><STRONG><a name="[79]"></a>API_Etim_Init</STRONG> (Thumb, 192 bytes, Stack size 88 bytes, bsp_etim.o(i.API_Etim_Init))
+<P><STRONG><a name="[79]"></a>API_Etim_Init</STRONG> (Thumb, 194 bytes, Stack size 88 bytes, bsp_etim.o(i.API_Etim_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = API_Etim_Init &rArr; ETIMx_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ETIMx_Init
@@ -930,22 +930,22 @@ Global Symbols
 
 <P><STRONG><a name="[b1]"></a>FLASH_EPCON_PREQ_Set</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, fm33g0xx_flash.o(i.FLASH_EPCON_PREQ_Set))
 <BR><BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_Prog_ByteString
-<LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashStart
-<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashAddData
+<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashStart
+<LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashAddData
 </UL>
 
-<P><STRONG><a name="[78]"></a>FLASH_Erase_Sector</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, fm33g0xx_flash.o(i.FLASH_Erase_Sector))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = FLASH_Erase_Sector
+<P><STRONG><a name="[78]"></a>FLASH_Erase_Sector</STRONG> (Thumb, 66 bytes, Stack size 12 bytes, fm33g0xx_flash.o(i.FLASH_Erase_Sector))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = FLASH_Erase_Sector
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_EPCON_ERTYPE_Set
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_EPCON_EREQ_Set
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_FLSKEY_Write
+<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_FLSKEY_Write
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_FLSIF_ERDIF_Clr
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_FLSIF_ERDIF_Chk
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_EPCON_ERTYPE_Set
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_EPCON_EREQ_Set
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Flash_Erase_Sector
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;API_Erase_Sector
-<LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashErase
+<LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashErase
 </UL>
 
 <P><STRONG><a name="[ae]"></a>FLASH_FLSIF_ERDIF_Chk</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, fm33g0xx_flash.o(i.FLASH_FLSIF_ERDIF_Chk))
@@ -958,19 +958,19 @@ Global Symbols
 
 <P><STRONG><a name="[b2]"></a>FLASH_FLSIF_PRDIF_Chk</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, fm33g0xx_flash.o(i.FLASH_FLSIF_PRDIF_Chk))
 <BR><BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_Prog_ByteString
-<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashAddData
+<LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashAddData
 </UL>
 
 <P><STRONG><a name="[b3]"></a>FLASH_FLSIF_PRDIF_Clr</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, fm33g0xx_flash.o(i.FLASH_FLSIF_PRDIF_Clr))
 <BR><BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_Prog_ByteString
-<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashAddData
+<LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashAddData
 </UL>
 
 <P><STRONG><a name="[ad]"></a>FLASH_FLSKEY_Write</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, fm33g0xx_flash.o(i.FLASH_FLSKEY_Write))
 <BR><BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_Prog_ByteString
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_Erase_Sector
-<LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashStart
-<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashEnd
+<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashStart
+<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashEnd
 </UL>
 
 <P><STRONG><a name="[c1]"></a>FLASH_FLSRDCON_WAIT_Set</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, fm33g0xx_flash.o(i.FLASH_FLSRDCON_WAIT_Set))
@@ -980,16 +980,16 @@ Global Symbols
 <P><STRONG><a name="[b0]"></a>FLASH_Prog_ByteString</STRONG> (Thumb, 74 bytes, Stack size 20 bytes, fm33g0xx_flash.o(i.FLASH_Prog_ByteString))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = FLASH_Prog_ByteString
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_EPCON_PREQ_Set
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_FLSKEY_Write
+<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_FLSKEY_Write
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_FLSIF_PRDIF_Clr
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_FLSIF_PRDIF_Chk
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_EPCON_PREQ_Set
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Flsah_Write_String
 </UL>
 
 <P><STRONG><a name="[b4]"></a>Flash_Erase_Sector</STRONG> (Thumb, 80 bytes, Stack size 16 bytes, bsp_flash.o(i.Flash_Erase_Sector))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Flash_Erase_Sector &rArr; RCC_PERCLK_SetableEx
+<BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = Flash_Erase_Sector &rArr; FLASH_Erase_Sector
 </UL>
 <BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_PERCLK_SetableEx
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_Erase_Sector
@@ -1047,8 +1047,8 @@ Global Symbols
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_System
 <LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart_Proc
-<LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWDog
-<LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashErase
+<LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWDog
+<LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashErase
 </UL>
 
 <P><STRONG><a name="[ba]"></a>IWDT_IWDTCFG_IWDTOVP_Set</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, fm33g0xx_iwdt.o(i.IWDT_IWDTCFG_IWDTOVP_Set))
@@ -1083,7 +1083,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_SysClk_Gen
 </UL>
 
-<P><STRONG><a name="[bd]"></a>Init_SysClk</STRONG> (Thumb, 42 bytes, Stack size 40 bytes, bsp_core.o(i.Init_SysClk))
+<P><STRONG><a name="[bd]"></a>Init_SysClk</STRONG> (Thumb, 48 bytes, Stack size 40 bytes, bsp_core.o(i.Init_SysClk))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = Init_SysClk &rArr; RCC_SysClk_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_SysClk_Init
@@ -1138,11 +1138,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[21]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART3_IRQHandler
 </UL>
 
-<P><STRONG><a name="[124]"></a>LzoCRC</STRONG> (Thumb, 44 bytes, Stack size 12 bytes, gylzo.o(i.LzoCRC))
+<P><STRONG><a name="[123]"></a>LzoCRC</STRONG> (Thumb, 44 bytes, Stack size 12 bytes, gylzo.o(i.LzoCRC))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = LzoCRC
 </UL>
-<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
-<LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
+<BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
+<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
 </UL>
 
 <P><STRONG><a name="[7a]"></a>NVIC_SET</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, bsp_core.o(i.NVIC_SET))
@@ -1201,9 +1201,9 @@ Global Symbols
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Flash_Erase_Sector
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;API_Erase_Sector
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;API_Uartx_Init
-<LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashStart
-<LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashErase
-<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashEnd
+<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashStart
+<LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashErase
+<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashEnd
 </UL>
 
 <P><STRONG><a name="[d4]"></a>RCC_PLLCON_PLLDB_Get</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, fm33g0xx_rcc.o(i.RCC_PLLCON_PLLDB_Get))
@@ -1424,7 +1424,6 @@ Global Symbols
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTx_RXSTA_RXEN_Setable
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_UARTIE_RxTxIE_SetableEx
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTx_TXSTA_IREN_Setable
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTx_TXSTA_TXIS_Set
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTx_TXSTA_STOPSEL_Set
 <LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTx_TXBUFSTA_TX_INTSEL_Set
 <LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTx_SPBRG_Write
@@ -1433,6 +1432,7 @@ Global Symbols
 <LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTx_RTXCON_TXDFLAG_Setable
 <LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTx_RTXCON_RXDFLAG_Setable
 <LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTx_RTXCON_RTX7EN_Setable
+<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UARTx_TXSTA_TXIS_Set
 </UL>
 <BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_SInit
 </UL>
@@ -1572,8 +1572,8 @@ Global Symbols
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;API_Erase_Sector
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CalCRC16_CCITT
 <LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BitChange
-<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 <BR>[Called By]<UL><LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1619,7 +1619,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_lzo_config_check
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;minilzo_decompress
+<BR>[Called By]<UL><LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;minilzo_decompress
 </UL>
 
 <P><STRONG><a name="[10e]"></a>__myfree</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, malloc.o(i.__myfree))
@@ -1627,10 +1627,10 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mem_free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
+<BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
 <LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchAddDiff
-<LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoReadOpen
-<LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoReadClose
+<LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoReadOpen
+<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoReadClose
 </UL>
 
 <P><STRONG><a name="[110]"></a>__mymalloc</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, malloc.o(i.__mymalloc))
@@ -1638,9 +1638,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mem_malloc
 </UL>
-<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
+<BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
 <LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchAddDiff
-<LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoReadOpen
+<LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoReadOpen
 </UL>
 
 <P><STRONG><a name="[10d]"></a>_lzo_config_check</STRONG> (Thumb, 342 bytes, Stack size 48 bytes, minilzo.o(i._lzo_config_check))
@@ -1665,7 +1665,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchAddDiff
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;offtin
 </UL>
-<BR>[Called By]<UL><LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
+<BR>[Called By]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
 </UL>
 
 <P><STRONG><a name="[12f]"></a>camper</STRONG> (Thumb, 30 bytes, Stack size 12 bytes, bsp_lib.o(i.camper))
@@ -1679,16 +1679,16 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> _printf_char_file.o(.text)
 </UL>
-<P><STRONG><a name="[128]"></a>judgeSize</STRONG> (Thumb, 66 bytes, Stack size 12 bytes, patchflash.o(i.judgeSize))
+<P><STRONG><a name="[127]"></a>judgeSize</STRONG> (Thumb, 66 bytes, Stack size 12 bytes, patchflash.o(i.judgeSize))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = judgeSize
 </UL>
-<BR>[Called By]<UL><LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
+<BR>[Called By]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
 </UL>
 
-<P><STRONG><a name="[11f]"></a>lzo1x_decompress_safe</STRONG> (Thumb, 648 bytes, Stack size 24 bytes, minilzo.o(i.lzo1x_decompress_safe))
+<P><STRONG><a name="[11e]"></a>lzo1x_decompress_safe</STRONG> (Thumb, 648 bytes, Stack size 24 bytes, minilzo.o(i.lzo1x_decompress_safe))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = lzo1x_decompress_safe
 </UL>
-<BR>[Called By]<UL><LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;minilzo_decompress
+<BR>[Called By]<UL><LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;minilzo_decompress
 </UL>
 
 <P><STRONG><a name="[49]"></a>main</STRONG> (Thumb, 144 bytes, Stack size 16 bytes, bootmain.o(i.main))
@@ -1720,70 +1720,68 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> malloc.o(.data)
 </UL>
-<P><STRONG><a name="[111]"></a>mem_malloc</STRONG> (Thumb, 206 bytes, Stack size 32 bytes, malloc.o(i.mem_malloc))
+<P><STRONG><a name="[111]"></a>mem_malloc</STRONG> (Thumb, 204 bytes, Stack size 32 bytes, malloc.o(i.mem_malloc))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = mem_malloc
 </UL>
 <BR>[Called By]<UL><LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mymalloc
 </UL>
 
-<P><STRONG><a name="[3b]"></a>mem_perused</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, malloc.o(i.mem_perused))
+<P><STRONG><a name="[3b]"></a>mem_perused</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, malloc.o(i.mem_perused))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = mem_perused
-</UL>
-<BR>[Calls]<UL><LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> malloc.o(.data)
 </UL>
-<P><STRONG><a name="[11e]"></a>minilzo_decompress</STRONG> (Thumb, 88 bytes, Stack size 48 bytes, gylzo.o(i.minilzo_decompress))
+<P><STRONG><a name="[11d]"></a>minilzo_decompress</STRONG> (Thumb, 88 bytes, Stack size 48 bytes, gylzo.o(i.minilzo_decompress))
 <BR><BR>[Stack]<UL><LI>Max Depth = 176 + Unknown Stack Size
 <LI>Call Chain = minilzo_decompress &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
-<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lzo1x_decompress_safe
+<LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lzo1x_decompress_safe
 <LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__lzo_init_v2
 </UL>
-<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
+<BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
 </UL>
 
 <P><STRONG><a name="[11a]"></a>myLzoRead</STRONG> (Thumb, 232 bytes, Stack size 40 bytes, gylzo.o(i.myLzoRead))
 <BR><BR>[Stack]<UL><LI>Max Depth = 264 + Unknown Stack Size
 <LI>Call Chain = myLzoRead &rArr; mylzo_d &rArr; minilzo_decompress &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
-<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
-<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
+<BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
+<LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mylzo_d
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 <BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lzo_read
 </UL>
 
-<P><STRONG><a name="[122]"></a>myLzoReadClose</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, gylzo.o(i.myLzoReadClose))
+<P><STRONG><a name="[121]"></a>myLzoReadClose</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, gylzo.o(i.myLzoReadClose))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = myLzoReadClose &rArr; __myfree &rArr; mem_free
 </UL>
 <BR>[Calls]<UL><LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__myfree
 </UL>
-<BR>[Called By]<UL><LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
+<BR>[Called By]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
 </UL>
 
-<P><STRONG><a name="[123]"></a>myLzoReadOpen</STRONG> (Thumb, 62 bytes, Stack size 24 bytes, gylzo.o(i.myLzoReadOpen))
+<P><STRONG><a name="[122]"></a>myLzoReadOpen</STRONG> (Thumb, 62 bytes, Stack size 24 bytes, gylzo.o(i.myLzoReadOpen))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = myLzoReadOpen &rArr; __mymalloc &rArr; mem_malloc
 </UL>
 <BR>[Calls]<UL><LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mymalloc
 <LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__myfree
 <LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
-<BR>[Called By]<UL><LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
+<BR>[Called By]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
 </UL>
 
-<P><STRONG><a name="[120]"></a>mylzo_d</STRONG> (Thumb, 182 bytes, Stack size 48 bytes, gylzo.o(i.mylzo_d))
+<P><STRONG><a name="[11f]"></a>mylzo_d</STRONG> (Thumb, 182 bytes, Stack size 48 bytes, gylzo.o(i.mylzo_d))
 <BR><BR>[Stack]<UL><LI>Max Depth = 224 + Unknown Stack Size
 <LI>Call Chain = mylzo_d &rArr; minilzo_decompress &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mymalloc
 <LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__myfree
-<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;minilzo_decompress
-<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LzoCRC
+<LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;minilzo_decompress
+<LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LzoCRC
 <LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoRead
 </UL>
@@ -1792,19 +1790,19 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mem_init
 </UL>
 
-<P><STRONG><a name="[125]"></a>patch</STRONG> (Thumb, 300 bytes, Stack size 72 bytes, bspatch.o(i.patch))
+<P><STRONG><a name="[124]"></a>patch</STRONG> (Thumb, 300 bytes, Stack size 72 bytes, bspatch.o(i.patch))
 <BR><BR>[Stack]<UL><LI>Max Depth = 280 + Unknown Stack Size
 <LI>Call Chain = patch &rArr; bspatch &rArr; patchAddDiff &rArr; __aeabi_ldivmod &rArr; __aeabi_uldivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memcmp
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
-<LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchGetAdr
-<LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoReadOpen
-<LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoReadClose
-<LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;judgeSize
-<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LzoCRC
+<BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchGetAdr
+<LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoReadOpen
+<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoReadClose
+<LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;judgeSize
+<LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LzoCRC
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bspatch
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;offtin
+<LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memcmp
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchUpGrade
 </UL>
@@ -1814,83 +1812,83 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mymalloc
 <LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__myfree
-<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ldivmod
-<LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashErase
-<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
+<LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashErase
+<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 <BR>[Called By]<UL><LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bspatch
 </UL>
 
-<P><STRONG><a name="[12a]"></a>patchFlashAddData</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, patchflash.o(i.patchFlashAddData))
+<P><STRONG><a name="[129]"></a>patchFlashAddData</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, patchflash.o(i.patchFlashAddData))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = patchFlashAddData
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_EPCON_PREQ_Set
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_FLSIF_PRDIF_Clr
+<BR>[Calls]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_FLSIF_PRDIF_Clr
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_FLSIF_PRDIF_Chk
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_EPCON_PREQ_Set
 </UL>
-<BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
+<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
 </UL>
 
-<P><STRONG><a name="[12b]"></a>patchFlashEnd</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, patchflash.o(i.patchFlashEnd))
+<P><STRONG><a name="[12a]"></a>patchFlashEnd</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, patchflash.o(i.patchFlashEnd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = patchFlashEnd &rArr; RCC_PERCLK_SetableEx
 </UL>
 <BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_PERCLK_SetableEx
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_FLSKEY_Write
 </UL>
-<BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
+<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
 </UL>
 
-<P><STRONG><a name="[129]"></a>patchFlashErase</STRONG> (Thumb, 94 bytes, Stack size 32 bytes, patchflash.o(i.patchFlashErase))
-<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = patchFlashErase &rArr; RCC_PERCLK_SetableEx
+<P><STRONG><a name="[128]"></a>patchFlashErase</STRONG> (Thumb, 94 bytes, Stack size 32 bytes, patchflash.o(i.patchFlashErase))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = patchFlashErase &rArr; FLASH_Erase_Sector
 </UL>
 <BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_PERCLK_SetableEx
 <LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IWDT_Clr
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_Erase_Sector
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchUpGrade
-<LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchGetAdr
+<LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchGetAdr
 <LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchAddDiff
 </UL>
 
-<P><STRONG><a name="[12c]"></a>patchFlashStart</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, patchflash.o(i.patchFlashStart))
+<P><STRONG><a name="[12b]"></a>patchFlashStart</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, patchflash.o(i.patchFlashStart))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = patchFlashStart &rArr; RCC_PERCLK_SetableEx
 </UL>
 <BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_PERCLK_SetableEx
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_EPCON_PREQ_Set
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_FLSKEY_Write
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FLASH_EPCON_PREQ_Set
 </UL>
-<BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
+<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
 </UL>
 
-<P><STRONG><a name="[12d]"></a>patchFlashWDog</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, patchflash.o(i.patchFlashWDog))
+<P><STRONG><a name="[12c]"></a>patchFlashWDog</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, patchflash.o(i.patchFlashWDog))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = patchFlashWDog
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IWDT_Clr
-<LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+<LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
 </UL>
-<BR>[Called By]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
+<BR>[Called By]<UL><LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
 </UL>
 
-<P><STRONG><a name="[121]"></a>patchFlashWrite</STRONG> (Thumb, 102 bytes, Stack size 32 bytes, patchflash.o(i.patchFlashWrite))
+<P><STRONG><a name="[120]"></a>patchFlashWrite</STRONG> (Thumb, 102 bytes, Stack size 32 bytes, patchflash.o(i.patchFlashWrite))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = patchFlashWrite &rArr; patchFlashStart &rArr; RCC_PERCLK_SetableEx
 </UL>
-<BR>[Calls]<UL><LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWDog
-<LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashStart
-<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashEnd
-<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashAddData
+<BR>[Calls]<UL><LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWDog
+<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashStart
+<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashEnd
+<LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashAddData
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchUpGrade
 <LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchAddDiff
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;myLzoRead
 </UL>
 
-<P><STRONG><a name="[126]"></a>patchGetAdr</STRONG> (Thumb, 114 bytes, Stack size 16 bytes, patchflash.o(i.patchGetAdr))
-<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = patchGetAdr &rArr; patchFlashErase &rArr; RCC_PERCLK_SetableEx
+<P><STRONG><a name="[125]"></a>patchGetAdr</STRONG> (Thumb, 118 bytes, Stack size 16 bytes, patchflash.o(i.patchGetAdr))
+<BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = patchGetAdr &rArr; patchFlashErase &rArr; FLASH_Erase_Sector
 </UL>
-<BR>[Calls]<UL><LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashErase
+<BR>[Calls]<UL><LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashErase
 </UL>
-<BR>[Called By]<UL><LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
+<BR>[Called By]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
 </UL>
 
 <P><STRONG><a name="[12e]"></a>patchGotoAPP</STRONG> (Thumb, 30 bytes, Stack size 16 bytes, patchflash.o(i.patchGotoAPP))
@@ -1902,18 +1900,19 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchUpGrade
 </UL>
 
-<P><STRONG><a name="[11b]"></a>patchUpGrade</STRONG> (Thumb, 110 bytes, Stack size 24 bytes, patchflash.o(i.patchUpGrade))
+<P><STRONG><a name="[11b]"></a>patchUpGrade</STRONG> (Thumb, 124 bytes, Stack size 24 bytes, patchflash.o(i.patchUpGrade))
 <BR><BR>[Stack]<UL><LI>Max Depth = 304 + Unknown Stack Size
 <LI>Call Chain = patchUpGrade &rArr; patch &rArr; bspatch &rArr; patchAddDiff &rArr; __aeabi_ldivmod &rArr; __aeabi_uldivmod
 </UL>
 <BR>[Calls]<UL><LI><a href="#[12f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;camper
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;API_Erase_Sector
-<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memcmp
+<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchGotoAPP
-<LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashErase
-<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
-<LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
+<LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashErase
+<LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patchFlashWrite
+<LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memcmp
 </UL>
 <BR>[Called By]<UL><LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1945,7 +1944,7 @@ Local Symbols
 <P><STRONG><a name="[118]"></a>offtin</STRONG> (Thumb, 126 bytes, Stack size 12 bytes, bspatch.o(i.offtin))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = offtin
 </UL>
-<BR>[Called By]<UL><LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
+<BR>[Called By]<UL><LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;patch
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;bspatch
 </UL>
 

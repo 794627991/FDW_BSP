@@ -149,7 +149,7 @@ extern void Refresh(void); /* GUI，mem模式刷新显示 */
 #endif
 
 #ifndef RCHFCLKCFG
-#define RCHFCLKCFG 8 /* 如果未定义系统时钟频率，RCHF默认为8M */
+#define RCHFCLKCFG 36 /* 如果未定义系统时钟频率，RCHF默认为8M */
 #endif
 
 #if (RCHFCLKCFG == 8)

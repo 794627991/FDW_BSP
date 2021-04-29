@@ -175,7 +175,7 @@ static uint8_t bc28rxdeal(iot_type *iot)
     {
         /*+NSONMI:1,2*/
         IOTDAT(MODULE).readData = 1;
-        iotprintf("%s%c%s", "AT+NSORF=", IOTDAT(MODULE).DGRAM, ",512\r\n");
+        iotprintf("%s%c%s", "AT+NSORF=", IOTDAT(MODULE).DGRAM, ",1024\r\n");
     }
     else if (strstr(buf, "NPSMR:1")) //½øÈëpsm
     {

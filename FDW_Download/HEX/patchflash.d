@@ -61,3 +61,5 @@
 ..\..\fdw_download\hex\patchflash.o: ..\other\gydiff_2.0\lzoconf.h
 ..\..\fdw_download\hex\patchflash.o: ..\other\gydiff_2.0\malloc.h
 ..\..\fdw_download\hex\patchflash.o: ..\api\myprintf.h
+..\..\fdw_download\hex\patchflash.o: ..\api\bsp_uart.h
+..\..\fdw_download\hex\patchflash.o: ..\api\malloc.h

@@ -29,6 +29,7 @@ extern "C"
     void patchUpGrade(void);
     void patchDownLoadAnswer(uint8_t *buf, uint16_t *len);
     uint8_t patchAddDiff(bspatchtype *bspatch, int64_t newpos, int64_t oldpos, int64_t len);
+    void patchAppWriteVer(uint16_t ver);
 
 #ifdef __cplusplus
 }

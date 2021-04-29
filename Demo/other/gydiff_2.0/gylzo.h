@@ -23,6 +23,12 @@ uint32_t myLzoWriteClose(int *err, lzoWrite *lzo);
 
 #endif
 
+#ifdef __DEBUG
+#define debug(format, ...) printf(format, ##__VA_ARGS__)
+#else
+#define debug(format, ...)
+#endif
+
 typedef struct _myLzoRead
 {
     uint32_t pos;   /* 区块计算地址 */

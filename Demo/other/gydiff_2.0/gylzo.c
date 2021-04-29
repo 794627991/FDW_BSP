@@ -38,14 +38,14 @@ lzo_uint minilzo_decompress(uint8_t *inbuf, uint32_t inlen, uint8_t *outbuf)
     lzo_uint new_len = (lzo_uint)(-1); //加密后
     if (lzo_init() != LZO_E_OK)
     {
-        printf("\r\n初始化失败\r\n");
+        debug("\r\n初始化失败\r\n");
     }
     else
     {
         r = lzo1x_decompress_safe(inbuf, inlen, outbuf, &new_len, NULL);
         if (r == LZO_E_OK)
         {
-            printf("\r\n解压后的长度为：%d\r\n", new_len);
+            debug("\r\n解压后的长度为：%d\r\n", new_len);
         }
     }
 
@@ -64,26 +64,26 @@ lzo_uint minilzo_compress(uint8_t *inbuf, uint32_t inlen)
     if (wrkmem == NULL || out == NULL)
     {
         /*有一个申请失败就不加密了*/
-        printf("mem fail\r\n");
+        debug("mem fail\r\n");
     }
     else
     {
         if (lzo_init() != LZO_E_OK)
         {
-            printf("初始化失败\r\n");
+            debug("初始化失败\r\n");
         }
         else
         {
             r = lzo1x_1_compress(inbuf, inlen, out, &out_len, wrkmem);
             if (r == LZO_E_OK)
             {
-                // printf("\r\n压缩后的数据长度为：%d\r\n", out_len);
-                // printf("\r\n压缩比为: %.2lf%c\r\n", (float)(((int)inlen - (int)out_len) / (float)inlen) * 100.0, '%');
+                // debug("\r\n压缩后的数据长度为：%d\r\n", out_len);
+                // debug("\r\n压缩比为: %.2lf%c\r\n", (float)(((int)inlen - (int)out_len) / (float)inlen) * 100.0, '%');
                 if (out_len > inlen)
                 {
                     /*意味着负压缩,保持原样*/
                     out_len = (lzo_uint)(-1);
-                    // printf("\r\n压缩后数据长度比压缩前大\r\n");
+                    // debug("\r\n压缩后数据长度比压缩前大\r\n");
                 }
                 else
                 {
@@ -245,7 +245,7 @@ uint32_t myLzoWriteClose(int *err, lzoWrite *lzo)
 lzoRead lzo;
 lzoRead *myLzoReadOpen(int *err, int level)
 {
-    lzoRead *t = &lzo;
+    // lzoRead *t = &lzo;
     *err = 0;
     // if ((lzo = (lzoRead *)mymalloc(sizeof(lzoRead))) == NULL)
     // {
@@ -261,7 +261,7 @@ lzoRead *myLzoReadOpen(int *err, int level)
     /* 申请工作区 大小是 level+1 */
     if (((lzo.level = level) < 256) || (lzo.work = (uint8_t *)mymalloc(lzo.level + 1)) == NULL)
     {
-        myfree(t);
+        myfree(lzo.work);
         return NULL;
     }
     *err = MYLZO_OK;
@@ -288,7 +288,7 @@ uint32_t myLzoRead(int *err, lzoRead *lzo, void *buf, uint32_t len, uint8_t op)
             if ((offset = mylzo_d(lzo->block, lzo->work, (uint32_t *)&lzo->lzlen, lzo->level)) == 0)
             {
                 *err = 0;
-                printf("mylzo_d err\r\n");
+                debug("mylzo_d err\r\n");
                 return 0;
             }
             lzo->block += offset;
