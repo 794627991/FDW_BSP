@@ -64,7 +64,7 @@ void uCOS_SystemInit(void)
     GUI_Init();
     patchAppWriteVer(SoftVer);
     debug("\r\n程序已开始运行\r\n");
-    SIMLT_I2C_OP_INIT();
+    // SIMLT_I2C_OP_INIT();
     debug("\r\n差分升级测试\r\n");
 }
 

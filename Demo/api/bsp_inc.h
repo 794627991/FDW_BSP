@@ -7,6 +7,7 @@
 #include "bsp_etim.h"
 #include "bsp_flash.h"
 #include "bsp_iic.h"
+#include "bsp_iic_simlt.h"
 #include "bsp_led.h"
 #include "bsp_lptim.h"
 #include "bsp_lpuart.h"

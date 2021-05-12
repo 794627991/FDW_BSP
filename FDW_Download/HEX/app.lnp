@@ -30,6 +30,7 @@
 "..\..\fdw_download\hex\sha256.o"
 "..\..\fdw_download\hex\ucosinit.o"
 "..\..\fdw_download\hex\useevent.o"
+"..\..\fdw_download\hex\bsp_iic_simlt.o"
 "..\..\fdw_download\hex\fm33g0xx_aes.o"
 "..\..\fdw_download\hex\fm33g0xx_anac.o"
 "..\..\fdw_download\hex\fm33g0xx_btim.o"

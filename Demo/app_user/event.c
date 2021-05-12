@@ -1,5 +1,16 @@
 #include "event.h"
 
+iic_simlt_type iic_exp = {
+    MONI_IIC_SDA_GPIO,
+    MONI_IIC_SDA_PIN,
+    MONI_IIC_SCL_GPIO,
+    MONI_IIC_SCL_PIN,
+    OutputIO,
+    InputtIO,
+    GPIO_SetBits,
+    GPIO_ResetBits,
+    GPIO_ReadInputDataBit};
+
 extern uint8_t showemu;
 extern uint32_t sysvdd;
 extern float systemp;
@@ -81,45 +92,45 @@ void __API_EPROM_Read(uint32_t base, uint8_t *Buf, uint16_t len)
 
 void NBTxDeal(void)
 {
-	for(int i=0;i<600;i++)
-	{
-		NBTxBuf[i]=i&0xff;
-	}
-//    uint16_t VersionNum = 100;
-//    uint16_t year;
-//    uint8_t Systemtime[6];
-//    memset(NBTxBuf, 0, 72);
-//    NBTxBuf[0] = 0xaa; //命令头(开始计数)
-//    NBTxBuf[1] = 0x11;
-//    NBTxBuf[2] = 0xC5;
-//    NBTxBuf[3] = 0x11;
-//    NBTxBuf[4] = 0x22;
-//    NBTxBuf[5] = 0x33;
-//    NBTxBuf[6] = 0x44;
+    for (int i = 0; i < 600; i++)
+    {
+        NBTxBuf[i] = i & 0xff;
+    }
+    //    uint16_t VersionNum = 100;
+    //    uint16_t year;
+    //    uint8_t Systemtime[6];
+    //    memset(NBTxBuf, 0, 72);
+    //    NBTxBuf[0] = 0xaa; //命令头(开始计数)
+    //    NBTxBuf[1] = 0x11;
+    //    NBTxBuf[2] = 0xC5;
+    //    NBTxBuf[3] = 0x11;
+    //    NBTxBuf[4] = 0x22;
+    //    NBTxBuf[5] = 0x33;
+    //    NBTxBuf[6] = 0x44;
 
-//    NBTxBuf[7] = 0xAA; //表类型
+    //    NBTxBuf[7] = 0xAA; //表类型
 
-//    Systemtime[0] = Hex_Sec;
-//    Systemtime[1] = Hex_Min;
-//    Systemtime[2] = Hex_Hour;
-//    Systemtime[3] = Hex_Day;
-//    year = Hex_YearL + 2000;
-//    Systemtime[4] = LOWBYTE(LOWWORD(year)) * 16 + Hex_Mon;
-//    Systemtime[5] = HIGHWORD(year) * 16 + HIGHBYTE(LOWWORD(year));
-//    memcpy(&NBTxBuf[8], Systemtime, 6); //实时时间 6B
-//    NBTxBuf[14] = 1;                    //只取结算日
-//    NBTxBuf[15] = 1;                    //上传原因
+    //    Systemtime[0] = Hex_Sec;
+    //    Systemtime[1] = Hex_Min;
+    //    Systemtime[2] = Hex_Hour;
+    //    Systemtime[3] = Hex_Day;
+    //    year = Hex_YearL + 2000;
+    //    Systemtime[4] = LOWBYTE(LOWWORD(year)) * 16 + Hex_Mon;
+    //    Systemtime[5] = HIGHWORD(year) * 16 + HIGHBYTE(LOWWORD(year));
+    //    memcpy(&NBTxBuf[8], Systemtime, 6); //实时时间 6B
+    //    NBTxBuf[14] = 1;                    //只取结算日
+    //    NBTxBuf[15] = 1;                    //上传原因
 
-//    memset(&NBTxBuf[16], 0, 12); //累计量
+    //    memset(&NBTxBuf[16], 0, 12); //累计量
 
-//    NBTxBuf[28] = 0;    //表内运行状态
-//    NBTxBuf[29] = 0x31; //信号强度
-//    memset(&NBTxBuf[30], 0, 49);
-//    //memcpy(&NBTxBuf[57], iotdat.Simword, 10);	   //sim卡号
-//    memcpy(&NBTxBuf[67], (uchar *)&VersionNum, 2); //程序版本号
-//    NBTxBuf[69] = 0;
-//    NBTxBuf[70] = CalCheckSum(NBTxBuf, 70, 0);
-//    NBTxBuf[71] = 0xbb;
+    //    NBTxBuf[28] = 0;    //表内运行状态
+    //    NBTxBuf[29] = 0x31; //信号强度
+    //    memset(&NBTxBuf[30], 0, 49);
+    //    //memcpy(&NBTxBuf[57], iotdat.Simword, 10);	   //sim卡号
+    //    memcpy(&NBTxBuf[67], (uchar *)&VersionNum, 2); //程序版本号
+    //    NBTxBuf[69] = 0;
+    //    NBTxBuf[70] = CalCheckSum(NBTxBuf, 70, 0);
+    //    NBTxBuf[71] = 0xbb;
 
     iotTxData(NBTxBuf, 600);
 }
@@ -195,17 +206,20 @@ void PressureAndTempTest(void)
 {
     uint8_t cmd = 0x0a, flag = 0;
     uint8_t buf[5];
-    API_SIMLT_I2C_Write_Com(0xDA, 0x30, 1, &cmd, 1);
+    // API_SIMLT_I2C_Write_Com(0xDA, 0x30, 1, &cmd, 1);
+    API_SIMLT_IIC(&iic_exp, 0, 0xDA, 0x30, &cmd, 1);
     Do_DelayStart();
     {
-        API_SIMLT_I2C_Read_Com(0xDA, 0x2, 1, &cmd, 1);
+        // API_SIMLT_I2C_Read_Com(0xDA, 0x2, 1, &cmd, 1);
+        API_SIMLT_IIC(&iic_exp, 1, 0xDA, 0x2, &cmd, 1);
         if (cmd & 0x1)
             flag = 1; /* 设置地址成功, 写周期结束 */
     }
     While_DelayMsEnd(8 * clkmode);
     if (flag)
     {
-        API_SIMLT_I2C_Read_Com(0xDA, 0x6, 1, buf, 5);
+        // API_SIMLT_I2C_Read_Com(0xDA, 0x6, 1, buf, 5);
+        API_SIMLT_IIC(&iic_exp, 1, 0xDA, 0x6, buf, 5);
         /* 0-2为压力，大端，最高位为符号位，后6位为小数位 */
         /* 3-4为温度，大端，最高位为符号位，后8位为小数位 */
         float Pressure, Temp;

@@ -57,6 +57,7 @@
 ..\..\fdw_download\hex\bootfixapi.o: ..\api\bsp_etim.h
 ..\..\fdw_download\hex\bootfixapi.o: ..\api\bsp_flash.h
 ..\..\fdw_download\hex\bootfixapi.o: ..\api\bsp_iic.h
+..\..\fdw_download\hex\bootfixapi.o: ..\api\bsp_iic_simlt.h
 ..\..\fdw_download\hex\bootfixapi.o: ..\api\bsp_led.h
 ..\..\fdw_download\hex\bootfixapi.o: ..\api\bsp_lptim.h
 ..\..\fdw_download\hex\bootfixapi.o: ..\api\bsp_lpuart.h
